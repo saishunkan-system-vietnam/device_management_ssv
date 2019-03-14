@@ -70,6 +70,13 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
     /**
+     * ...and connect the rest of 'Pages' controller's URLs.
+     */
+    //$routes->connect('/devices.json', ['controller' => 'Devices']);
+
+ 
+
+    /**
      * Connect catchall routes for all controllers.
      *
      * Using the argument `DashedRoute`, the `fallbacks` method is a shortcut for
@@ -88,8 +95,13 @@ Router::scope('/', function (RouteBuilder $routes) {
      * You can remove these routes once you've connected the
      * routes you want in your application.
      */
+    $routes->setExtensions(['json', 'xml']);
+
     $routes->fallbacks(DashedRoute::class);
 });
+    Router::prefix('inventory', function ($routes) {
+        $routes->connect('/devices.json', ['controller' => 'Devices']);
+    });
 
 /**
  * If you need a different set of middleware or none at all,

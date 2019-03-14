@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS inventory_management;
 CREATE DATABASE inventory_management DEFAULT CHARACTER SET utf8;
 use inventory_management;
 
-CREATE TABLE IF NOT EXISTS DEVICE (
+CREATE TABLE IF NOT EXISTS DEVICES (
   id                        INT unsigned NOT NULL AUTO_INCREMENT,
   parent_id                 INT DEFAULT 0,
   id_cate					INT NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS DEVICE (
   primary key(id)
 );
 
-CREATE TABLE IF NOT EXISTS BRAND (
+CREATE TABLE IF NOT EXISTS BRANDS (
   id                        INT unsigned NOT NULL AUTO_INCREMENT,
   brand_name       			VARCHAR(100) NOT NULL,
   created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS BRAND (
   primary key(id)
 );
 
-CREATE TABLE IF NOT EXISTS CATEGORY(
+CREATE TABLE IF NOT EXISTS CATEGORIES(
   id                        INT unsigned NOT NULL AUTO_INCREMENT,
   id_parent 				INT,
   category_name             VARCHAR(100) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS CATEGORY(
   primary key(id)
 );
 
-CREATE TABLE IF NOT EXISTS USER (
+CREATE TABLE IF NOT EXISTS USERS (
   id                        INT unsigned NOT NULL AUTO_INCREMENT,
   user_name                 VARCHAR(100) NOT NULL,
   position                  VARCHAR(100) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS USER (
   primary key(id)
 );
 
-CREATE TABLE IF NOT EXISTS FILE (
+CREATE TABLE IF NOT EXISTS FILES (
   id                        INT unsigned NOT NULL AUTO_INCREMENT,
   relate_id                 INT,
   relate_name               INT,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS FILE (
   primary key(id)
 );
 
-CREATE TABLE IF NOT EXISTS BorrowDevice (
+CREATE TABLE IF NOT EXISTS BorrowDevices (
   id                        INT unsigned NOT NULL AUTO_INCREMENT,
   borrower_id               INT NOT NULL,
   approved_id               INT,

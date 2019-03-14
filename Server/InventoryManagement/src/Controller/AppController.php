@@ -52,4 +52,15 @@ class AppController extends Controller
          */
         //$this->loadComponent('Security');
     }
+    /**
+     * beforeRender callback
+     *
+     * @return void
+     */
+    public function beforeRender( Event $event) {
+        //parent::beforeRender();
+        
+        $this->set('devices');
+    }
+    
 }
