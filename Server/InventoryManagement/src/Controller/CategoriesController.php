@@ -17,11 +17,20 @@ class CategoriesController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
+     public function initialize()
     {
-        $categories = $this->paginate($this->Categories);
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+    }
 
-        $this->set(compact('categories'));
+
+    public function index()
+     {
+      
+        $categories = $this->paginate($this->Categories);
+        $this->payload['payload']['categories'] = $categories;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
     }
 
     /**
@@ -37,7 +46,8 @@ class CategoriesController extends AppController
             'contain' => []
         ]);
 
-        $this->set('category', $category);
+        //$this->set('category', $category);
+        $this->payload['payload'] = $categories;
     }
 
     /**
@@ -57,7 +67,8 @@ class CategoriesController extends AppController
             }
             $this->Flash->error(__('The category could not be saved. Please, try again.'));
         }
-        $this->set(compact('category'));
+        //$this->set(compact('category'));
+        $this->payload['payload'] = $categories;
     }
 
     /**
@@ -81,7 +92,8 @@ class CategoriesController extends AppController
             }
             $this->Flash->error(__('The category could not be saved. Please, try again.'));
         }
-        $this->set(compact('category'));
+        //$this->set(compact('category'));
+        $this->payload['payload'] = $category;
     }
 
     /**

@@ -22,12 +22,8 @@ class FilesController extends AppController
 
         $files = $this->paginate($this->Files);
 
-        $this->payload['payload'] = ['test' => '32432342234'];
+        $this->payload['payload'] = $files;
 
-
-        //echo "string";
-
-        //echo "string";
     }
 
     /**
@@ -39,11 +35,11 @@ class FilesController extends AppController
      */
     public function view($id = null)
     {
-        // $file = $this->Files->get($id, [
-        //     'contain' => []
-        // ]);
+        $file = $this->Files->get($id, [
+            'contain' => []
+        ]);
 
-        $this->payload['payload'] = ['test' => 'view'];
+        $this->payload['payload'] = $file;
     }
 
     /**
@@ -63,7 +59,8 @@ class FilesController extends AppController
             }
             $this->Flash->error(__('The file could not be saved. Please, try again.'));
         }
-        $this->set(compact('file'));
+        //$this->set(compact('file'));
+        $this->payload['payload'] = $file;
     }
 
     /**
@@ -75,9 +72,9 @@ class FilesController extends AppController
      */
     public function edit($id = null)
     {
-        $file = $this->Files->get($id, [
-            'contain' => []
-        ]);
+        // $file = $this->Files->get($id, [
+        //     'contain' => []
+        // ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $file = $this->Files->patchEntity($file, $this->request->getData());
             if ($this->Files->save($file)) {
@@ -87,7 +84,8 @@ class FilesController extends AppController
             }
             $this->Flash->error(__('The file could not be saved. Please, try again.'));
         }
-        $this->set(compact('file'));
+        //$this->set(compact('file'));
+        $this->payload['payload'] = $file;
     }
 
     /**

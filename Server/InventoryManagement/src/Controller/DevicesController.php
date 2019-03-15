@@ -25,20 +25,21 @@ class DevicesController extends AppController
 
     public function index()
     {
-        $devices = $this->Devices->find('all');
-        $this->set([
-            'devices' => $devices,
-            '_serialize' => ['devices']
-        ]);
+        //$devices = $this->Devices->find('all');
+        $devices = $this->paginate($this->Devices);
+        $this->payload['payload']['categories'] = $devices;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
+
     }
 
     public function view($id)
     {
         $devices = $this->Devices->get($id);
-        $this->set([
-            'devices' => $devices,
-            '_serialize' => ['devices']
-        ]);
+        $this->payload['payload']['categories'] = $devices;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
+
     }
 
     public function add()
@@ -49,13 +50,9 @@ class DevicesController extends AppController
         } else {
             $message = 'Error';
         }
-        // $this->set([
-        //     'message' => $message,
-        //     'devices' => $recipe,
-        //     '_serialize' => ['message', 'devices']
-        // ]);
-
-        $this->payload['payload'] = ['test' => '32432342234'];
+        $this->payload['payload']['devices'] = $devices;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
     }
 
     public function edit($id)
@@ -69,10 +66,9 @@ class DevicesController extends AppController
                 $message = 'Error';
             }
         }
-        $this->set([
-            'message' => $message,
-            '_serialize' => ['message']
-        ]);
+        $this->payload['payload']['devices'] = $devices;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
     }
 
     public function delete($id)

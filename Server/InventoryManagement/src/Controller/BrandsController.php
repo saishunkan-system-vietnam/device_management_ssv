@@ -21,7 +21,9 @@ class BrandsController extends AppController
     {
         $brands = $this->paginate($this->Brands);
 
-        $this->set(compact('brands'));
+        $this->payload['payload']['brands'] = $brands;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
     }
 
     /**
@@ -37,7 +39,9 @@ class BrandsController extends AppController
             'contain' => []
         ]);
 
-        $this->set('brand', $brand);
+        $this->payload['payload']['brand'] = $brand;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
     }
 
     /**
@@ -57,7 +61,10 @@ class BrandsController extends AppController
             }
             $this->Flash->error(__('The brand could not be saved. Please, try again.'));
         }
-        $this->set(compact('brand'));
+        //$this->set(compact('brand'));
+        $this->payload['payload']['brand'] = $brand;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
     }
 
     /**
@@ -81,7 +88,10 @@ class BrandsController extends AppController
             }
             $this->Flash->error(__('The brand could not be saved. Please, try again.'));
         }
-        $this->set(compact('brand'));
+        //$this->set(compact('brand'));
+        $this->payload['payload']['brand'] = $brand;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
     }
 
     /**
