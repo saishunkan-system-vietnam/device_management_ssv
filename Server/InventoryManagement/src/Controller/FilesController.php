@@ -19,9 +19,15 @@ class FilesController extends AppController
      */
     public function index()
     {
+
         $files = $this->paginate($this->Files);
 
-        $this->set(compact('files'));
+        $this->payload['payload'] = ['test' => '32432342234'];
+
+
+        //echo "string";
+
+        //echo "string";
     }
 
     /**
@@ -33,11 +39,11 @@ class FilesController extends AppController
      */
     public function view($id = null)
     {
-        $file = $this->Files->get($id, [
-            'contain' => []
-        ]);
+        // $file = $this->Files->get($id, [
+        //     'contain' => []
+        // ]);
 
-        $this->set('file', $file);
+        $this->payload['payload'] = ['test' => 'view'];
     }
 
     /**

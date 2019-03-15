@@ -49,11 +49,13 @@ class DevicesController extends AppController
         } else {
             $message = 'Error';
         }
-        $this->set([
-            'message' => $message,
-            'devices' => $recipe,
-            '_serialize' => ['message', 'devices']
-        ]);
+        // $this->set([
+        //     'message' => $message,
+        //     'devices' => $recipe,
+        //     '_serialize' => ['message', 'devices']
+        // ]);
+
+        $this->payload['payload'] = ['test' => '32432342234'];
     }
 
     public function edit($id)

@@ -28,6 +28,8 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
 
+
+    public $payload = '';
     /**
      * Initialization hook method.
      *
@@ -40,6 +42,10 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
+
+        $this->payload = [
+            'status' => 'sucsess'
+        ];
 
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
@@ -58,9 +64,15 @@ class AppController extends Controller
      * @return void
      */
     public function beforeRender( Event $event) {
-        //parent::beforeRender();
+
+        parent::beforeRender($event);
+
+
+        $this->viewBuilder()->setLayout('api_respon');
         
-        $this->set('devices');
+        $this->set('response', $this->payload);
+
+
     }
     
 }
