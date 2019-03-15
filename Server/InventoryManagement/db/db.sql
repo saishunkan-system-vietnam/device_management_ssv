@@ -2,16 +2,16 @@ DROP DATABASE IF EXISTS inventory_management;
 CREATE DATABASE inventory_management DEFAULT CHARACTER SET utf8;
 use inventory_management;
 
-CREATE TABLE IF NOT EXISTS DEVICES (
-  id                        INT unsigned NOT NULL AUTO_INCREMENT,
-  parent_id                 INT DEFAULT 0,
+CREATE TABLE IF NOT EXISTS devices (
+  id                        BIGINT unsigned NOT NULL AUTO_INCREMENT,
+  parent_id                 BIGINT DEFAULT 0,
   id_cate					INT NOT NULL,
   serial_number             VARCHAR(50) NOT NULL,
   product_number			VARCHAR(50) NOT NULL,
   name                      VARCHAR(100) NOT NULL,
   brand_id                  INT NOT NULL,
   specifications            TEXT,
-  status                    INT DEFAULT 0,
+  status                    TINYINT DEFAULT 0,
   stock_date                DATETIME DEFAULT CURRENT_TIMESTAMP,
   warranty_period           DATETIME,
   created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS DEVICES (
   primary key(id)
 );
 
-CREATE TABLE IF NOT EXISTS BRANDS (
+CREATE TABLE IF NOT EXISTS brands (
   id                        INT unsigned NOT NULL AUTO_INCREMENT,
   brand_name       			VARCHAR(100) NOT NULL,
   created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS BRANDS (
   primary key(id)
 );
 
-CREATE TABLE IF NOT EXISTS CATEGORIES(
+CREATE TABLE IF NOT EXISTS categories(
   id                        INT unsigned NOT NULL AUTO_INCREMENT,
   id_parent 				INT,
   category_name             VARCHAR(100) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS CATEGORIES(
   primary key(id)
 );
 
-CREATE TABLE IF NOT EXISTS USERS (
+CREATE TABLE IF NOT EXISTS users (
   id                        INT unsigned NOT NULL AUTO_INCREMENT,
   user_name                 VARCHAR(100) NOT NULL,
   position                  VARCHAR(100) NOT NULL,
@@ -50,11 +50,11 @@ CREATE TABLE IF NOT EXISTS USERS (
   primary key(id)
 );
 
-CREATE TABLE IF NOT EXISTS FILES (
-  id                        INT unsigned NOT NULL AUTO_INCREMENT,
-  relate_id                 INT,
-  relate_name               INT,
-  path                      TEXT,
+CREATE TABLE IF NOT EXISTS files (
+  id                        BIGINT unsigned NOT NULL AUTO_INCREMENT,
+  relate_id                 BIGINT NOT NULL,
+  relate_name               VARCHAR(50) NOT NULL,
+  path                      TEXT NOT NULL,
   type                      VARCHAR(50),
   created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
   update_time           	DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -62,19 +62,37 @@ CREATE TABLE IF NOT EXISTS FILES (
   primary key(id)
 );
 
-CREATE TABLE IF NOT EXISTS BorrowDevices (
-  id                        INT unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS borrow_devices (
+  id                        BIGINT unsigned NOT NULL AUTO_INCREMENT,
   borrower_id               INT NOT NULL,
   approved_id               INT,
   handover_id               INT,
-  device_id                 INT NOT NULL,
-  note                      TEXT,
+  device_id                 BIGINT NOT NULL,
+  borrow_reason             TEXT,
+  return_reason             TEXT,
   status                    INT,
   borrow_date               DATETIME NOT NULL,
   approved_date             DATETIME,
   delivery_date             DATETIME,
-  returnee_date             DATETIME NOT NULL,
-   created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
+  return_date               DATETIME NOT NULL,
+  created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
+  update_time           	DATETIME DEFAULT CURRENT_TIMESTAMP,
+  is_deleted                BOOLEAN NOT NULL DEFAULT FALSE,
+  primary key(id)
+)
+
+CREATE TABLE IF NOT EXISTS borrow_devices_detail (
+  id                        BIGINT unsigned NOT NULL AUTO_INCREMENT,
+  borrow_device_id          BIGINT NOT NULL,
+  device_id                 BIGINT NOT NULL,
+  borrow_reason             TEXT,
+  return_reason             TEXT,
+  status                    INT,
+  borrow_date               DATETIME NOT NULL,
+  approved_date             DATETIME,
+  delivery_date             DATETIME,
+  return_date               DATETIME NOT NULL,
+  created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
   update_time           	DATETIME DEFAULT CURRENT_TIMESTAMP,
   is_deleted                BOOLEAN NOT NULL DEFAULT FALSE,
   primary key(id)
