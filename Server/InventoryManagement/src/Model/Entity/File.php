@@ -7,9 +7,9 @@ use Cake\ORM\Entity;
  * File Entity
  *
  * @property int $id
- * @property int|null $relate_id
- * @property int|null $relate_name
- * @property string|null $path
+ * @property int $relate_id
+ * @property string $relate_name
+ * @property string $path
  * @property string|null $type
  * @property \Cake\I18n\FrozenTime|null $created_time
  * @property \Cake\I18n\FrozenTime|null $update_time

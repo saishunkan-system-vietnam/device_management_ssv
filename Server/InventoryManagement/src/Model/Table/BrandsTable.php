@@ -7,9 +7,9 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Brand Model
+ * Brands Model
  *
- * @property \App\Model\Table\DeviceTable|\Cake\ORM\Association\HasMany $Device
+ * @property \App\Model\Table\DevicesTable|\Cake\ORM\Association\HasMany $Devices
  *
  * @method \App\Model\Entity\Brand get($primaryKey, $options = [])
  * @method \App\Model\Entity\Brand newEntity($data = null, array $options = [])
@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Brand[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Brand findOrCreate($search, callable $callback = null, $options = [])
  */
-class BrandTable extends Table
+class BrandsTable extends Table
 {
 
     /**
@@ -33,11 +33,11 @@ class BrandTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('brand');
+        $this->setTable('brands');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Device', [
+        $this->hasMany('Devices', [
             'foreignKey' => 'brand_id'
         ]);
     }

@@ -7,12 +7,13 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Device Model
+ * Devices Model
  *
- * @property \App\Model\Table\DeviceTable|\Cake\ORM\Association\BelongsTo $ParentDevice
+ * @property \App\Model\Table\DevicesTable|\Cake\ORM\Association\BelongsTo $ParentDevices
  * @property \App\Model\Table\BrandsTable|\Cake\ORM\Association\BelongsTo $Brands
- * @property \App\Model\Table\BorrowdeviceTable|\Cake\ORM\Association\HasMany $Borrowdevice
- * @property \App\Model\Table\DeviceTable|\Cake\ORM\Association\HasMany $ChildDevice
+ * @property \App\Model\Table\BorrowDevicesTable|\Cake\ORM\Association\HasMany $BorrowDevices
+ * @property \App\Model\Table\BorrowDevicesDetailTable|\Cake\ORM\Association\HasMany $BorrowDevicesDetail
+ * @property \App\Model\Table\DevicesTable|\Cake\ORM\Association\HasMany $ChildDevices
  *
  * @method \App\Model\Entity\Device get($primaryKey, $options = [])
  * @method \App\Model\Entity\Device newEntity($data = null, array $options = [])
@@ -23,7 +24,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Device[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Device findOrCreate($search, callable $callback = null, $options = [])
  */
-class DeviceTable extends Table
+class DevicesTable extends Table
 {
 
     /**
@@ -36,23 +37,26 @@ class DeviceTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('device');
+        $this->setTable('devices');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('ParentDevice', [
-            'className' => 'Device',
+        $this->belongsTo('ParentDevices', [
+            'className' => 'Devices',
             'foreignKey' => 'parent_id'
         ]);
         $this->belongsTo('Brands', [
             'foreignKey' => 'brand_id',
             'joinType' => 'INNER'
         ]);
-        $this->hasMany('Borrowdevice', [
+        $this->hasMany('BorrowDevices', [
             'foreignKey' => 'device_id'
         ]);
-        $this->hasMany('ChildDevice', [
-            'className' => 'Device',
+        $this->hasMany('BorrowDevicesDetail', [
+            'foreignKey' => 'device_id'
+        ]);
+        $this->hasMany('ChildDevices', [
+            'className' => 'Devices',
             'foreignKey' => 'parent_id'
         ]);
     }
@@ -66,7 +70,6 @@ class DeviceTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->nonNegativeInteger('id')
             ->allowEmptyString('id', 'create');
 
         $validator
@@ -97,7 +100,6 @@ class DeviceTable extends Table
             ->allowEmptyString('specifications');
 
         $validator
-            ->integer('status')
             ->allowEmptyString('status');
 
         $validator
@@ -133,7 +135,7 @@ class DeviceTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['parent_id'], 'ParentDevice'));
+        $rules->add($rules->existsIn(['parent_id'], 'ParentDevices'));
         $rules->add($rules->existsIn(['brand_id'], 'Brands'));
 
         return $rules;

@@ -7,24 +7,21 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * BorrowDevices Model
+ * BorrowDevicesDetail Model
  *
- * @property \App\Model\Table\BorrowersTable|\Cake\ORM\Association\BelongsTo $Borrowers
- * @property \App\Model\Table\ApprovedsTable|\Cake\ORM\Association\BelongsTo $Approveds
- * @property \App\Model\Table\HandoversTable|\Cake\ORM\Association\BelongsTo $Handovers
+ * @property \App\Model\Table\BorrowDevicesTable|\Cake\ORM\Association\BelongsTo $BorrowDevices
  * @property \App\Model\Table\DevicesTable|\Cake\ORM\Association\BelongsTo $Devices
- * @property \App\Model\Table\BorrowDevicesDetailTable|\Cake\ORM\Association\HasMany $BorrowDevicesDetail
  *
- * @method \App\Model\Entity\BorrowDevice get($primaryKey, $options = [])
- * @method \App\Model\Entity\BorrowDevice newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\BorrowDevice[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\BorrowDevice|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\BorrowDevice|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\BorrowDevice patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\BorrowDevice[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\BorrowDevice findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\BorrowDevicesDetail get($primaryKey, $options = [])
+ * @method \App\Model\Entity\BorrowDevicesDetail newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\BorrowDevicesDetail[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\BorrowDevicesDetail|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\BorrowDevicesDetail|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\BorrowDevicesDetail patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\BorrowDevicesDetail[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\BorrowDevicesDetail findOrCreate($search, callable $callback = null, $options = [])
  */
-class BorrowDevicesTable extends Table
+class BorrowDevicesDetailTable extends Table
 {
 
     /**
@@ -37,26 +34,17 @@ class BorrowDevicesTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('borrow_devices');
+        $this->setTable('borrow_devices_detail');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Borrowers', [
-            'foreignKey' => 'borrower_id',
+        $this->belongsTo('BorrowDevices', [
+            'foreignKey' => 'borrow_device_id',
             'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Approveds', [
-            'foreignKey' => 'approved_id'
-        ]);
-        $this->belongsTo('Handovers', [
-            'foreignKey' => 'handover_id'
         ]);
         $this->belongsTo('Devices', [
             'foreignKey' => 'device_id',
             'joinType' => 'INNER'
-        ]);
-        $this->hasMany('BorrowDevicesDetail', [
-            'foreignKey' => 'borrow_device_id'
         ]);
     }
 
@@ -126,9 +114,7 @@ class BorrowDevicesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['borrower_id'], 'Borrowers'));
-        $rules->add($rules->existsIn(['approved_id'], 'Approveds'));
-        $rules->add($rules->existsIn(['handover_id'], 'Handovers'));
+        $rules->add($rules->existsIn(['borrow_device_id'], 'BorrowDevices'));
         $rules->add($rules->existsIn(['device_id'], 'Devices'));
 
         return $rules;

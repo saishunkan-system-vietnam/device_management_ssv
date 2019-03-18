@@ -47,15 +47,15 @@ Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
     // Register scoped middleware for in scopes.
-    $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
-        'httpOnly' => true
-    ]));
+    // $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
+    //     'httpOnly' => true
+    // ]));
 
     /**
      * Apply a middleware to the current route scope.
      * Requires middleware to be registered via `Application::routes()` with `registerMiddleware()`
      */
-    $routes->applyMiddleware('csrf');
+    //$routes->applyMiddleware('csrf');
 
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
@@ -96,8 +96,12 @@ Router::scope('/', function (RouteBuilder $routes) {
      * routes you want in your application.
      */
     $routes->setExtensions(['json', 'xml']);
+    $routes->connect('/devices', ['controller' => 'Devices','action' => 'index']);
+    $routes->connect('/devices/add', ['controller' => 'Devices','action' => 'add']);
+    $routes->connect('/devices/view', ['controller' => 'Devices','action' => 'view']);
 
-    $routes->fallbacks(DashedRoute::class);
+
+    //$routes->fallbacks(DashedRoute::class);
 });
     Router::prefix('inventory', function ($routes) {
         $routes->connect('/devices.json', ['controller' => 'Devices']);

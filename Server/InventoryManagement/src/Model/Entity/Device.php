@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  * @property string $serial_number
  * @property string $product_number
  * @property string $name
- * @property string $brand_id
+ * @property int $brand_id
  * @property string|null $specifications
  * @property int|null $status
  * @property \Cake\I18n\FrozenTime|null $stock_date
@@ -23,8 +23,9 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\ParentDevice $parent_device
  * @property \App\Model\Entity\Brand $brand
- * @property \App\Model\Entity\Borrowdevice[] $borrowdevice
- * @property \App\Model\Entity\ChildDevice[] $child_device
+ * @property \App\Model\Entity\BorrowDevice[] $borrow_devices
+ * @property \App\Model\Entity\BorrowDevicesDetail[] $borrow_devices_detail
+ * @property \App\Model\Entity\ChildDevice[] $child_devices
  */
 class Device extends Entity
 {
@@ -54,7 +55,8 @@ class Device extends Entity
         'is_deleted' => true,
         'parent_device' => true,
         'brand' => true,
-        'borrowdevice' => true,
-        'child_device' => true
+        'borrow_devices' => true,
+        'borrow_devices_detail' => true,
+        'child_devices' => true
     ];
 }
