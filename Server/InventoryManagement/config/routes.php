@@ -47,15 +47,15 @@ Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
     // Register scoped middleware for in scopes.
-    $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
-        'httpOnly' => true
-    ]));
+    // $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
+    //    'httpOnly' => true
+    // ]));
 
     /**
      * Apply a middleware to the current route scope.
      * Requires middleware to be registered via `Application::routes()` with `registerMiddleware()`
      */
-    $routes->applyMiddleware('csrf');
+    // $routes->applyMiddleware('csrf');
 
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
@@ -63,6 +63,19 @@ Router::scope('/', function (RouteBuilder $routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+
+    /** Categories*/
+    $routes->connect('/categories/index', ['controller' => 'Categories', 'action' => 'index']);
+    $routes->connect('/categories/view/:id', ['controller' => 'Categories', 'action' => 'view']);
+    $routes->connect('/categories/edit/:id', ['controller' => 'Categories', 'action' => 'edit']);
+    $routes->connect('/categories/delete/:id', ['controller' => 'Categories', 'action' => 'delete']);
+    $routes->connect('/categories/add', ['controller' => 'Categories', 'action' => 'add']);
+    /** Brands*/
+    $routes->connect('/brand/index', ['controller' => 'Brands', 'action' => 'index']);
+    $routes->connect('/brand/view/:id', ['controller' => 'Brands', 'action' => 'view']);
+    $routes->connect('/brand/edit/:id', ['controller' => 'Brands', 'action' => 'edit']);
+    $routes->connect('/brand/delete', ['controller' => 'Brands', 'action' => 'delete']);
+    $routes->connect('/brand/add', ['controller' => 'Brands', 'action' => 'add']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

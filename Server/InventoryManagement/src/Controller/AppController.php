@@ -51,7 +51,7 @@ class AppController extends Controller
             'enableBeforeRedirect' => false,
         ]);
         $this->loadComponent('Flash');
-
+       //$this->loadComponent('Csrf');
         /*
          * Enable the following component for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -67,12 +67,24 @@ class AppController extends Controller
 
         parent::beforeRender($event);
 
-
         $this->viewBuilder()->setLayout('api_respon');
-        
+
         $this->set('response', $this->payload);
 
 
+    }
+
+    public function responseApi($status = 'success', $data_name = 'data', $data = null) 
+    {
+        $this->payload = [
+            'status' => $status,
+            'payload' => [
+                $data_name => $data
+            ]
+        ];
+
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
     }
     
 }

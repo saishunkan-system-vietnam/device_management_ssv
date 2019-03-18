@@ -1,15 +1,15 @@
 <?php
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use Cake\ORM\Rule\IsUnique;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Brand Model
+ * Brands Model
  *
- * @property \App\Model\Table\DeviceTable|\Cake\ORM\Association\HasMany $Device
+ * @property \App\Model\Table\DevicesTable|\Cake\ORM\Association\HasMany $Devices
  *
  * @method \App\Model\Entity\Brand get($primaryKey, $options = [])
  * @method \App\Model\Entity\Brand newEntity($data = null, array $options = [])
@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Brand[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Brand findOrCreate($search, callable $callback = null, $options = [])
  */
-class BrandTable extends Table
+class BrandsTable extends Table
 {
 
     /**
@@ -33,12 +33,12 @@ class BrandTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('brand');
+        $this->setTable('brands');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Device', [
-            'foreignKey' => 'brand_id'
+        $this->hasMany('Devices', [
+            'foreignKey' => 'brand_id',
         ]);
     }
 
@@ -68,11 +68,15 @@ class BrandTable extends Table
             ->dateTime('update_time')
             ->allowEmptyDateTime('update_time');
 
-        $validator
-            ->boolean('is_deleted')
-            ->requirePresence('is_deleted', 'create')
-            ->allowEmptyString('is_deleted', false);
-
         return $validator;
+    }
+
+    /**
+     *  Check brand name unique
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['brand_name']));
+        return $rules;
     }
 }
