@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\BrandTable;
+use App\Model\Table\CategoriesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\BrandTable Test Case
+ * App\Model\Table\CategoriesTable Test Case
  */
-class BrandTableTest extends TestCase
+class CategoriesTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\BrandTable
+     * @var \App\Model\Table\CategoriesTable
      */
-    public $Brand;
+    public $Categories;
 
     /**
      * Fixtures
@@ -24,8 +24,7 @@ class BrandTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Brand',
-        'app.Device'
+        'app.Categories'
     ];
 
     /**
@@ -36,8 +35,8 @@ class BrandTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Brand') ? [] : ['className' => BrandTable::class];
-        $this->Brand = TableRegistry::getTableLocator()->get('Brand', $config);
+        $config = TableRegistry::getTableLocator()->exists('Categories') ? [] : ['className' => CategoriesTable::class];
+        $this->Categories = TableRegistry::getTableLocator()->get('Categories', $config);
     }
 
     /**
@@ -47,7 +46,7 @@ class BrandTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Brand);
+        unset($this->Categories);
 
         parent::tearDown();
     }

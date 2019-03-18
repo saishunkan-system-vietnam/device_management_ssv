@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\CategoryTable;
+use App\Model\Table\FilesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\CategoryTable Test Case
+ * App\Model\Table\FilesTable Test Case
  */
-class CategoryTableTest extends TestCase
+class FilesTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CategoryTable
+     * @var \App\Model\Table\FilesTable
      */
-    public $Category;
+    public $Files;
 
     /**
      * Fixtures
@@ -24,7 +24,8 @@ class CategoryTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Category'
+        'app.Files',
+        'app.Relates'
     ];
 
     /**
@@ -35,8 +36,8 @@ class CategoryTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Category') ? [] : ['className' => CategoryTable::class];
-        $this->Category = TableRegistry::getTableLocator()->get('Category', $config);
+        $config = TableRegistry::getTableLocator()->exists('Files') ? [] : ['className' => FilesTable::class];
+        $this->Files = TableRegistry::getTableLocator()->get('Files', $config);
     }
 
     /**
@@ -46,7 +47,7 @@ class CategoryTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Category);
+        unset($this->Files);
 
         parent::tearDown();
     }
@@ -67,6 +68,16 @@ class CategoryTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

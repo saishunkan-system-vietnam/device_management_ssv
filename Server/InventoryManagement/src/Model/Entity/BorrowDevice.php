@@ -4,19 +4,19 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Borrowdevice Entity
+ * BorrowDevice Entity
  *
  * @property int $id
  * @property int $borrower_id
  * @property int|null $approved_id
  * @property int|null $handover_id
- * @property int $device_id
- * @property string|null $note
+ * @property string|null $borrow_reason
+ * @property string|null $return_reason
  * @property int|null $status
  * @property \Cake\I18n\FrozenTime $borrow_date
  * @property \Cake\I18n\FrozenTime|null $approved_date
  * @property \Cake\I18n\FrozenTime|null $delivery_date
- * @property \Cake\I18n\FrozenTime $returnee_date
+ * @property \Cake\I18n\FrozenTime $return_date
  * @property \Cake\I18n\FrozenTime|null $created_time
  * @property \Cake\I18n\FrozenTime|null $update_time
  * @property bool $is_deleted
@@ -24,9 +24,9 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Borrower $borrower
  * @property \App\Model\Entity\Approved $approved
  * @property \App\Model\Entity\Handover $handover
- * @property \App\Model\Entity\Device $device
+ * @property \App\Model\Entity\BorrowDevicesDetail[] $borrow_devices_detail
  */
-class Borrowdevice extends Entity
+class BorrowDevice extends Entity
 {
 
     /**
@@ -42,19 +42,19 @@ class Borrowdevice extends Entity
         'borrower_id' => true,
         'approved_id' => true,
         'handover_id' => true,
-        'device_id' => true,
-        'note' => true,
+        'borrow_reason' => true,
+        'return_reason' => true,
         'status' => true,
         'borrow_date' => true,
         'approved_date' => true,
         'delivery_date' => true,
-        'returnee_date' => true,
+        'return_date' => true,
         'created_time' => true,
         'update_time' => true,
         'is_deleted' => true,
         'borrower' => true,
         'approved' => true,
         'handover' => true,
-        'device' => true
+        'borrow_devices_detail' => true
     ];
 }

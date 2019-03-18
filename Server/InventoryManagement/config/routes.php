@@ -47,15 +47,15 @@ Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
     // Register scoped middleware for in scopes.
-    $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
-        'httpOnly' => true
-    ]));
+    // $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
+    //     'httpOnly' => true
+    // ]));
 
     /**
      * Apply a middleware to the current route scope.
      * Requires middleware to be registered via `Application::routes()` with `registerMiddleware()`
      */
-    $routes->applyMiddleware('csrf');
+    //$routes->applyMiddleware('csrf');
 
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
@@ -68,6 +68,8 @@ Router::scope('/', function (RouteBuilder $routes) {
      * ...and connect the rest of 'Pages' controller's URLs.
      */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+    $routes->connect('list', ['controller' => 'BorrowDetails', 'action' => 'index']);
+
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\BorrowdeviceTable;
+use App\Model\Table\DevicesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\BorrowdeviceTable Test Case
+ * App\Model\Table\DevicesTable Test Case
  */
-class BorrowdeviceTableTest extends TestCase
+class DevicesTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\BorrowdeviceTable
+     * @var \App\Model\Table\DevicesTable
      */
-    public $Borrowdevice;
+    public $Devices;
 
     /**
      * Fixtures
@@ -24,11 +24,8 @@ class BorrowdeviceTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Borrowdevice',
-        'app.Borrowers',
-        'app.Approveds',
-        'app.Handovers',
-        'app.Devices'
+        'app.Devices',
+        'app.Brands'
     ];
 
     /**
@@ -39,8 +36,8 @@ class BorrowdeviceTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Borrowdevice') ? [] : ['className' => BorrowdeviceTable::class];
-        $this->Borrowdevice = TableRegistry::getTableLocator()->get('Borrowdevice', $config);
+        $config = TableRegistry::getTableLocator()->exists('Devices') ? [] : ['className' => DevicesTable::class];
+        $this->Devices = TableRegistry::getTableLocator()->get('Devices', $config);
     }
 
     /**
@@ -50,7 +47,7 @@ class BorrowdeviceTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Borrowdevice);
+        unset($this->Devices);
 
         parent::tearDown();
     }

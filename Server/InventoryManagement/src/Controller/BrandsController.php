@@ -25,7 +25,6 @@ class BrandsController extends AppController
         $this->response->body(json_encode($this->payload));
         return $this->response;
     }
-
     /**
      * View method
      *

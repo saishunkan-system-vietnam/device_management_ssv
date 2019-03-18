@@ -7,7 +7,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * User Model
+ * Users Model
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -18,7 +18,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
  */
-class UserTable extends Table
+class UsersTable extends Table
 {
 
     /**
@@ -31,7 +31,7 @@ class UserTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('user');
+        $this->setTable('users');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
     }

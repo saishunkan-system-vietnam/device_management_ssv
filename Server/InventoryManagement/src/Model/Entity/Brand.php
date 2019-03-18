@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $update_time
  * @property bool $is_deleted
  *
- * @property \App\Model\Entity\Device[] $device
+ * @property \App\Model\Entity\Device[] $devices
  */
 class Brand extends Entity
 {
@@ -31,6 +31,6 @@ class Brand extends Entity
         'created_time' => true,
         'update_time' => true,
         'is_deleted' => true,
-        'device' => true
+        'devices' => true
     ];
 }

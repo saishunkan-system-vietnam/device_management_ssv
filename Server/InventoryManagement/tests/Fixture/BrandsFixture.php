@@ -4,18 +4,11 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * BrandFixture
+ * BrandsFixture
  *
  */
-class BrandFixture extends TestFixture
+class BrandsFixture extends TestFixture
 {
-
-    /**
-     * Table name
-     *
-     * @var string
-     */
-    public $table = 'brand';
 
     /**
      * Fields
@@ -50,8 +43,8 @@ class BrandFixture extends TestFixture
             [
                 'id' => 1,
                 'brand_name' => 'Lorem ipsum dolor sit amet',
-                'created_time' => '2019-03-13 09:32:28',
-                'update_time' => '2019-03-13 09:32:28',
+                'created_time' => '2019-03-18 10:57:23',
+                'update_time' => '2019-03-18 10:57:23',
                 'is_deleted' => 1
             ],
         ];
