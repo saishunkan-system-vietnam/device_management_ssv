@@ -1,0 +1,60 @@
+
+
+.rowdetail {
+    
+    padding: 15px 0;
+    width: 200px;
+
+}
+
+.buttonclick {
+    background-color: #288ad6;
+    color: #fff;
+}
+#borrow-content .table-order {
+    border-collapse: collapse;
+    overflow: visible;
+}
+#borrow-content .table-order.table thead th:first-child {
+    padding-right: 0;
+}
+#borrow-content .table-order.table thead th {
+    font-size: 12px;
+    color: #555;
+    text-transform: uppercase;
+    border: none;
+    font-weight: 600;
+    vertical-align: top;
+    padding: 0px 40px;
+    padding-right: 10px;
+}
+
+#borrow-content  .table-order.table tbody {
+    background: #fff;
+}
+
+#borrow-content .table-order.table tbody tr td:first-child { 
+    border-bottom-left-radius: 3px;
+    vertical-align: top;
+}
+
+#borrow-content .table-order.table tbody td.desc {
+    color: #4272d7;
+}
+
+#borrow-content .table-order.table tbody td { 
+    font-size: 14px;
+    color: #808080;
+    vertical-align: middle;
+    padding: 10px 40px;
+    padding-right: 10px;
+    border: none;
+}
+#borrow-content .table-order.table tbody td.pht {
+	width: 130px;
+}
+#borrow-content .table-order.table tbody .pht .img {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
