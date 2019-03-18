@@ -32,6 +32,7 @@
 
     <!-- Main CSS-->
     <link href="../../css/theme.css" rel="stylesheet" media="all">
+    <link href="../../css/style.css" rel="stylesheet" media="all"/>
 
 </head>
 
@@ -79,8 +80,23 @@
                                 <i class="fas fa-chart-bar"></i>Charts</a>
                         </li>
                         <li>
-                            <a href="listdevice.html">
-                                <i class="fas fa-table"></i>Devices</a>
+                            <a class="js-arrow" href="#">
+                                    <i class="fas fa-tachometer-alt"></i>Quản Lý
+                            </a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="index.html">Duyệt Thiết Bị</a>
+                                </li>
+                                <li>
+                                    <a href="index2.html">Thiết Bị</a>
+                                </li>
+                                <li>
+                                    <a href="index3.html">Người dùng</a>
+                                </li>
+                                <li>
+                                    <a href="index4.html">Khác</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="form.html">
@@ -88,7 +104,7 @@
                         </li>
                         <li>
                             <a href="html/borrow/list.html">
-                                <i class="fas fa-calendar-alt"></i>Borrow Device</a>
+                                <i class="fas fa-calendar-alt"></i>Mượn thiết bị</a>
                         </li>
                         <li>
                             <a href="map.html">
@@ -187,8 +203,23 @@
                                 <i class="fas fa-chart-bar"></i>Charts</a>
                         </li>
                         <li>
-                            <a href="listdevice.html">
-                                <i class="fas fa-table"></i>Devices</a>
+                            <a class="js-arrow" href="#">
+                                    <i class="fas fa-tachometer-alt"></i>Quản Lý
+                            </a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="index.html">Duyệt Thiết Bị</a>
+                                </li>
+                                <li>
+                                    <a href="index2.html">Thiết Bị</a>
+                                </li>
+                                <li>
+                                    <a href="index3.html">Người dùng</a>
+                                </li>
+                                <li>
+                                    <a href="index4.html">Khác</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="form.html">
@@ -196,7 +227,7 @@
                         </li>
                         <li>
                             <a href="list.html">
-                                <i class="fas fa-calendar-alt"></i>Borrow Device</a>
+                                <i class="fas fa-calendar-alt"></i>Mượn thiết bị</a>
                         </li>
                         <li>
                             <a href="map.html">
@@ -439,110 +470,145 @@
             <!-- HEADER DESKTOP-->
 
             <!-- MAIN CONTENT-->
-            <div class="main-content">
+            <div class="main-content" id="borrow-list">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="row m-t-30">
-                            <div class="col-md-12">
-                                    <div class="table-data__tool">
-                                        <div class="table-data__tool-left">
-                                            <div class="rs-select2--light rs-select2--md">
-                                                <select class="js-select2" name="property">
-                                                    <option selected="selected" value="">Apple</option>
-                                                    <option value="">Samsung</option>
-                                                    <option value="">Huawei</option>
-                                                    <option value="">Xiaomi</option>
-                                                    <option value="">Oppo</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
-                                            </div>
-                                            <div class="rs-select2--light rs-select2--sm">
-                                                <select class="js-select2" name="time">
-                                                    <option selected="selected" value="">Phone</option>
-                                                    <option value="">Laptop</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
-                                            </div>
-                                            <div class="rs-select2--light">
-                                                <form class="form-header" action="" method="POST">
-                                                        <input class="au-input au-input" style="width: 500px" type="text" name="search" placeholder="Search for datas &amp; device..." />
-                                                        <button class="au-btn--submit" type="submit">
-                                                            <i class="zmdi zmdi-search"></i>
-                                                        </button>
-                                                </form>
+                                <div class="col-md-12">
+                                        <div class="table-data__tool">
+                                            <div class="table-data__tool-left">
+                                                <div class="rs-select2--light rs-select2--md">
+                                                    <select class="js-select2" name="property">
+                                                        <option selected="selected" value="">Apple</option>
+                                                        <option value="">Samsung</option>
+                                                        <option value="">Huawei</option>
+                                                        <option value="">Xiaomi</option>
+                                                        <option value="">Oppo</option>
+                                                    </select>
+                                                    <div class="dropDownSelect2"></div>
+                                                </div>
+                                                <div class="rs-select2--light rs-select2--sm">
+                                                    <select class="js-select2" name="time">
+                                                        <option selected="selected" value="">Phone</option>
+                                                        <option value="">Laptop</option>
+                                                    </select>
+                                                    <div class="dropDownSelect2"></div>
+                                                </div>
+                                                <div class="rs-select2--light">
+                                                    <form class="form-header" action="" method="POST">
+                                                            <input class="au-input au-input" style="width: 500px" type="text" name="search" placeholder="Search for datas &amp; device..." />
+                                                            <button class="au-btn--submit" type="submit">
+                                                                <i class="zmdi zmdi-search"></i>
+                                                            </button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
-                                 </div>
-                                <!-- DATA TABLE-->
-                                <div class="table-responsive table--no-card m-b-30">
-                                    <table class="table table-borderless table-striped table-earning">
-                                        <thead>
-                                            <tr>
-                                                <th>serial Number</th>
-                                                <th>name</th>
-                                                <th class="text-right">Brand</th>
-                                                <th class="text-right">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr onclick="location.href = 'detail.html';">
-                                                <td>4CE0460D0G</td>
-                                                <td>iPhone X 64Gb Grey</td>
-                                                <td class="text-right">Apple</td>
-                                                <td class="text-right">
-                                                    <span class="status--process">Ready</span>
-                                                </td>
-                                            </tr>
-                                            <tr onclick="location.href = 'detail.html';">
-                                                <td>4CE0460D0G</td>
-                                                <td>Samsung S8 Black</td>
-                                                <td class="text-right">SamSung</td>
-                                                <td class="text-right">
-                                                    <span class="status--process">Ready</span>
-                                                </td>
-                                            </tr>
-                                            <tr onclick="location.href = 'detail.html';">
-                                                <td>4CE0460D0G</td>
-                                                <td>Sony Xperia XZ (2017)</td>
-                                                <td class="text-right">Sony</td>
-                                                <td class="text-right">
-                                                    <span class="status--denied">Denied</span>
-                                                </td>
-                                            </tr>
-                                            <tr onclick="location.href = 'detail.html';">
-                                                <td>4CE0460D0G</td>
-                                                <td>iPhone 6s White</td>
-                                                <td class="text-right">Apple</td>
-                                                <td class="text-right">
-                                                    <span class="status--process">Ready</span>
-                                                </td>
-                                            </tr>
-                                            <tr onclick="location.href = 'detail.html';">
-                                                <td>4CE0460D0G</td>
-                                                <td>SamSung Glaxy A7</td>
-                                                <td class="text-right">SamSung</td>
-                                                <td class="text-right">
-                                                    <span class="status--denied">Denied</span>
-                                                </td>
-                                            </tr>
-                                            <tr onclick="location.href = 'detail.html';">
-                                                <td>4CE0460D0G</td>
-                                                <td>Xiaomi Redmi Note7 </td>
-                                                <td class="text-right">Redmi</td>
-                                                <td class="text-right">
-                                                        <span class="status--process">Ready</span>
-                                                </td>
-                                            </tr>
-                                            <tr onclick="location.href = 'detail.html';">
-                                                <td>4CE0460D0G</td>
-                                                <td>Macbook Air 2018</td>
-                                                <td class="text-right">Apple</td>
-                                                <td class="text-right">
-                                                    <span class="status--denied">Denied</span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="table-responsive m-b-40">
+                                            <table class="table table-borderless table-striped table-earning" >
+                                                <thead>
+                                                    <tr>
+                                                        <th>Hình ảnh</th>
+                                                        <th>Mã Máy</th>
+                                                        <th>Tên</th>
+                                                        <th>Thương hiệu</th>
+                                                        <th>Trạng thái</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr onclick="location.href = 'detail.html';">
+                                                        <td class="pht">
+                                                            <div class="img" style="background-image: url('https://images.fpt.shop/unsafe/fit-in/465x465/filters:quality(90):fill(white)/cdn.fptshop.com.vn/Uploads/Originals/2017/12/8/636483223586180190_3.jpg')">
+                                                                <img src="https://images.fpt.shop/unsafe/fit-in/465x465/filters:quality(90):fill(white)/cdn.fptshop.com.vn/Uploads/Originals/2017/12/8/636483223586180190_3.jpg"/>
+                                                            </div>
+                                                        </td>
+                                                        <td>4CE0460D0G</td>
+                                                        <td>iPhone X 64Gb Grey</td>
+                                                        <td>Aplpe</td>
+                                                        <td class="process">Processed</td>
+                                                    </tr>
+                                                    <tr onclick="location.href = 'detail.html';">
+                                                        <td class="pht">
+                                                            <div class="img" style="background-image: url('https://www.spark.co.nz/content/dam/telecomcms/responsive/images/shop/mobile/note8-gwp/s8-foreground-465x465.png')">
+                                                                <img src="https://www.spark.co.nz/content/dam/telecomcms/responsive/images/shop/mobile/note8-gwp/s8-foreground-465x465.png"/>
+                                                            </div>
+                                                        </td>
+                                                        <td>4CE0460D0G</td>
+                                                        <td>Samsung S8 Black</td>
+                                                        <td>Samsung</td>
+                                                        <td class="process">Processed</td>
+                                                    </tr>
+                                                    <tr onclick="location.href = 'detail.html';">
+                                                        <td class="pht">
+                                                            <div class="img" style="background-image: url('https://images.fpt.shop/unsafe/fit-in/465x465/filters:quality(90):fill(white)/cdn.fptshop.com.vn/Uploads/Originals/2018/12/21/636809860721137664_nokia81-xanh-1.png')">
+                                                                <img src="https://images.fpt.shop/unsafe/fit-in/465x465/filters:quality(90):fill(white)/cdn.fptshop.com.vn/Uploads/Originals/2018/12/21/636809860721137664_nokia81-xanh-1.png"/>
+                                                            </div>
+                                                        </td>
+                                                        <td>4CE0460D0G</td>
+                                                        <td>Nokia 8</td>
+                                                        <td>Nokia</td>
+                                                        <td class="denied">Denied</td>
+                                                    </tr>
+                                                    <tr onclick="location.href = 'detail.html';">
+                                                        <td class="pht">
+                                                            <div class="img" style="background-image: url('https://i.ebayimg.com/00/s/NDY1WDQ2NQ==/z/LFwAAOSwo6NcLsGE/$_85.JPG')">
+                                                                <img src="https://i.ebayimg.com/00/s/NDY1WDQ2NQ==/z/LFwAAOSwo6NcLsGE/$_85.JPG"/>
+                                                            </div>
+                                                        </td>
+                                                        <td>4CE0460D0G</td>
+                                                        <td>iPhone X 256Gb Black</td>
+                                                        <td>Apple</td>
+                                                        <td class="denied">Denied</td>
+                                                    </tr>
+                                                    <tr onclick="location.href = 'detail.html';">
+                                                        <td class="pht">
+                                                            <div class="img" style="background-image: url('https://images.fpt.shop/unsafe/fit-in/465x465/filters:quality(90):fill(white)/cdn.fptshop.com.vn/Uploads/Originals/2019/3/13/636880674505593656_xiaomi-redmi-note-7-pro-1.png')">
+                                                                <img src="https://images.fpt.shop/unsafe/fit-in/465x465/filters:quality(90):fill(white)/cdn.fptshop.com.vn/Uploads/Originals/2019/3/13/636880674505593656_xiaomi-redmi-note-7-pro-1.png"/>
+                                                            </div>
+                                                        </td>
+                                                        <td>4CE0460D0G</td>
+                                                        <td>Xaomi Note7</td>
+                                                        <td>Xaomi</td>
+                                                        <td class="process">Processed</td>
+                                                    </tr>
+                                                    <tr onclick="location.href = 'detail.html';">
+                                                        <td class="pht">
+                                                            <div class="img" style="background-image: url('https://images.fpt.shop/unsafe/fit-in/465x465/filters:quality(90):fill(white)/cdn.fptshop.com.vn/Uploads/Originals/2018/12/18/636807370304485577_nova-3-tim-1.png')">
+                                                                <img src="https://images.fpt.shop/unsafe/fit-in/465x465/filters:quality(90):fill(white)/cdn.fptshop.com.vn/Uploads/Originals/2018/12/18/636807370304485577_nova-3-tim-1.png"/>
+                                                            </div>
+                                                        </td>
+                                                        <td>4CE0460D0G</td>
+                                                        <td>Huawei Nova 3i </td>
+                                                        <td>Huawei</td>
+                                                        <td class="denied">Denied</td>
+                                                    </tr>
+                                                    <tr onclick="location.href = 'detail.html';">
+                                                        <td class="pht">
+                                                            <div class="img" style="background-image: url('https://cdn.tgdd.vn/Products/Images/42/188963/huawei-mate-20-pro-purple-400x460.png')">
+                                                                <img src="https://cdn.tgdd.vn/Products/Images/42/188963/huawei-mate-20-pro-purple-400x460.png"/>
+                                                            </div>
+                                                        </td>
+                                                        <td>4CE0460D0G</td>
+                                                        <td>Huawei Mate Pro</td>
+                                                        <td>Huawei</td>
+                                                        <td class="process">Processed</td>
+                                                    </tr>
+                                                    <tr onclick="location.href = 'detail.html';">
+                                                        <td class="pht">
+                                                            <div class="img" style="background-image: url('http://applenama.com/upload/tour/123375851678.jpg')">
+                                                                <img src="http://applenama.com/upload/tour/123375851678.jpg"/>
+                                                            </div>
+                                                        </td>
+                                                        <td>4CE0460D0G</td>
+                                                        <td>Iphone 6 Plus</td>
+                                                        <td>Apple</td>
+                                                        <td class="process">Processed</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                 </div>
                             </div>
                         </div>
