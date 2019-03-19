@@ -116,7 +116,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/devices/addImage', ['controller' => 'Devices','action' => 'addImage']);
     $routes->connect('/devices/view/:id', ['controller' => 'Devices','action' => 'view']);
     $routes->connect('/devices/edit/:id', ['controller' => 'Devices','action' => 'edit']);
-    $routes->connect('/devices/delete/', ['controller' => 'Devices','action' => 'delete']);
+    $routes->connect('/devices/delete/:id', ['controller' => 'Devices','action' => 'delete']);
 
     //$routes->fallbacks(DashedRoute::class);
 });

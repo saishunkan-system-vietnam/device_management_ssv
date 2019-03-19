@@ -35,6 +35,7 @@ class DevicesController extends AppController
 
     public function index()
     {
+        //search
         $devicesTable = TableRegistry::get('Devices');
         $devices = $devicesTable->find('all');
         $this->responseApi($this->status,$this->data_name,$devices);
@@ -42,6 +43,7 @@ class DevicesController extends AppController
 
     public function view($id)
     {
+        //view by id
         $devicesTable = TableRegistry::get('Devices');
         $devices = $devicesTable->where(['id'=>$id])->first();
         $this->responseApi($this->status,$this->data_name,$devices);
@@ -52,6 +54,7 @@ class DevicesController extends AppController
 
     public function add()
     {
+        //add device info
         $devicesTable = TableRegistry::get('Devices');
         $devices = $devicesTable->newEntity();
         if($this->request->is('post')){
@@ -68,19 +71,22 @@ class DevicesController extends AppController
             $devices->update_time = $this->request->getData('update_time'); 
             $devices->is_deleted = $this->request->getData('is_deleted'); 
 
+            //validate
             $devices = $this->Devices->patchEntity($devices, $this->request->getData());
             
             if ($this->Devices->save($devices)) {
-                $message = 'Saved';
+                $this->responseApi($this->status,$this->data_name,$devices);
             } else {
                 $message = 'Error';
+                $this->responseApi($this->status,$this->data_name,$message);
             }
         }
-        $this->responseApi($this->status,$this->data_name,$message);
+        
     }
 
     public function addImage()
-    {   
+    {  
+        //add image devices
         $devicesTable = TableRegistry::get('Devices');
         $devices = $this->request->getData();
         $id = $devices['id'];
@@ -107,26 +113,21 @@ class DevicesController extends AppController
                         $uploadImage->is_delete = 0;
                         $filesTable->save($uploadImage);
                     }else {
-                        $this->payload['status'] = 'failed';
-                        $this->response->body(json_encode($this->payload));
+                        $message = "Unable to upload image, please try again!";
                     }
                 }else {
-                    $this->payload['status'] = 'failed';
-                    $this->response->body(json_encode($this->payload));
+                    $message = "Please choose an image has type like jpg, png,... to upload!";
                 }
             }else {
-                $this->payload['status'] = 'failed';
-                $this->response->body(json_encode($this->payload));
+                $message = "Please choose an image to upload!";
             }
         }
-        $this->responseApi($this->status,$this->data_name,$devices);
+        $this->responseApi($this->status,$this->data_name,$devices,$message);
     }
 
     public function edit($id)
     {
-        $devicesTable = TableRegistry::get('Devices');
-        $devices = $devicesTable->where(['id'=>$id])->first();
-
+        //edit
         $parent_id = $this->request->getData('parent_id');
         $id_cate = $this->request->getData('id_cate');
         $serial_number = $this->request->getData('serial_number');
@@ -141,7 +142,6 @@ class DevicesController extends AppController
         $is_deleted = $this->request->getData('is_deleted'); 
         $devicesTable = TableRegistry::get('Devices');
        
-    
         if ($this->request->is(['post', 'put'])) {
             $devices = $this->Devices->patchEntity($devices, $this->request->getData());
             if ($this->Devices->save($devices)) {
@@ -154,10 +154,11 @@ class DevicesController extends AppController
         $this->response->body(json_encode($this->payload));
     }
 
-    public function delete()
+    public function delete($id)
     {
+        //delete
         $devicesTable = TableRegistry::get('Devices');
-        $devices = $devicesTable->find('all');
+        $devices = $devicesTable->delete()->where(['id' => $id]);
         $message = "Deleted";
         $this->set([
             'message' => $message,
