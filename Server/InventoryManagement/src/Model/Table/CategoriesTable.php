@@ -7,6 +7,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\ORM\Rule\IsUnique;
 
+
 /**
  * Categories Model
  *
@@ -67,6 +68,7 @@ class CategoriesTable extends Table
             ->dateTime('update_time')
             ->allowEmptyDateTime('update_time');
 
+
         return $validator;
     }
 
@@ -76,5 +78,11 @@ class CategoriesTable extends Table
     public function buildRules(RulesChecker $rules){
         $rules->add($rules->isUnique(['category_name']));
         return $rules;
+        $validator
+            ->boolean('is_deleted')
+            ->requirePresence('is_deleted', 'create')
+            ->allowEmptyString('is_deleted', false);
+
+        return $validator;
     }
 }

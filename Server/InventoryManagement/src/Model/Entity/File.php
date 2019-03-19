@@ -4,16 +4,20 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Category Entity
+ * File Entity
  *
  * @property int $id
- * @property int|null $id_parent
- * @property string $category_name
+ * @property int $relate_id
+ * @property string $relate_name
+ * @property string $path
+ * @property string|null $type
  * @property \Cake\I18n\FrozenTime|null $created_time
  * @property \Cake\I18n\FrozenTime|null $update_time
  * @property bool $is_deleted
+ *
+ * @property \App\Model\Entity\Relate $relate
  */
-class Category extends Entity
+class File extends Entity
 {
 
     /**
@@ -26,10 +30,13 @@ class Category extends Entity
      * @var array
      */
     protected $_accessible = [
-        'id_parent' => true,
-        'category_name' => true,
+        'relate_id' => true,
+        'relate_name' => true,
+        'path' => true,
+        'type' => true,
         'created_time' => true,
         'update_time' => true,
-        'is_deleted' => true
+        'is_deleted' => true,
+        'relate' => true
     ];
 }

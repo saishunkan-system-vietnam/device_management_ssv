@@ -7,7 +7,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * File Model
+ * Files Model
  *
  * @property \App\Model\Table\RelatesTable|\Cake\ORM\Association\BelongsTo $Relates
  *
@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\File[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\File findOrCreate($search, callable $callback = null, $options = [])
  */
-class FileTable extends Table
+class FilesTable extends Table
 {
 
     /**
@@ -33,12 +33,13 @@ class FileTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('file');
+        $this->setTable('files');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Relates', [
-            'foreignKey' => 'relate_id'
+            'foreignKey' => 'relate_id',
+            'joinType' => 'INNER'
         ]);
     }
 
@@ -51,16 +52,18 @@ class FileTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->nonNegativeInteger('id')
             ->allowEmptyString('id', 'create');
 
         $validator
-            ->integer('relate_name')
-            ->allowEmptyString('relate_name');
+            ->scalar('relate_name')
+            ->maxLength('relate_name', 50)
+            ->requirePresence('relate_name', 'create')
+            ->allowEmptyString('relate_name', false);
 
         $validator
             ->scalar('path')
-            ->allowEmptyString('path');
+            ->requirePresence('path', 'create')
+            ->allowEmptyString('path', false);
 
         $validator
             ->scalar('type')
@@ -92,8 +95,6 @@ class FileTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['relate_id'], 'Relates'));
-
         return $rules;
     }
 }
