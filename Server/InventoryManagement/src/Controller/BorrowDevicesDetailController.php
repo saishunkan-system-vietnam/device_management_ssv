@@ -26,6 +26,7 @@ class BorrowDevicesDetailController extends AppController
         $borrowDevicesDetail = $this->paginate($this->BorrowDevicesDetail);
 
         //$this->set(compact('borrowDevicesDetail'));
+        
         $this->payload['payload']['borrowDevicesDetail'] = $borrowDevicesDetail;
         $this->response->body(json_encode($this->payload));
         return $this->response;
@@ -44,7 +45,7 @@ class BorrowDevicesDetailController extends AppController
             'contain' => ['BorrowDevices']
         ]);
 
-        $this->set('borrowDevicesDetail', $borrowDevicesDetail);
+        //$this->set('borrowDevicesDetail', $borrowDevicesDetail);
     }
 
     /**
@@ -65,7 +66,7 @@ class BorrowDevicesDetailController extends AppController
             $this->Flash->error(__('The borrow devices detail could not be saved. Please, try again.'));
         }
         $borrowDevices = $this->BorrowDevicesDetail->BorrowDevices->find('list', ['limit' => 200]);
-        $this->set(compact('borrowDevicesDetail', 'borrowDevices'));
+        //$this->set(compact('borrowDevicesDetail', 'borrowDevices'));
     }
 
     /**

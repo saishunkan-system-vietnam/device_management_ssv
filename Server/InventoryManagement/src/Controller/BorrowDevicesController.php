@@ -20,11 +20,105 @@ class BorrowDevicesController extends AppController
      */
     public function index()
     {
-
-        $borrowDevices = $this->paginate($this->BorrowDevices);
-
-        // $this->set(compact('borrowDevices'));
-        $this->payload['payload']['borrowDevices'] = $borrowDevices;
+        if($this->request->is('post')) {
+            $inputData = $this->request->getData();
+        }
+        elseif ($this->request->is('get')) {
+            $inputData = $this->request->getQuery(); 
+        }
+        $query = $this->BorrowDevices->find()->select(
+            [
+                'borrower_name' => 'u.user_name',
+                'name_device' => 'd.name',
+                'borrower_id',
+                'borrow_date',
+                'return_date',
+                'approved_date',
+                'delivery_date',
+                'status',
+                'handover' => 'hv.user_name',
+                'approved_name'=>'hv.user_name',
+                'full_name'=>'u.fullname'
+            ]
+        )
+        ->join([
+            'u'=>[
+                'table' => 'users',
+                'alias' => 'u',
+                'type' => 'LEFT',
+                'conditions' => 'BorrowDevices.borrower_id = u.id',
+            ],
+            'd'=>[
+                'table' => 'devices',
+                'alias' => 'd',
+                'type' => 'LEFT',
+                'conditions' => 'd.id = BorrowDevices.device_id'
+            ],
+            'hv'=>[
+                'table' => 'users',
+                'alias' => 'hv',
+                'type' => 'LEFT',
+                'conditions' => 'BorrowDevices.handover_id = u.id'
+            ],
+            'ap'=>[
+                'table' => 'users',
+                'alias' => 'ap',
+                'type' => 'LEFT',
+                'conditions' => 'BorrowDevices.approved_id = u.id'
+            ]
+            
+        ]);
+        if (!empty($inputData['user_name'])) {
+            $query->where(
+            [
+                'u.user_name LIKE' => "%".$inputData['user_name']."%"
+            ]
+            );
+        }
+        if (!empty($inputData['name'])){
+            $query->where(
+            [
+                'd.name LIKE' => "%".$inputData['name']."%"
+            ]
+            );
+        }
+        if (!empty($inputData['borrow_date'])){
+            $query->where(
+            [
+                'BorrowDevices.borrow_date LIKE' => "%".$inputData['borrow_date']."%"
+            ]
+            );
+        }
+        if (!empty($inputData['return_date'])){
+            $query->where(
+            [
+                'BorrowDevices.return_date LIKE' => "%".$inputData['return_date']."%"
+            ]
+            );
+        }
+        if (!empty($inputData['approved_date'])){
+            $query->where(
+            [
+                'BorrowDevices.approved_date LIKE' => "%".$inputData['approved_date']."%"
+            ]
+            );
+        }
+        if (!empty($inputData['delivery_date'])){
+            $query->where(
+            [
+                'BorrowDevices.delivery_date LIKE' => "%".$inputData['delivery_date']."%"
+            ]
+            );
+        }
+        if (!empty($inputData['status'])){
+            $query->where(
+            [
+                'BorrowDevices.status LIKE' => "%".$inputData['status']."%"
+            ]
+            );
+        }
+        //dd($query->all());
+        $this->payload['payload']['BorrowDevices'] = $query->all();
         $this->response->body(json_encode($this->payload));
         return $this->response;
     }
@@ -50,23 +144,26 @@ class BorrowDevicesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    // public function add()
-    // {
-    //     $borrowDevice = $this->BorrowDevices->newEntity();
-    //     if ($this->request->is('post')) {
-    //         $borrowDevice = $this->BorrowDevices->patchEntity($borrowDevice, $this->request->getData());
-    //         if ($this->BorrowDevices->save($borrowDevice)) {
-    //             $this->Flash->success(__('The borrow device has been saved.'));
+    public function add()
+    {
+        $borrowDevice = $this->BorrowDevices->newEntity();
+        if ($this->request->is('post')) {
+            $borrowDevice = $this->BorrowDevices->patchEntity($borrowDevice, $this->request->getData());
+            if ($this->BorrowDevices->save($borrowDevice)) {
+                $this->Flash->success(__('The borrow device has been saved.'));
 
-    //             return $this->redirect(['action' => 'index']);
-    //         }
-    //         $this->Flash->error(__('The borrow device could not be saved. Please, try again.'));
-    //     }
-    //     $borrowers = $this->BorrowDevices->Borrowers->find('list', ['limit' => 200]);
-    //     $approveds = $this->BorrowDevices->Approveds->find('list', ['limit' => 200]);
-    //     $handovers = $this->BorrowDevices->Handovers->find('list', ['limit' => 200]);
-    //     $this->set(compact('borrowDevice', 'borrowers', 'approveds', 'handovers'));
-    // }
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The borrow device could not be saved. Please, try again.'));
+        }
+        // $borrowers = $this->BorrowDevices->Borrowers->find('list', ['limit' => 200]);
+        // $approveds = $this->BorrowDevices->Approveds->find('list', ['limit' => 200]);
+        // $handovers = $this->BorrowDevices->Handovers->find('list', ['limit' => 200]);
+        //$this->set(compact('borrowDevice', 'borrowers', 'approveds', 'handovers'));
+        $this->payload['payload']['BorrowDevices'] = $borrowDevice;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
+    }
 
     /**
      * Edit method

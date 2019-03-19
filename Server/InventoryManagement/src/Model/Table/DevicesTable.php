@@ -36,7 +36,7 @@ class DevicesTable extends Table
         parent::initialize($config);
 
         $this->setTable('devices');
-        $this->setDisplayField('name');
+        $this->setDisplayField('name_device');
         $this->setPrimaryKey('id');
 
         // $this->belongsTo('ParentDevices', [

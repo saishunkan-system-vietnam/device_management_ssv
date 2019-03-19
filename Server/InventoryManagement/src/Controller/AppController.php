@@ -73,18 +73,5 @@ class AppController extends Controller
 
 
     }
-
-    public function responseApi($status = 'success', $data_name = 'data', $data = null) 
-    {
-        $this->payload = [
-            'status' => $status,
-            'payload' => [
-                $data_name => $data
-            ]
-        ];
-
-        $this->response->body(json_encode($this->payload));
-        return $this->response;
-    }
     
 }
