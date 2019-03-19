@@ -75,25 +75,30 @@ class DevicesTable extends Table
         $validator
             ->integer('id_cate')
             ->requirePresence('id_cate', 'create')
-            ->allowEmptyString('id_cate', false);
+            ->notEmpty('id_cate', 'This field is required!!!');
 
         $validator
             ->scalar('serial_number')
             ->maxLength('serial_number', 50)
             ->requirePresence('serial_number', 'create')
-            ->allowEmptyString('serial_number', false);
+            ->notEmpty('serial_number', 'This field is required!!!');
 
         $validator
             ->scalar('product_number')
             ->maxLength('product_number', 50)
             ->requirePresence('product_number', 'create')
-            ->allowEmptyString('product_number', false);
+            ->notEmpty('product_number', 'This field is required!!!');
 
         $validator
             ->scalar('name')
             ->maxLength('name', 100)
             ->requirePresence('name', 'create')
-            ->allowEmptyString('name', false);
+            ->notEmpty('name', 'This field is required!!!');
+        
+        $validator
+            ->integer('brand_id')
+            ->requirePresence('brand_id', 'create')
+            ->notEmpty('brand_id', 'This field is required!!!');
 
         $validator
             ->scalar('specifications')
@@ -121,8 +126,8 @@ class DevicesTable extends Table
         $validator
             ->boolean('is_deleted')
             ->requirePresence('is_deleted', 'create')
-            ->allowEmptyString('is_deleted', false);
-
+            ->notEmpty('is_deleted', 'This field is required!!!');
+            
         return $validator;
     }
 
@@ -135,8 +140,8 @@ class DevicesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['parent_id'], 'ParentDevices'));
-        $rules->add($rules->existsIn(['brand_id'], 'Brands'));
+        // $rules->add($rules->existsIn(['parent_id'], 'ParentDevices'));
+        // $rules->add($rules->existsIn(['brand_id'], 'Brands'));
 
         return $rules;
     }

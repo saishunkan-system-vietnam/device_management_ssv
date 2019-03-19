@@ -48,14 +48,15 @@ Router::defaultRouteClass(DashedRoute::class);
 Router::scope('/', function (RouteBuilder $routes) {
     // Register scoped middleware for in scopes.
     // $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
-    //     'httpOnly' => true
+    //    'httpOnly' => true
     // ]));
 
     /**
      * Apply a middleware to the current route scope.
      * Requires middleware to be registered via `Application::routes()` with `registerMiddleware()`
      */
-    //$routes->applyMiddleware('csrf');
+    // $routes->applyMiddleware('csrf');
+
 
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
@@ -63,6 +64,19 @@ Router::scope('/', function (RouteBuilder $routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+
+    /** Categories*/
+    $routes->connect('/categories/index', ['controller' => 'Categories', 'action' => 'index']);
+    $routes->connect('/categories/view/:id', ['controller' => 'Categories', 'action' => 'view']);
+    $routes->connect('/categories/edit/:id', ['controller' => 'Categories', 'action' => 'edit']);
+    $routes->connect('/categories/delete/:id', ['controller' => 'Categories', 'action' => 'delete']);
+    $routes->connect('/categories/add', ['controller' => 'Categories', 'action' => 'add']);
+    /** Brands*/
+    $routes->connect('/brand/index', ['controller' => 'Brands', 'action' => 'index']);
+    $routes->connect('/brand/view/:id', ['controller' => 'Brands', 'action' => 'view']);
+    $routes->connect('/brand/edit/:id', ['controller' => 'Brands', 'action' => 'edit']);
+    $routes->connect('/brand/delete', ['controller' => 'Brands', 'action' => 'delete']);
+    $routes->connect('/brand/add', ['controller' => 'Brands', 'action' => 'add']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
@@ -96,10 +110,13 @@ Router::scope('/', function (RouteBuilder $routes) {
      * routes you want in your application.
      */
     $routes->setExtensions(['json', 'xml']);
-    $routes->connect('/devices', ['controller' => 'Devices','action' => 'index']);
+    //Devices
+    $routes->connect('/devices/index', ['controller' => 'Devices','action' => 'index']);
     $routes->connect('/devices/add', ['controller' => 'Devices','action' => 'add']);
-    $routes->connect('/devices/view', ['controller' => 'Devices','action' => 'view']);
-
+    $routes->connect('/devices/addImage', ['controller' => 'Devices','action' => 'addImage']);
+    $routes->connect('/devices/view/:id', ['controller' => 'Devices','action' => 'view']);
+    $routes->connect('/devices/edit/:id', ['controller' => 'Devices','action' => 'edit']);
+    $routes->connect('/devices/delete/', ['controller' => 'Devices','action' => 'delete']);
 
     //$routes->fallbacks(DashedRoute::class);
 });

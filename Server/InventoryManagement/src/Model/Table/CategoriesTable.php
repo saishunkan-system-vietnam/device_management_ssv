@@ -5,6 +5,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\Rule\IsUnique;
+
 
 /**
  * Categories Model
@@ -73,4 +75,13 @@ class CategoriesTable extends Table
 
         return $validator;
     }
+
+    /**
+     *  Check category name unique
+     */
+    public function buildRules(RulesChecker $rules){
+        $rules->add($rules->isUnique(['category_name']));
+        return $rules;
+    }
+
 }
