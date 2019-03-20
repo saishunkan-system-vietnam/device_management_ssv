@@ -62,7 +62,6 @@ class BrandsController extends AppController
 
         $this->responseApi($this->status, $this->data_name, $brands);
     }
-
     /**
      * View method
      *

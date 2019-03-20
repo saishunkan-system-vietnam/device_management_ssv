@@ -47,7 +47,9 @@ class CategoriesController extends AppController
         ]);
 
         //$this->set('category', $category);
-        $this->payload['payload'] = $categories;
+        $this->payload['payload']['categories'] = $categories;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
     }
 
     /**
@@ -67,8 +69,9 @@ class CategoriesController extends AppController
             }
             $this->Flash->error(__('The category could not be saved. Please, try again.'));
         }
-        //$this->set(compact('category'));
-        $this->payload['payload'] = $categories;
+        $this->payload['payload']['categories'] = $categories;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
     }
 
     /**
@@ -93,7 +96,9 @@ class CategoriesController extends AppController
             $this->Flash->error(__('The category could not be saved. Please, try again.'));
         }
         //$this->set(compact('category'));
-        $this->payload['payload'] = $category;
+        $this->payload['payload']['categories'] = $categories;
+        $this->response->body(json_encode($this->payload));
+        return $this->response;
     }
 
     /**

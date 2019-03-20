@@ -37,16 +37,17 @@ class DevicesController extends AppController
     {
         //search
         $devicesTable = TableRegistry::get('Devices');
-        $devices = $devicesTable->find('all');
+        $devices = $devicesTable->find();
         $this->responseApi($this->status,$this->data_name,$devices);
     }
 
-    public function view($id)
+    public function view()
     {
         //view by id
         $devicesTable = TableRegistry::get('Devices');
-        $devices = $devicesTable->where(['id'=>$id])->first();
-        $this->responseApi($this->status,$this->data_name,$devices);
+        $devices = $devicesTable->find();
+        $view = $devices->where(['id'=>$id]);
+        $this->responseApi($this->status,$this->data_name,$devices,$view);
         // $this->payload['payload']['categories'] = $devices;
         // $this->response->body(json_encode($this->payload));
         
@@ -73,7 +74,6 @@ class DevicesController extends AppController
 
             //validate
             $devices = $this->Devices->patchEntity($devices, $this->request->getData());
-            
             if ($this->Devices->save($devices)) {
                 $this->responseApi($this->status,$this->data_name,$devices);
             } else {
@@ -125,25 +125,27 @@ class DevicesController extends AppController
         $this->responseApi($this->status,$this->data_name,$devices,$message);
     }
 
-    public function edit($id)
+    public function edit()
     {
         //edit
-        $parent_id = $this->request->getData('parent_id');
-        $id_cate = $this->request->getData('id_cate');
-        $serial_number = $this->request->getData('serial_number');
-        $product_number = $this->request->getData('product_number');
-        $name = $this->request->getData('name');
-        $brand_id = $this->request->getData('brand_id');
-        $specifications = $this->request->getData('specifications');
-        $status = $this->request->getData('status');
-        $warranty_period = $this->request->getData('warranty_period');  
-        $created_time = $this->request->getData('created_time'); 
-        $update_time = $this->request->getData('update_time'); 
-        $is_deleted = $this->request->getData('is_deleted'); 
         $devicesTable = TableRegistry::get('Devices');
-       
-        if ($this->request->is(['post', 'put'])) {
-            $devices = $this->Devices->patchEntity($devices, $this->request->getData());
+        $devices = $this->request->getData();
+        $id = $devices['id'];
+        if ($this->request->is('post')) {
+            $parent_id = $this->request->getData('parent_id');
+            $id_cate = $this->request->getData('id_cate');
+            $serial_number = $this->request->getData('serial_number');
+            $product_number = $this->request->getData('product_number');
+            $name = $this->request->getData('name');
+            $brand_id = $this->request->getData('brand_id');
+            $specifications = $this->request->getData('specifications');
+            $status = $this->request->getData('status');
+            $warranty_period = $this->request->getData('warranty_period');  
+            $created_time = $this->request->getData('created_time'); 
+            $update_time = $this->request->getData('update_time'); 
+            $is_deleted = $this->request->getData('is_deleted'); 
+            
+            //$devices = $this->Devices->patchEntity($devices, $this->request->getData());
             if ($this->Devices->save($devices)) {
                 $message = 'Saved';
             } else {
@@ -154,11 +156,17 @@ class DevicesController extends AppController
         $this->response->body(json_encode($this->payload));
     }
 
-    public function delete($id)
+    public function delete()
     {
         //delete
         $devicesTable = TableRegistry::get('Devices');
-        $devices = $devicesTable->delete()->where(['id' => $id]);
+        $devices = $this->request->getData();
+        $id = $devices['id'];
+        $is_deleted = $devices['is_deleted'];
+
+        $is_deleted = $devicesTable->update()->where(['id' => $id]);
+        
+
         $message = "Deleted";
         $this->set([
             'message' => $message,

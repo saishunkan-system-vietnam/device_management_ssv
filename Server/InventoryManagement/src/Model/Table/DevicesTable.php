@@ -40,7 +40,6 @@ class DevicesTable extends Table
         $this->setTable('devices');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
-
         $this->belongsTo('ParentDevices', [
             'className' => 'Devices',
             'foreignKey' => 'parent_id'
@@ -59,6 +58,18 @@ class DevicesTable extends Table
             'className' => 'Devices',
             'foreignKey' => 'parent_id'
         ]);
+        // $this->belongsTo('ParentDevices', [
+        //     'className' => 'Devices',
+        //     'foreignKey' => 'parent_id'
+        // ]);
+        // $this->belongsTo('Brands', [
+        //     'foreignKey' => 'brand_id',
+        //     'joinType' => 'INNER'
+        // ]);
+        // $this->hasMany('ChildDevices', [
+        //     'className' => 'Devices',
+        //     'foreignKey' => 'parent_id'
+        // ]);
     }
 
     /**
@@ -142,7 +153,6 @@ class DevicesTable extends Table
     {
         // $rules->add($rules->existsIn(['parent_id'], 'ParentDevices'));
         // $rules->add($rules->existsIn(['brand_id'], 'Brands'));
-
         return $rules;
     }
 }
