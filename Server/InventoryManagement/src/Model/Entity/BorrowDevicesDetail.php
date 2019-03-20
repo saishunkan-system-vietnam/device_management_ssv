@@ -36,7 +36,6 @@ class BorrowDevicesDetail extends Entity
      * @var array
      */
     protected $_accessible = [
-        'borrow_device_id' => true,
         'device_id' => true,
         'borrow_reason' => true,
         'return_reason' => true,
@@ -50,5 +49,6 @@ class BorrowDevicesDetail extends Entity
         'is_deleted' => true,
         'borrow_device' => true,
         'device' => true
+        'borrow_device' => true
     ];
 }

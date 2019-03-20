@@ -151,8 +151,7 @@ class DevicesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        // $rules->add($rules->existsIn(['parent_id'], 'ParentDevices'));
-        // $rules->add($rules->existsIn(['brand_id'], 'Brands'));
+
         return $rules;
     }
 }

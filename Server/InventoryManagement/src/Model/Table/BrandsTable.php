@@ -40,6 +40,9 @@ class BrandsTable extends Table
         $this->hasMany('Devices', [
             'foreignKey' => 'brand_id',
         ]);
+        // $this->hasMany('Devices', [
+        //     'foreignKey' => 'brand_id'
+        // ]);
     }
 
     /**

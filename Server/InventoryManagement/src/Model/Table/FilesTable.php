@@ -37,6 +37,10 @@ class FilesTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Relates', [
+            'foreignKey' => 'relate_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -91,7 +95,6 @@ class FilesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        
         return $rules;
     }
 }

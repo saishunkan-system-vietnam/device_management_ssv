@@ -40,7 +40,6 @@ class BorrowDevicesTable extends Table
         $this->setTable('borrow_devices');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
-
         $this->belongsTo('Borrowers', [
             'foreignKey' => 'borrower_id',
             'joinType' => 'INNER'
@@ -58,6 +57,20 @@ class BorrowDevicesTable extends Table
         $this->hasMany('BorrowDevicesDetail', [
             'foreignKey' => 'borrow_device_id'
         ]);
+
+        // $this->belongsTo('Borrowers', [
+        //     'foreignKey' => 'borrower_id',
+        //     'joinType' => 'INNER'
+        // ]);
+        // $this->belongsTo('Approveds', [
+        //     'foreignKey' => 'approved_id'
+        // ]);
+        // $this->belongsTo('Handovers', [
+        //     'foreignKey' => 'handover_id'
+        // ]);
+        // $this->hasMany('BorrowDevicesDetail', [
+        //     'foreignKey' => 'borrow_device_id'
+        // ]);
     }
 
     /**
@@ -124,13 +137,8 @@ class BorrowDevicesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['borrower_id'], 'Borrowers'));
-        $rules->add($rules->existsIn(['approved_id'], 'Approveds'));
-        $rules->add($rules->existsIn(['handover_id'], 'Handovers'));
-        $rules->add($rules->existsIn(['device_id'], 'Devices'));
-
-        return $rules;
-    }
+    // public function buildRules(RulesChecker $rules)
+    // {
+    //     return $rules;
+    // }
 }

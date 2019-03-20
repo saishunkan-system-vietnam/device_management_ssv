@@ -46,6 +46,10 @@ class BorrowDevicesDetailTable extends Table
             'foreignKey' => 'device_id',
             'joinType' => 'INNER'
         ]);
+        // $this->belongsTo('BorrowDevices', [
+        //     'foreignKey' => 'borrow_device_id',
+        //     'joinType' => 'INNER'
+        // ]);
     }
 
     /**
@@ -114,8 +118,7 @@ class BorrowDevicesDetailTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['borrow_device_id'], 'BorrowDevices'));
-        $rules->add($rules->existsIn(['device_id'], 'Devices'));
+        //$rules->add($rules->existsIn(['borrow_device_id'], 'BorrowDevices'));
 
         return $rules;
     }
