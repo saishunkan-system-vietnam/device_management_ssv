@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -54,18 +53,26 @@ class CategoriesTable extends Table
 
         $validator
             ->scalar('category_name')
-            ->maxLength('category_name', 100)
+            ->maxLength('category_name', 100, 'The category field cannot enter more than 100 characters')
             ->requirePresence('category_name', 'create')
             ->allowEmptyString('category_name', false);
 
         $validator
             ->scalar('created_user')
+<<<<<<< HEAD
             ->maxLength('created_user', 100)
+=======
+            ->maxLength('created_user', 100, 'The created user field cannot enter more than 100 characters')
+>>>>>>> 7cc7db5a112d82167b2216ec997f89989f49e082
             ->allowEmptyString('created_user');
 
         $validator
             ->scalar('update_user')
+<<<<<<< HEAD
             ->maxLength('update_user', 100)
+=======
+            ->maxLength('update_user', 100, 'The update user field cannot enter more than 100 characters')
+>>>>>>> 7cc7db5a112d82167b2216ec997f89989f49e082
             ->allowEmptyString('update_user');
 
         $validator
@@ -76,11 +83,18 @@ class CategoriesTable extends Table
             ->dateTime('update_time')
             ->allowEmptyDateTime('update_time');
 
-        $validator
-            ->boolean('is_deleted')
-            ->requirePresence('is_deleted', 'create')
-            ->allowEmptyString('is_deleted', false);
-
         return $validator;
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Check unique category name
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['category_name']));
+        return $rules;
+    }
+>>>>>>> 7cc7db5a112d82167b2216ec997f89989f49e082
 }

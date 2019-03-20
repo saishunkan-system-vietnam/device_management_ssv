@@ -56,18 +56,26 @@ class BrandsTable extends Table
 
         $validator
             ->scalar('brand_name')
-            ->maxLength('brand_name', 100)
+            ->maxLength('brand_name', 100, 'The brand name field cannot enter more than 100 characters')
             ->requirePresence('brand_name', 'create')
             ->allowEmptyString('brand_name', false);
 
         $validator
             ->scalar('created_user')
+<<<<<<< HEAD
             ->maxLength('created_user', 100)
+=======
+            ->maxLength('created_user', 100, 'The created user field cannot enter more than 100 characters')
+>>>>>>> 7cc7db5a112d82167b2216ec997f89989f49e082
             ->allowEmptyString('created_user');
 
         $validator
             ->scalar('update_user')
+<<<<<<< HEAD
             ->maxLength('update_user', 100)
+=======
+            ->maxLength('update_user', 100, 'The update user field cannot enter more than 100 characters')
+>>>>>>> 7cc7db5a112d82167b2216ec997f89989f49e082
             ->allowEmptyString('update_user');
 
         $validator
@@ -83,6 +91,16 @@ class BrandsTable extends Table
             ->requirePresence('is_deleted', 'create')
             ->allowEmptyString('is_deleted', false);
 
+<<<<<<< HEAD
         return $validator;
+=======
+    /**
+     * Check unique brand name
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['brand_name']));
+        return $rules;
+>>>>>>> 7cc7db5a112d82167b2216ec997f89989f49e082
     }
 }
