@@ -2,7 +2,6 @@
 namespace App\Model\Table;
 
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Rule\IsUnique;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -40,9 +39,6 @@ class BrandsTable extends Table
         $this->hasMany('Devices', [
             'foreignKey' => 'brand_id',
         ]);
-        // $this->hasMany('Devices', [
-        //     'foreignKey' => 'brand_id'
-        // ]);
     }
 
     /**
@@ -59,9 +55,19 @@ class BrandsTable extends Table
 
         $validator
             ->scalar('brand_name')
-            ->maxLength('brand_name', 100)
+            ->maxLength('brand_name', 100, 'The brand name field cannot enter more than 100 characters')
             ->requirePresence('brand_name', 'create')
             ->allowEmptyString('brand_name', false);
+
+        $validator
+            ->scalar('created_user')
+            ->maxLength('created_user', 100, 'The created user field cannot enter more than 100 characters')
+            ->allowEmptyString('created_user');
+
+        $validator
+            ->scalar('update_user')
+            ->maxLength('update_user', 100, 'The update user field cannot enter more than 100 characters')
+            ->allowEmptyString('update_user');
 
         $validator
             ->dateTime('created_time')
@@ -75,7 +81,7 @@ class BrandsTable extends Table
     }
 
     /**
-     *  Check brand name unique
+     * Check unique brand name
      */
     public function buildRules(RulesChecker $rules)
     {
