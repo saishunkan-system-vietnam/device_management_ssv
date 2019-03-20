@@ -29,7 +29,7 @@ class AppController extends Controller
 {
 
     const PAGE = 1;
-    const PERPAGE = 1;
+    const PERPAGE = 10;
 
     public $payload = '';
 
@@ -54,7 +54,9 @@ class AppController extends Controller
             'status' => 'sucsess',
         ];
 
-        if ($this->getRequest()->getData('perpage') != null) {
+        if ($this->getRequest()->getQuery('perpage') != null) {
+            $this->perpage = $this->getRequest()->getQuery('perpage');
+        } elseif ($this->getRequest()->getData('perpage') != null) {
             $this->perpage = $this->getRequest()->getData('perpage');
         } else {
             $this->perpage = self::PERPAGE;
@@ -96,18 +98,16 @@ class AppController extends Controller
 
     }
 
-    public function responseApi($status = 'success', $data_name = 'data', $data = null)
+    public function responseApi($status = 'success', $data_name = 'data', $data = null, $count = null)
     {
         $this->payload = [
             'status' => $status,
             'payload' => [
                 $data_name => $data,
+                'record_all' => $count
             ],
         ];
 
-        //$this->response->withBody(json_encode($this->payload));
-        //return $this->response->body(new Body($this->payload));
-        //return $this->response;
         $body = $this->response->getBody();
         $body->write(json_encode($this->payload));
         return $this->response->withBody($body);

@@ -41,7 +41,6 @@ class BrandsController extends AppController
         $this->data_name = 'brands';
 
         $this->loadModel('Devices');
-
     }
 
     /**
@@ -57,20 +56,22 @@ class BrandsController extends AppController
 
         if ($this->request->is('post')) {
             $inputData = $this->getRequest()->getData();
-
         } elseif ($this->request->is('get')) {
             $inputData = $this->getRequest()->getQuery();
         }
-
+        $condition = ['is_deleted' => 0];
         $brands = $this->Brands->find();
+        $brands_quantity = $this->Brands->find()->select(['count' => 'count(1)']);
         if (isset($inputData['brand_name']) && !empty($inputData['brand_name'])) {
-            $brands->where(['brand_name Like' => '%' . trim($inputData['brand_name']) . '%']);
+            array_push($condition, ['brand_name Like' => '%' . trim($inputData['brand_name']) . '%']);
         }
-        $brands->where(['is_deleted' => 0]);
-        $brands->limit($this->perpage)
-            ->page($this->page);
+        $brands->where($condition)
+            ->limit($this->perpage)
+            ->page($this->page)
+            ->order(['id' => 'DESC']);
+        $brands_quantity->where($condition);
 
-        $this->responseApi($this->status, $this->data_name, $brands);
+        $this->responseApi($this->status, $this->data_name, $brands, $brands_quantity);
     }
 
     /**
@@ -82,7 +83,7 @@ class BrandsController extends AppController
      */
     public function view($id = null)
     {
-        $id = $this->getRequest()->param('id');
+        $id = $this->getRequest()->getParam('id');
 
         $brand = $this->Brands
             ->find()
@@ -97,7 +98,6 @@ class BrandsController extends AppController
         }
 
         $this->responseApi($this->status, $this->data_name, $brand);
-
     }
 
     /**
@@ -111,7 +111,7 @@ class BrandsController extends AppController
         $this->request->allowMethod(['post']);
 
         $inputData['brand_name'] = trim($this->request->getData('brand_name'));
-        $inputData['created_user'] = 'zin';
+        $inputData['created_user'] = 'brand';
         $brand = $this->Brands->newEntity();
         $brand = $this->Brands->patchEntity($brand, $inputData);
         if ($data = $this->Brands->save($brand)) {
@@ -125,7 +125,7 @@ class BrandsController extends AppController
         } else {
             $this->status = 'fail';
             $this->data_name = 'error';
-            $category = $category->errors();
+            $category = $category->getErrors();
         }
 
         $this->responseApi($this->status, $this->data_name, $brand);
@@ -143,7 +143,7 @@ class BrandsController extends AppController
         // Only accept PATCH POST and PUT requests
         $this->request->allowMethod(['patch', 'post', 'put']);
 
-        $id = $this->getRequest()->param('id');
+        $id = $this->getRequest()->getParam('id');
 
         $brand = $this->Brands
             ->find()
@@ -154,7 +154,7 @@ class BrandsController extends AppController
         //Check exist brand
         if ($brand) {
             $inputData['brand_name'] = trim($this->request->getData('brand_name'));
-            $inputData['update_user'] = 'zin';
+            $inputData['update_user'] = 'brand';
             $inputData['update_time'] = Time::now();
             $brand = $this->Brands->patchEntity($brand, $inputData);
             if ($this->Brands->save($brand)) {
@@ -167,7 +167,7 @@ class BrandsController extends AppController
             } else {
                 $this->status = 'fail';
                 $this->data_name = 'error';
-                $category = $category->errors();
+                $category = $category->getErrors();
             }
         } else {
             $this->data_name = 'message';
@@ -189,7 +189,7 @@ class BrandsController extends AppController
         // Only accept POST and GET requests
         $this->request->allowMethod(['delete', 'post']);
 
-        $id = $this->getRequest()->param('id');
+        $id = $this->getRequest()->getParam('id');
 
         $brand = $this->Brands
             ->find()
@@ -208,7 +208,7 @@ class BrandsController extends AppController
             // Check there are device that are using brand
             if ($devices->count() == 0) {
                 $brand->is_deleted = (int) 1;
-                $category->update_user = 'zin';
+                $category->update_user = 'brand';
                 $brand->update_time = Time::now();
                 if ($this->Brands->save($brand)) {
                     $data_name = 'message';

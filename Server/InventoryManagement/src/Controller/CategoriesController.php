@@ -68,18 +68,17 @@ class CategoriesController extends AppController
         } elseif ($this->request->is('get')) {
             $inputData = $this->getRequest()->getQuery();
         }
-
+        $condition = ['is_deleted' => 0];
         $categories = $this->Categories->find();
-        if (isset($inputData['id_parent']) &&
-            !empty($inputData['id_parent']) &&
-            isset($inputData['children_flg']) &&
-            $inputData['children_flg'] != 1) {
-            $categories->where(['id_parent' => trim($inputData['id_parent'])]);
+        $categories_quantity = $this->Categories->find()->select(['count' => 'count(1)']);
+
+        if (isset($inputData['id_parent']) && $inputData['id_parent'] != null &&
+            isset($inputData['children_flg']) && $inputData['children_flg'] != 1) {
+            array_push($condition, ['id_parent' => trim($inputData['id_parent'])]);
         }
         if (isset($inputData['category_name']) && !empty($inputData['category_name'])) {
-            $categories->where(['category_name LIKE ' => '%' . trim($inputData['category_name']) . '%']);
+            array_push($condition, ['category_name LIKE ' => '%' . trim($inputData['category_name']) . '%']);
         }
-        $categories->where(['is_deleted' => 0]);
 
         if (isset($inputData['children_flg']) && $inputData['children_flg'] == 1) {
             $id_parent = [];
@@ -90,13 +89,16 @@ class CategoriesController extends AppController
                 array_push($id_parent, $category->id);
             }
 
-            $categories->where(['id_parent IN' => $id_parent]);
+            array_push($condition, ['id_parent IN' => $id_parent]);
         }
 
-        $categories->limit($this->perpage)
-            ->page($this->page);
+        $categories->where($condition)
+            ->limit($this->perpage)
+            ->page($this->page)
+            ->order(['id' => 'DESC']);
+        $categories_quantity->where($condition);
 
-        $this->responseApi($this->status, $this->data_name, $categories);
+        $this->responseApi($this->status, $this->data_name, $categories, $categories_quantity);
 
     }
 
@@ -109,7 +111,7 @@ class CategoriesController extends AppController
      */
     public function view($id = null)
     {
-        $id = $this->getRequest()->param('id');
+        $id = $this->getRequest()->getParam('id');
 
         $category = $this->Categories
             ->find()
@@ -138,11 +140,11 @@ class CategoriesController extends AppController
 
         $inputData['id_parent'] = trim($this->request->getData('id_parent'));
         $inputData['category_name'] = trim($this->request->getData('category_name'));
-        $inputData['created_user'] = 'zin';
+        $inputData['created_user'] = 'category';
 
         $category = $this->Categories->newEntity();
         $category = $this->Categories->patchEntity($category, $inputData);
-        
+
         if ($data = $this->Categories->save($category)) {
             $id = $data->id;
             $category = $this->Categories
@@ -154,7 +156,7 @@ class CategoriesController extends AppController
         } else {
             $this->status = 'fail';
             $this->data_name = 'error';
-            $category = $category->errors();
+            $category = $category->getErrors();
         }
 
         $this->responseApi($this->status, $this->data_name, $category);
@@ -172,7 +174,7 @@ class CategoriesController extends AppController
         // Only accept PATCH POST and PUT requests
         $this->request->allowMethod(['patch', 'post', 'put']);
 
-        $id = $this->getRequest()->param('id');
+        $id = $this->getRequest()->getParam('id');
 
         $category = $this->Categories
             ->find()
@@ -184,7 +186,7 @@ class CategoriesController extends AppController
         if ($category) {
             $inputData['id_parent'] = trim($this->request->getData('id_parent'));
             $inputData['category_name'] = trim($this->request->getData('category_name'));
-            $inputData['update_user'] = 'zin';
+            $inputData['update_user'] = 'category';
             $inputData['update_time'] = Time::now();
             $category = $this->Categories->patchEntity($category, $inputData);
             if ($this->Categories->save($category)) {
@@ -197,7 +199,7 @@ class CategoriesController extends AppController
             } else {
                 $this->status = 'fail';
                 $this->data_name = 'error';
-                $category = $category->errors();
+                $category = $category->getErrors();
             }
         } else {
             $this->data_name = 'message';
@@ -219,7 +221,7 @@ class CategoriesController extends AppController
         // Only accept POST and GET requests
         $this->request->allowMethod(['delete', 'post']);
 
-        $id = $this->getRequest()->param('id');
+        $id = $this->getRequest()->getParam('id');
 
         $category = $this->Categories
             ->find()
@@ -238,7 +240,7 @@ class CategoriesController extends AppController
             // Check there are device that are using this category
             if ($devices->count() == 0) {
                 $category->is_deleted = (int) 1;
-                $category->update_user = 'zin';
+                $category->update_user = 'category';
                 $category->update_time = Time::now();
                 if ($this->Categories->save($category)) {
                     $data_name = 'message';
