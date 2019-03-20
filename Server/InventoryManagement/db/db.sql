@@ -5,36 +5,42 @@ use inventory_management;
 CREATE TABLE IF NOT EXISTS devices (
   id                        BIGINT unsigned NOT NULL AUTO_INCREMENT,
   parent_id                 BIGINT DEFAULT 0,
-  id_cate         INT NOT NULL,
+  id_cate					INT NOT NULL,
   serial_number             VARCHAR(50) NOT NULL,
-  product_number      VARCHAR(50) NOT NULL,
+  product_number			VARCHAR(50) DEFAULT '' NOT NULL,
   name                      VARCHAR(100) NOT NULL,
   brand_id                  INT NOT NULL,
   specifications            TEXT,
   status                    TINYINT DEFAULT 0,
   stock_date                DATETIME DEFAULT CURRENT_TIMESTAMP,
   warranty_period           DATETIME,
-  created_time            DATETIME DEFAULT CURRENT_TIMESTAMP,
-  update_time             DATETIME DEFAULT CURRENT_TIMESTAMP,
+  created_user          	VARCHAR(100) DEFAULT '',
+  update_time           	VARCHAR(100) DEFAULT '',
+  created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
+  update_time           	DATETIME DEFAULT CURRENT_TIMESTAMP,
   is_deleted                BOOLEAN NOT NULL DEFAULT FALSE,
   primary key(id)
 );
 
 CREATE TABLE IF NOT EXISTS brands (
   id                        INT unsigned NOT NULL AUTO_INCREMENT,
-  brand_name            VARCHAR(100) NOT NULL,
-  created_time            DATETIME DEFAULT CURRENT_TIMESTAMP,
-  update_time             DATETIME DEFAULT CURRENT_TIMESTAMP,
+  brand_name       			VARCHAR(100) NOT NULL,
+  created_user          	VARCHAR(100) DEFAULT '',
+  update_time           	VARCHAR(100) DEFAULT '',
+  created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
+  update_time           	DATETIME DEFAULT CURRENT_TIMESTAMP,
   is_deleted                BOOLEAN NOT NULL DEFAULT FALSE,
   primary key(id)
 );
 
 CREATE TABLE IF NOT EXISTS categories(
   id                        INT unsigned NOT NULL AUTO_INCREMENT,
-  id_parent         INT,
+  id_parent 				INT,
   category_name             VARCHAR(100) NOT NULL,
-  created_time            DATETIME DEFAULT CURRENT_TIMESTAMP,
-  update_time             DATETIME DEFAULT CURRENT_TIMESTAMP,
+  created_user          	VARCHAR(100) DEFAULT '',
+  update_time           	VARCHAR(100) DEFAULT '',
+  created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
+  update_time           	DATETIME DEFAULT CURRENT_TIMESTAMP,
   is_deleted                BOOLEAN NOT NULL DEFAULT FALSE,
   primary key(id)
 );
@@ -42,10 +48,13 @@ CREATE TABLE IF NOT EXISTS categories(
 CREATE TABLE IF NOT EXISTS users (
   id                        INT unsigned NOT NULL AUTO_INCREMENT,
   user_name                 VARCHAR(100) NOT NULL,
+  full_name                 VARCHAR(255) NOT NULL,
   position                  VARCHAR(100) NOT NULL,
   level                     INT,
-  created_time            DATETIME DEFAULT CURRENT_TIMESTAMP,
-  update_time             DATETIME DEFAULT CURRENT_TIMESTAMP,
+  created_user          	VARCHAR(100) DEFAULT '',
+  update_time           	VARCHAR(100) DEFAULT '',
+  created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
+  update_time           	DATETIME DEFAULT CURRENT_TIMESTAMP,
   is_deleted                BOOLEAN NOT NULL DEFAULT FALSE,
   primary key(id)
 );
@@ -56,12 +65,15 @@ CREATE TABLE IF NOT EXISTS files (
   relate_name               VARCHAR(50) NOT NULL,
   path                      TEXT NOT NULL,
   type                      VARCHAR(50),
-  created_time            DATETIME DEFAULT CURRENT_TIMESTAMP,
-  update_time             DATETIME DEFAULT CURRENT_TIMESTAMP,
+  created_user          	VARCHAR(100) DEFAULT '',
+  update_time           	VARCHAR(100) DEFAULT '',
+  created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
+  update_time           	DATETIME DEFAULT CURRENT_TIMESTAMP,
   is_deleted                BOOLEAN NOT NULL DEFAULT FALSE,
   primary key(id)
 );
-CREATE TABLE IF NOT EXISTS borrow_details (
+
+CREATE TABLE IF NOT EXISTS borrow_devices (
   id                        BIGINT unsigned NOT NULL AUTO_INCREMENT,
   borrower_id               INT NOT NULL,
   approved_id               INT,
@@ -73,8 +85,29 @@ CREATE TABLE IF NOT EXISTS borrow_details (
   approved_date             DATETIME,
   delivery_date             DATETIME,
   return_date               DATETIME NOT NULL,
-  created_time            DATETIME DEFAULT CURRENT_TIMESTAMP,
-  update_time             DATETIME DEFAULT CURRENT_TIMESTAMP,
+  created_user          	VARCHAR(100) DEFAULT '',
+  update_time           	VARCHAR(100) DEFAULT '',
+  created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
+  update_time           	DATETIME DEFAULT CURRENT_TIMESTAMP,
+  is_deleted                BOOLEAN NOT NULL DEFAULT FALSE,
+  primary key(id)
+)
+
+CREATE TABLE IF NOT EXISTS borrow_devices_detail (
+  id                        BIGINT unsigned NOT NULL AUTO_INCREMENT,
+  borrow_device_id          BIGINT NOT NULL,
+  device_id                 BIGINT NOT NULL,
+  borrow_reason             TEXT,
+  return_reason             TEXT,
+  status                    INT,
+  borrow_date               DATETIME NOT NULL,
+  approved_date             DATETIME,
+  delivery_date             DATETIME,
+  return_date               DATETIME NOT NULL,
+  created_user          	VARCHAR(100) DEFAULT '',
+  update_time           	VARCHAR(100) DEFAULT '',
+  created_time          	DATETIME DEFAULT CURRENT_TIMESTAMP,
+  update_time           	DATETIME DEFAULT CURRENT_TIMESTAMP,
   is_deleted                BOOLEAN NOT NULL DEFAULT FALSE,
   primary key(id)
 )
