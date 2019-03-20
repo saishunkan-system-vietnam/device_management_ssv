@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\DevicesTable|\Cake\ORM\Association\BelongsTo $ParentDevices
  * @property \App\Model\Table\BrandsTable|\Cake\ORM\Association\BelongsTo $Brands
- * @property \App\Model\Table\BorrowDevicesTable|\Cake\ORM\Association\HasMany $BorrowDevices
  * @property \App\Model\Table\BorrowDevicesDetailTable|\Cake\ORM\Association\HasMany $BorrowDevicesDetail
  * @property \App\Model\Table\DevicesTable|\Cake\ORM\Association\HasMany $ChildDevices
  *
@@ -40,6 +39,7 @@ class DevicesTable extends Table
         $this->setTable('devices');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+
         $this->belongsTo('ParentDevices', [
             'className' => 'Devices',
             'foreignKey' => 'parent_id'
@@ -48,24 +48,9 @@ class DevicesTable extends Table
             'foreignKey' => 'brand_id',
             'joinType' => 'INNER'
         ]);
-        $this->hasMany('BorrowDevices', [
-            'foreignKey' => 'device_id'
-        ]);
         $this->hasMany('BorrowDevicesDetail', [
             'foreignKey' => 'device_id'
         ]);
-        $this->hasMany('ChildDevices', [
-            'className' => 'Devices',
-            'foreignKey' => 'parent_id'
-        ]);
-        // $this->belongsTo('ParentDevices', [
-        //     'className' => 'Devices',
-        //     'foreignKey' => 'parent_id'
-        // ]);
-        // $this->belongsTo('Brands', [
-        //     'foreignKey' => 'brand_id',
-        //     'joinType' => 'INNER'
-        // ]);
         // $this->hasMany('ChildDevices', [
         //     'className' => 'Devices',
         //     'foreignKey' => 'parent_id'
@@ -81,35 +66,36 @@ class DevicesTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
+            ->integer('id')
             ->allowEmptyString('id', 'create');
 
         $validator
-            ->integer('id_cate')
+            ->integer('id_cate', 'Only use number in this field!!!')
             ->requirePresence('id_cate', 'create')
-            ->notEmpty('id_cate', 'This field is required!!!');
+            ->allowEmptyString('id_cate', false , 'The field is not allowed to be empty!!!');
+
+        $validator
+            ->integer('parent_id', 'Only use number in this field!!!')
+            ->requirePresence('parent_id', 'create')
+            ->allowEmptyString('parent_id', true);
 
         $validator
             ->scalar('serial_number')
-            ->maxLength('serial_number', 50)
+            ->maxLength('serial_number', 50, 'Serial number is not longer than 50 charater!!!')
             ->requirePresence('serial_number', 'create')
-            ->notEmpty('serial_number', 'This field is required!!!');
+            ->allowEmptyString('serial_number', false, 'The field is not allowed to be empty!!!');
 
         $validator
             ->scalar('product_number')
-            ->maxLength('product_number', 50)
+            ->maxLength('product_number', 50, 'Product number is not longer than 50 charater!!!')
             ->requirePresence('product_number', 'create')
-            ->notEmpty('product_number', 'This field is required!!!');
+            ->allowEmptyString('product_number', false, 'The field is not allowed to be empty!!!');
 
         $validator
             ->scalar('name')
-            ->maxLength('name', 100)
+            ->maxLength('name', 100 , 'Name is not longer than 100 charater!!!')
             ->requirePresence('name', 'create')
-            ->notEmpty('name', 'This field is required!!!');
-        
-        $validator
-            ->integer('brand_id')
-            ->requirePresence('brand_id', 'create')
-            ->notEmpty('brand_id', 'This field is required!!!');
+            ->allowEmptyString('name', false, 'The field is not allowed to be empty!!!');
 
         $validator
             ->scalar('specifications')
@@ -127,6 +113,16 @@ class DevicesTable extends Table
             ->allowEmptyDateTime('warranty_period');
 
         $validator
+            ->scalar('created_user')
+            ->maxLength('created_user', 100, 'Created user is not longer than 100 charater!!!')
+            ->allowEmptyString('created_user');
+
+        $validator
+            ->scalar('update_user')
+            ->maxLength('update_user', 100, 'Update user is not longer than 100 charater!!!')
+            ->allowEmptyString('update_user');
+
+        $validator
             ->dateTime('created_time')
             ->allowEmptyDateTime('created_time');
 
@@ -134,11 +130,6 @@ class DevicesTable extends Table
             ->dateTime('update_time')
             ->allowEmptyDateTime('update_time');
 
-        $validator
-            ->boolean('is_deleted')
-            ->requirePresence('is_deleted', 'create')
-            ->notEmpty('is_deleted', 'This field is required!!!');
-            
         return $validator;
     }
 
@@ -151,6 +142,7 @@ class DevicesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        
 
         return $rules;
     }

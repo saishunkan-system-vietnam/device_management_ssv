@@ -28,7 +28,6 @@ class BorrowDevicesTableTest extends TestCase
         'app.Borrowers',
         'app.Approveds',
         'app.Handovers',
-        'app.Devices',
         'app.BorrowDevicesDetail'
     ];
 

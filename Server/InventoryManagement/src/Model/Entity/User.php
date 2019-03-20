@@ -8,8 +8,11 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $user_name
+ * @property string $full_name
  * @property string $position
  * @property int|null $level
+ * @property string|null $created_user
+ * @property string|null $update_user
  * @property \Cake\I18n\FrozenTime|null $created_time
  * @property \Cake\I18n\FrozenTime|null $update_time
  * @property bool $is_deleted
@@ -28,8 +31,11 @@ class User extends Entity
      */
     protected $_accessible = [
         'user_name' => true,
+        'full_name' => true,
         'position' => true,
         'level' => true,
+        'created_user' => true,
+        'update_user' => true,
         'created_time' => true,
         'update_time' => true,
         'is_deleted' => true

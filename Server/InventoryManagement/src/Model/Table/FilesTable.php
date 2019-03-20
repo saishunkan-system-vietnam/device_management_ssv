@@ -71,6 +71,16 @@ class FilesTable extends Table
             ->allowEmptyString('type');
 
         $validator
+            ->scalar('created_user')
+            ->maxLength('created_user', 100)
+            ->allowEmptyString('created_user');
+
+        $validator
+            ->scalar('update_user')
+            ->maxLength('update_user', 100)
+            ->allowEmptyString('update_user');
+
+        $validator
             ->dateTime('created_time')
             ->allowEmptyDateTime('created_time');
 
@@ -95,6 +105,8 @@ class FilesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->existsIn(['relate_id'], 'Relates'));
+
         return $rules;
     }
 }

@@ -26,7 +26,6 @@ class DevicesTableTest extends TestCase
     public $fixtures = [
         'app.Devices',
         'app.Brands',
-        'app.BorrowDevices',
         'app.BorrowDevicesDetail'
     ];
 

@@ -1,8 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Rule\IsUnique;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -38,11 +38,8 @@ class BrandsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Devices', [
-            'foreignKey' => 'brand_id',
+            'foreignKey' => 'brand_id'
         ]);
-        // $this->hasMany('Devices', [
-        //     'foreignKey' => 'brand_id'
-        // ]);
     }
 
     /**
@@ -64,6 +61,16 @@ class BrandsTable extends Table
             ->allowEmptyString('brand_name', false);
 
         $validator
+            ->scalar('created_user')
+            ->maxLength('created_user', 100)
+            ->allowEmptyString('created_user');
+
+        $validator
+            ->scalar('update_user')
+            ->maxLength('update_user', 100)
+            ->allowEmptyString('update_user');
+
+        $validator
             ->dateTime('created_time')
             ->allowEmptyDateTime('created_time');
 
@@ -71,15 +78,11 @@ class BrandsTable extends Table
             ->dateTime('update_time')
             ->allowEmptyDateTime('update_time');
 
-        return $validator;
-    }
+        $validator
+            ->boolean('is_deleted')
+            ->requirePresence('is_deleted', 'create')
+            ->allowEmptyString('is_deleted', false);
 
-    /**
-     *  Check brand name unique
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->isUnique(['brand_name']));
-        return $rules;
+        return $validator;
     }
 }

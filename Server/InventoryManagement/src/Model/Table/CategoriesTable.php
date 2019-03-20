@@ -5,8 +5,6 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Cake\ORM\Rule\IsUnique;
-
 
 /**
  * Categories Model
@@ -61,6 +59,16 @@ class CategoriesTable extends Table
             ->allowEmptyString('category_name', false);
 
         $validator
+            ->scalar('created_user')
+            ->maxLength('created_user', 100)
+            ->allowEmptyString('created_user');
+
+        $validator
+            ->scalar('update_user')
+            ->maxLength('update_user', 100)
+            ->allowEmptyString('update_user');
+
+        $validator
             ->dateTime('created_time')
             ->allowEmptyDateTime('created_time');
 
@@ -75,19 +83,4 @@ class CategoriesTable extends Table
 
         return $validator;
     }
-
-    /**
-     *  Check category name unique
-     */
-    public function buildRules(RulesChecker $rules){
-        $rules->add($rules->isUnique(['category_name']));
-        return $rules;
-        $validator
-            ->boolean('is_deleted')
-            ->requirePresence('is_deleted', 'create')
-            ->allowEmptyString('is_deleted', false);
-
-        return $validator;
-    }
-
 }

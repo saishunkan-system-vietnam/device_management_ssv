@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\BorrowersTable|\Cake\ORM\Association\BelongsTo $Borrowers
  * @property \App\Model\Table\ApprovedsTable|\Cake\ORM\Association\BelongsTo $Approveds
  * @property \App\Model\Table\HandoversTable|\Cake\ORM\Association\BelongsTo $Handovers
- * @property \App\Model\Table\DevicesTable|\Cake\ORM\Association\BelongsTo $Devices
  * @property \App\Model\Table\BorrowDevicesDetailTable|\Cake\ORM\Association\HasMany $BorrowDevicesDetail
  *
  * @method \App\Model\Entity\BorrowDevice get($primaryKey, $options = [])
@@ -40,6 +39,7 @@ class BorrowDevicesTable extends Table
         $this->setTable('borrow_devices');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
         $this->belongsTo('Borrowers', [
             'foreignKey' => 'borrower_id',
             'joinType' => 'INNER'
@@ -50,27 +50,9 @@ class BorrowDevicesTable extends Table
         $this->belongsTo('Handovers', [
             'foreignKey' => 'handover_id'
         ]);
-        $this->belongsTo('Devices', [
-            'foreignKey' => 'device_id',
-            'joinType' => 'INNER'
-        ]);
         $this->hasMany('BorrowDevicesDetail', [
             'foreignKey' => 'borrow_device_id'
         ]);
-
-        // $this->belongsTo('Borrowers', [
-        //     'foreignKey' => 'borrower_id',
-        //     'joinType' => 'INNER'
-        // ]);
-        // $this->belongsTo('Approveds', [
-        //     'foreignKey' => 'approved_id'
-        // ]);
-        // $this->belongsTo('Handovers', [
-        //     'foreignKey' => 'handover_id'
-        // ]);
-        // $this->hasMany('BorrowDevicesDetail', [
-        //     'foreignKey' => 'borrow_device_id'
-        // ]);
     }
 
     /**
@@ -115,6 +97,16 @@ class BorrowDevicesTable extends Table
             ->allowEmptyDateTime('return_date', false);
 
         $validator
+            ->scalar('created_user')
+            ->maxLength('created_user', 100)
+            ->allowEmptyString('created_user');
+
+        $validator
+            ->scalar('update_user')
+            ->maxLength('update_user', 100)
+            ->allowEmptyString('update_user');
+
+        $validator
             ->dateTime('created_time')
             ->allowEmptyDateTime('created_time');
 
@@ -137,8 +129,12 @@ class BorrowDevicesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    // public function buildRules(RulesChecker $rules)
-    // {
-    //     return $rules;
-    // }
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['borrower_id'], 'Borrowers'));
+        $rules->add($rules->existsIn(['approved_id'], 'Approveds'));
+        $rules->add($rules->existsIn(['handover_id'], 'Handovers'));
+
+        return $rules;
+    }
 }

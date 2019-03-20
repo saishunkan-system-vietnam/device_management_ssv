@@ -37,6 +37,7 @@ class DevicesController extends AppController
     {
         //search
         $devicesTable = TableRegistry::get('Devices');
+        $search = $this->request->getData('search');
         $devices = $devicesTable->find();
         $this->responseApi($this->status,$this->data_name,$devices);
     }
@@ -45,12 +46,9 @@ class DevicesController extends AppController
     {
         //view by id
         $devicesTable = TableRegistry::get('Devices');
-        $devices = $devicesTable->find();
-        $view = $devices->where(['id'=>$id]);
-        $this->responseApi($this->status,$this->data_name,$devices,$view);
-        // $this->payload['payload']['categories'] = $devices;
-        // $this->response->body(json_encode($this->payload));
-        
+        $id = $this->request->getData('id');
+        $devices = $devicesTable->find()->where(['id' => $id])->all();
+        $this->responseApi($this->status,$this->data_name,$devices);
     }
 
     public function add()
@@ -59,29 +57,17 @@ class DevicesController extends AppController
         $devicesTable = TableRegistry::get('Devices');
         $devices = $devicesTable->newEntity();
         if($this->request->is('post')){
-            $devices->parent_id = $this->request->getData('parent_id');
-            $devices->id_cate = $this->request->getData('id_cate');
-            $devices->serial_number = $this->request->getData('serial_number');
-            $devices->product_number = $this->request->getData('product_number');
-            $devices->name = $this->request->getData('name');
-            $devices->brand_id = $this->request->getData('brand_id');
-            $devices->specifications = $this->request->getData('specifications');
-            $devices->status = $this->request->getData('status');
-            $devices->warranty_period = $this->request->getData('warranty_period');  
-            $devices->created_time = $this->request->getData('created_time'); 
-            $devices->update_time = $this->request->getData('update_time'); 
-            $devices->is_deleted = $this->request->getData('is_deleted'); 
-
             //validate
             $devices = $this->Devices->patchEntity($devices, $this->request->getData());
             if ($this->Devices->save($devices)) {
-                $this->responseApi($this->status,$this->data_name,$devices);
+                $message = "Saved";
+                $this->responseApi($this->status,$this->data_name,$devices,$message);
             } else {
-                $message = 'Error';
+                $message =  $devices->errors();
+                $this->status = 'failed';
                 $this->responseApi($this->status,$this->data_name,$message);
             }
         }
-        
     }
 
     public function addImage()
@@ -114,12 +100,15 @@ class DevicesController extends AppController
                         $filesTable->save($uploadImage);
                     }else {
                         $message = "Unable to upload image, please try again!";
+                        $this->status = 'failed';
                     }
                 }else {
                     $message = "Please choose an image has type like jpg, png,... to upload!";
+                    $this->status = 'failed';
                 }
             }else {
                 $message = "Please choose an image to upload!";
+                $this->status = 'failed';
             }
         }
         $this->responseApi($this->status,$this->data_name,$devices,$message);
@@ -130,30 +119,18 @@ class DevicesController extends AppController
         //edit
         $devicesTable = TableRegistry::get('Devices');
         $devices = $this->request->getData();
-        $id = $devices['id'];
+        $id = $devices['id'];  
+        $devices = $devicesTable->get($id);
         if ($this->request->is('post')) {
-            $parent_id = $this->request->getData('parent_id');
-            $id_cate = $this->request->getData('id_cate');
-            $serial_number = $this->request->getData('serial_number');
-            $product_number = $this->request->getData('product_number');
-            $name = $this->request->getData('name');
-            $brand_id = $this->request->getData('brand_id');
-            $specifications = $this->request->getData('specifications');
-            $status = $this->request->getData('status');
-            $warranty_period = $this->request->getData('warranty_period');  
-            $created_time = $this->request->getData('created_time'); 
-            $update_time = $this->request->getData('update_time'); 
-            $is_deleted = $this->request->getData('is_deleted'); 
-            
-            //$devices = $this->Devices->patchEntity($devices, $this->request->getData());
+            $devices = $this->Devices->patchEntity($devices, $this->request->getData());
             if ($this->Devices->save($devices)) {
-                $message = 'Saved';
+                $message = 'Saved';               
             } else {
-                $message = 'Error';
+                $message = $devices->errors();
+                $this->status = 'failed';
             }
         }
-        $this->payload['payload']['devices'] = $devices;
-        $this->response->body(json_encode($this->payload));
+        $this->responseApi($this->status,$this->data_name,$devices,$message);
     }
 
     public function delete()
@@ -162,16 +139,15 @@ class DevicesController extends AppController
         $devicesTable = TableRegistry::get('Devices');
         $devices = $this->request->getData();
         $id = $devices['id'];
-        $is_deleted = $devices['is_deleted'];
-
-        $is_deleted = $devicesTable->update()->where(['id' => $id]);
-        
-
-        $message = "Deleted";
-        $this->set([
-            'message' => $message,
-            '_serialize' => ['message']
-        ]);
+        $devices = $devicesTable->get($id);
+        $devices->is_deleted = 1;
+        $devices = $this->Devices->patchEntity($devices, $this->request->getData());
+        if ($devicesTable->save($devices)) {
+            $message = "Deleted";
+        }else {
+            $message = "Failed to delete";
+            $this->status = 'failed';
+        }
         $this->responseApi($this->status,$this->data_name,$message);
     }
 }

@@ -17,13 +17,14 @@ use Cake\ORM\Entity;
  * @property int|null $status
  * @property \Cake\I18n\FrozenTime|null $stock_date
  * @property \Cake\I18n\FrozenTime|null $warranty_period
+ * @property string|null $created_user
+ * @property string|null $update_user
  * @property \Cake\I18n\FrozenTime|null $created_time
  * @property \Cake\I18n\FrozenTime|null $update_time
  * @property bool $is_deleted
  *
  * @property \App\Model\Entity\ParentDevice $parent_device
  * @property \App\Model\Entity\Brand $brand
- * @property \App\Model\Entity\BorrowDevice[] $borrow_devices
  * @property \App\Model\Entity\BorrowDevicesDetail[] $borrow_devices_detail
  * @property \App\Model\Entity\ChildDevice[] $child_devices
  */
@@ -50,12 +51,13 @@ class Device extends Entity
         'status' => true,
         'stock_date' => true,
         'warranty_period' => true,
+        'created_user' => true,
+        'update_user' => true,
         'created_time' => true,
         'update_time' => true,
         'is_deleted' => true,
         'parent_device' => true,
         'brand' => true,
-        'borrow_devices' => true,
         'borrow_devices_detail' => true,
         'child_devices' => true
     ];
