@@ -76,7 +76,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/brand/index', ['controller' => 'Brands', 'action' => 'index']);
     $routes->connect('/brand/view/:id', ['controller' => 'Brands', 'action' => 'view']);
     $routes->connect('/brand/edit/:id', ['controller' => 'Brands', 'action' => 'edit']);
-    $routes->connect('/brand/delete', ['controller' => 'Brands', 'action' => 'delete']);
+    $routes->connect('/brand/delete/:id', ['controller' => 'Brands', 'action' => 'delete']);
     $routes->connect('/brand/add', ['controller' => 'Brands', 'action' => 'add']);
 
     /**

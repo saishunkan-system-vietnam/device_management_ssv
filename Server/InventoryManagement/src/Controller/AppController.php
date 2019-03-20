@@ -28,8 +28,15 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
 
+    const PAGE = 1;
+    const PERPAGE = 1;
 
     public $payload = '';
+
+    public $page;
+
+    public $perpage;
+
     /**
      * Initialization hook method.
      *
@@ -44,26 +51,42 @@ class AppController extends Controller
         parent::initialize();
 
         $this->payload = [
-            'status' => 'sucsess'
+            'status' => 'sucsess',
         ];
+
+        if ($this->getRequest()->getData('perpage') != null) {
+            $this->perpage = $this->getRequest()->getData('perpage');
+        } else {
+            $this->perpage = self::PERPAGE;
+        }
+
+        if ($this->getRequest()->getQuery('page') != null) {
+            $this->page = $this->getRequest()->getQuery('page');
+        } elseif ($this->getRequest()->getData('page') != null) {
+            $this->page = $this->getRequest()->getData('page');
+        } else {
+            $this->page = self::PAGE;
+        }
 
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
         ]);
         $this->loadComponent('Flash');
-       //$this->loadComponent('Csrf');
+        //$this->loadComponent('Csrf');
         /*
          * Enable the following component for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
          */
         //$this->loadComponent('Security');
     }
+
     /**
      * beforeRender callback
      *
      * @return void
      */
-    public function beforeRender( Event $event) {
+    public function beforeRender(Event $event)
+    {
 
         parent::beforeRender($event);
 
@@ -71,20 +94,24 @@ class AppController extends Controller
 
         $this->set('response', $this->payload);
 
-
     }
 
-    public function responseApi($status = 'success', $data_name = 'data', $data = null) 
+    public function responseApi($status = 'success', $data_name = 'data', $data = null)
     {
         $this->payload = [
             'status' => $status,
             'payload' => [
-                $data_name => $data
-            ]
+                $data_name => $data,
+            ],
         ];
 
-        $this->response->body(json_encode($this->payload));
-        return $this->response;
+        //$this->response->withBody(json_encode($this->payload));
+        //return $this->response->body(new Body($this->payload));
+        //return $this->response;
+        $body = $this->response->getBody();
+        $body->write(json_encode($this->payload));
+        return $this->response->withBody($body);
+
     }
-    
+
 }
