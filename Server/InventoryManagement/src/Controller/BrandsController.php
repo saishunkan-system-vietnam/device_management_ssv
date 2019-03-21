@@ -61,17 +61,17 @@ class BrandsController extends AppController
         }
         $condition = ['is_deleted' => 0];
         $brands = $this->Brands->find();
-        $brands_quantity = $this->Brands->find()->select(['count' => 'count(1)']);
+        $brand_quantity = $this->Brands->find()->select(['count' => 'count(1)']);
         if (isset($inputData['brand_name']) && !empty($inputData['brand_name'])) {
             array_push($condition, ['brand_name Like' => '%' . trim($inputData['brand_name']) . '%']);
         }
         $brands->where($condition)
+            ->order(['id' => 'DESC'])
             ->limit($this->perpage)
-            ->page($this->page)
-            ->order(['id' => 'DESC']);
-        $brands_quantity->where($condition);
+            ->page($this->page);
+        $record_all = $brand_quantity->where($condition)->first();
 
-        $this->responseApi($this->status, $this->data_name, $brands, $brands_quantity);
+        $this->responseApi($this->status, $this->data_name, $brands, $record_all['count']);
     }
 
     /**
@@ -93,6 +93,7 @@ class BrandsController extends AppController
             ])->all();
 
         if ($brand->count() == 0) {
+            $this->status = 'fail';
             $this->data_name = 'message';
             $brand = 'Data not found';
         }
@@ -110,18 +111,12 @@ class BrandsController extends AppController
         // Only accept POST requests
         $this->request->allowMethod(['post']);
 
-        $inputData['brand_name'] = trim($this->request->getData('brand_name'));
+        $inputData['brand_name'] = trim($this->getRequest()->getData('brand_name'));
         $inputData['created_user'] = 'brand';
         $brand = $this->Brands->newEntity();
         $brand = $this->Brands->patchEntity($brand, $inputData);
         if ($data = $this->Brands->save($brand)) {
-            $id = $data->id;
-            $brand = $this->Brands
-                ->find()
-                ->where([
-                    'id' => $id,
-                    'is_deleted' => 0,
-                ])->all();
+            $brand = ['id' => $data->id];
         } else {
             $this->status = 'fail';
             $this->data_name = 'error';
@@ -143,7 +138,7 @@ class BrandsController extends AppController
         // Only accept PATCH POST and PUT requests
         $this->request->allowMethod(['patch', 'post', 'put']);
 
-        $id = $this->getRequest()->getParam('id');
+        $id = $this->getRequest()->getData('id');
 
         $brand = $this->Brands
             ->find()
@@ -153,17 +148,12 @@ class BrandsController extends AppController
             ])->first();
         //Check exist brand
         if ($brand) {
-            $inputData['brand_name'] = trim($this->request->getData('brand_name'));
+            $inputData['brand_name'] = trim($this->getRequest()->getData('brand_name'));
             $inputData['update_user'] = 'brand';
             $inputData['update_time'] = Time::now();
             $brand = $this->Brands->patchEntity($brand, $inputData);
             if ($this->Brands->save($brand)) {
-                $brand = $this->Brands
-                    ->find()
-                    ->where([
-                        'id' => $id,
-                        'is_deleted' => 0,
-                    ])->first();
+                $brand = ['id' => $id];
             } else {
                 $this->status = 'fail';
                 $this->data_name = 'error';
@@ -189,7 +179,7 @@ class BrandsController extends AppController
         // Only accept POST and GET requests
         $this->request->allowMethod(['delete', 'post']);
 
-        $id = $this->getRequest()->getParam('id');
+        $id = $this->getRequest()->getData('id');
 
         $brand = $this->Brands
             ->find()

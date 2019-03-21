@@ -92,19 +92,15 @@ class AppController extends Controller
 
         parent::beforeRender($event);
 
-        $this->viewBuilder()->setLayout('api_respon');
-
-        $this->set('response', $this->payload);
-
     }
 
-    public function responseApi($status = 'success', $data_name = 'data', $data = null, $count = null)
+    public function responseApi($status = 'success', $data_name = 'data', $data = null, $count = 0)
     {
         $this->payload = [
             'status' => $status,
             'payload' => [
                 $data_name => $data,
-                'record_all' => $count
+                'record_all' => $count,
             ],
         ];
 

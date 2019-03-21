@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\Rule\IsUnique;
 
 /**
  * Categories Model
@@ -59,20 +60,12 @@ class CategoriesTable extends Table
 
         $validator
             ->scalar('created_user')
-<<<<<<< HEAD
-            ->maxLength('created_user', 100)
-=======
             ->maxLength('created_user', 100, 'The created user field cannot enter more than 100 characters')
->>>>>>> 7cc7db5a112d82167b2216ec997f89989f49e082
             ->allowEmptyString('created_user');
 
         $validator
             ->scalar('update_user')
-<<<<<<< HEAD
-            ->maxLength('update_user', 100)
-=======
             ->maxLength('update_user', 100, 'The update user field cannot enter more than 100 characters')
->>>>>>> 7cc7db5a112d82167b2216ec997f89989f49e082
             ->allowEmptyString('update_user');
 
         $validator
@@ -85,8 +78,6 @@ class CategoriesTable extends Table
 
         return $validator;
     }
-<<<<<<< HEAD
-=======
 
     /**
      * Check unique category name
@@ -96,5 +87,4 @@ class CategoriesTable extends Table
         $rules->add($rules->isUnique(['category_name']));
         return $rules;
     }
->>>>>>> 7cc7db5a112d82167b2216ec997f89989f49e082
 }

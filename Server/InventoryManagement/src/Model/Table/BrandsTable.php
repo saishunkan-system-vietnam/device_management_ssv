@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\Rule\IsUnique;
 
 /**
  * Brands Model
@@ -62,20 +63,12 @@ class BrandsTable extends Table
 
         $validator
             ->scalar('created_user')
-<<<<<<< HEAD
-            ->maxLength('created_user', 100)
-=======
             ->maxLength('created_user', 100, 'The created user field cannot enter more than 100 characters')
->>>>>>> 7cc7db5a112d82167b2216ec997f89989f49e082
             ->allowEmptyString('created_user');
 
         $validator
             ->scalar('update_user')
-<<<<<<< HEAD
-            ->maxLength('update_user', 100)
-=======
             ->maxLength('update_user', 100, 'The update user field cannot enter more than 100 characters')
->>>>>>> 7cc7db5a112d82167b2216ec997f89989f49e082
             ->allowEmptyString('update_user');
 
         $validator
@@ -86,14 +79,9 @@ class BrandsTable extends Table
             ->dateTime('update_time')
             ->allowEmptyDateTime('update_time');
 
-        $validator
-            ->boolean('is_deleted')
-            ->requirePresence('is_deleted', 'create')
-            ->allowEmptyString('is_deleted', false);
-
-<<<<<<< HEAD
         return $validator;
-=======
+    }
+
     /**
      * Check unique brand name
      */
@@ -101,6 +89,5 @@ class BrandsTable extends Table
     {
         $rules->add($rules->isUnique(['brand_name']));
         return $rules;
->>>>>>> 7cc7db5a112d82167b2216ec997f89989f49e082
     }
 }

@@ -93,12 +93,12 @@ class CategoriesController extends AppController
         }
 
         $categories->where($condition)
+            ->order(['id' => 'DESC'])
             ->limit($this->perpage)
-            ->page($this->page)
-            ->order(['id' => 'DESC']);
-        $categories_quantity->where($condition);
+            ->page($this->page);
+        $record_all = $categories_quantity->where($condition)->first();
 
-        $this->responseApi($this->status, $this->data_name, $categories, $categories_quantity);
+        $this->responseApi($this->status, $this->data_name, $categories, $record_all['count']);
 
     }
 
@@ -121,6 +121,7 @@ class CategoriesController extends AppController
             ])->all();
 
         if ($category->count() == 0) {
+            $this->status = 'fail';
             $this->data_name = 'message';
             $category = 'Data not found';
         }
@@ -138,21 +139,15 @@ class CategoriesController extends AppController
         // Only accept POST requests
         $this->request->allowMethod(['post']);
 
-        $inputData['id_parent'] = trim($this->request->getData('id_parent'));
-        $inputData['category_name'] = trim($this->request->getData('category_name'));
+        $inputData['id_parent'] = trim($this->getRequest()->getData('id_parent'));
+        $inputData['category_name'] = trim($this->getRequest()->getData('category_name'));
         $inputData['created_user'] = 'category';
 
         $category = $this->Categories->newEntity();
         $category = $this->Categories->patchEntity($category, $inputData);
 
         if ($data = $this->Categories->save($category)) {
-            $id = $data->id;
-            $category = $this->Categories
-                ->find()
-                ->where([
-                    'id' => $id,
-                    'is_deleted' => 0,
-                ])->all();
+            $category = ['id' => $data->id];
         } else {
             $this->status = 'fail';
             $this->data_name = 'error';
@@ -174,7 +169,7 @@ class CategoriesController extends AppController
         // Only accept PATCH POST and PUT requests
         $this->request->allowMethod(['patch', 'post', 'put']);
 
-        $id = $this->getRequest()->getParam('id');
+        $id = $this->getRequest()->getData('id');
 
         $category = $this->Categories
             ->find()
@@ -184,24 +179,20 @@ class CategoriesController extends AppController
             ])->first();
         //Check exist brand
         if ($category) {
-            $inputData['id_parent'] = trim($this->request->getData('id_parent'));
-            $inputData['category_name'] = trim($this->request->getData('category_name'));
+            $inputData['id_parent'] = trim($this->getRequest()->getData('id_parent'));
+            $inputData['category_name'] = trim($this->getRequest()->getData('category_name'));
             $inputData['update_user'] = 'category';
             $inputData['update_time'] = Time::now();
             $category = $this->Categories->patchEntity($category, $inputData);
             if ($this->Categories->save($category)) {
-                $category = $this->Categories
-                    ->find()
-                    ->where([
-                        'id' => $id,
-                        'is_deleted' => 0,
-                    ])->first();
+                $category = ['id' => $id];
             } else {
                 $this->status = 'fail';
                 $this->data_name = 'error';
                 $category = $category->getErrors();
             }
         } else {
+            $this->status = 'fail';
             $this->data_name = 'message';
             $category = 'Data not found';
         }
@@ -221,7 +212,7 @@ class CategoriesController extends AppController
         // Only accept POST and GET requests
         $this->request->allowMethod(['delete', 'post']);
 
-        $id = $this->getRequest()->getParam('id');
+        $id = $this->getRequest()->getData('id');
 
         $category = $this->Categories
             ->find()
