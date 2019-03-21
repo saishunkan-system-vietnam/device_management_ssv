@@ -70,7 +70,6 @@ class DevicesController extends AppController
             ->limit($this->perpage)
             ->page($this->page);
         $record_all = $device_quantity->where($condition)->first();
-
         $this->responseApi($this->status, $this->data_name, $devices, $record_all['count']);
     }
 
@@ -88,7 +87,7 @@ class DevicesController extends AppController
         if ($devices->count() == 0) {
             $this->status = 'fail';
             $this->data_name = 'message';
-            $category = 'Data not found';
+            $category = 'Data not found!';
         }
 
         $this->responseApi($this->status, $this->data_name, $devices);
@@ -101,6 +100,7 @@ class DevicesController extends AppController
 
         $devicesTable = TableRegistry::get('Devices');
         $devices = $devicesTable->newEntity();
+
         $inputData['parent_id'] = trim($this->getRequest()->getData('parent_id'));
         $inputData['id_parent'] = trim($this->getRequest()->getData('id_parent'));
         $inputData['id_cate'] = trim($this->getRequest()->getData('id_cate'));
@@ -121,7 +121,6 @@ class DevicesController extends AppController
             $this->data_name = 'error';
             $device = $devices->getErrors();
         }
-
         $this->responseApi($this->status, $this->data_name, $device);
     }
 
@@ -130,43 +129,51 @@ class DevicesController extends AppController
         //add image devices
         $devicesTable = TableRegistry::get('Devices');
         $id = $this->getRequest()->getData('id');
-
-        $filesTable = TableRegistry::get('Files');
-        $images = $this->request->getData();
-        $folderPath = 'img/upload/devices/' . $id;
-        $path = 'img/upload/devices/' . $id . '/';
-        if (!file_exists($folderPath)) {
-            mkdir($path, 0777, true);
-        }
-        foreach ($images['img'] as $value) {
-            if (!empty($value['name'])) {
-                $ext = pathinfo($value['name'], PATHINFO_EXTENSION);
-                $fileName = 'devices' . strtotime("now") . "." . $ext;
-                $uploadPath = $path;
-                $uploadFile = $uploadPath . $fileName;
-                $valiExt = array('jpg', 'png', 'jpeg', 'gif');
-                if (in_array($ext, $valiExt)) {
-                    if (move_uploaded_file($value['tmp_name'], $uploadFile)) {
-                        $uploadImage = $filesTable->newEntity();
-                        $uploadImage->relate_id = $id;
-                        $uploadImage->relate_name = 'devices';
-                        $uploadImage->path = $path;
-                        $uploadImage->is_delete = 0;
-                        $filesTable->save($uploadImage);
+        if ($id != null) {
+            $filesTable = TableRegistry::get('Files');
+            $images = $this->request->getData();
+            $path = 'img/upload/devices/' . $id;
+            if (!file_exists($path)) {
+                mkdir($path . '/', 0777, true);
+            }
+            foreach ($images['img'] as $value) {
+                if (!empty($value['name'])) {
+                    $ext = pathinfo($value['name'], PATHINFO_EXTENSION);
+                    $fileName = 'devices' . strtotime("now") . "." . $ext;
+                    $uploadPath = $path . '/';
+                    $uploadFile = $uploadPath . $fileName;
+                    $valiExt = array('jpg', 'png', 'jpeg', 'gif');
+                    if (in_array($ext, $valiExt)) {
+                        if (move_uploaded_file($value['tmp_name'], $uploadFile)) {
+                            $uploadImage = $filesTable->newEntity();
+                            $uploadImage->relate_id = $id;
+                            $uploadImage->relate_name = 'devices';
+                            $uploadImage->path = $path . '/' . $fileName;
+                            $uploadImage->type = 'detail';
+                            $uploadImage->is_delete = 0;
+                            if ($filesTable->save($uploadImage)) {
+                                $message = "Image saved!";
+                            }else {
+                                $message = "Failed to save!";
+                            }
+                        } else {
+                            $message = "Unable to upload image, please try again!";
+                            $this->status = 'failed';
+                        }
                     } else {
-                        $message = "Unable to upload image, please try again!";
+                        $message = "Please choose an image has type like jpg, png,... to upload!";
                         $this->status = 'failed';
                     }
                 } else {
-                    $message = "Please choose an image has type like jpg, png,... to upload!";
+                    $message = "Please choose an image to upload!";
                     $this->status = 'failed';
                 }
-            } else {
-                $message = "Please choose an image to upload!";
-                $this->status = 'failed';
             }
+        }else {
+            $message = "Please input id to save an image!";
+            $this->status = 'failed';
         }
-        $this->responseApi($this->status, $this->data_name, $devices, $message);
+        $this->responseApi($this->status, $this->data_name, $message);
     }
 
     public function edit()
@@ -195,7 +202,7 @@ class DevicesController extends AppController
 
             $devices = $this->Devices->patchEntity($devices, $inputData);
             if ($this->Devices->save($devices)) {
-                $message = 'Saved';
+                $message = 'Saved!';
             } else {
                 $message = $devices->errors();
                 $this->status = 'failed';
@@ -203,25 +210,90 @@ class DevicesController extends AppController
         } else {
             $this->status = 'fail';
             $this->data_name = 'message';
-            $category = 'Data not found';
+            $category = 'Data not found!';
         }
 
         $this->responseApi($this->status, $this->data_name, $devices, $message);
     }
 
+    public function editImage()
+    {
+        $devicesTable = TableRegistry::get('Devices');
+        $id = $this->request->getData('id');
+
+        $filesTable = TableRegistry::get('Files');
+        $images = $filesTable->find()->where(['relate_id' => $id , 'is_deleted' => 0 , 'relate_name' => 'devices'])->first();
+        $editImg = $this->request->getData();
+        $path = 'img/upload/devices/' . $id;
+        $imgName = str_replace($path . '/','',$images->path);
+        
+        if (file_exists($path)) {
+            unlink($path . '/' . $imgName);
+        }
+        foreach ($editImg['img'] as $value) {
+            if (!empty($value['name'])) {
+                $ext = pathinfo($value['name'], PATHINFO_EXTENSION);
+                $fileName = 'devices' . strtotime("now") . "." . $ext;
+                $uploadPath = $path . '/';
+                $uploadFile = $uploadPath . $fileName;
+                $valiExt = array('jpg', 'png', 'jpeg', 'gif');
+                if (in_array($ext, $valiExt)) {
+                    if (move_uploaded_file($value['tmp_name'], $uploadFile)) {
+                        $uploadImage = $images;
+                        $uploadImage->relate_id = $id;
+                        $uploadImage->relate_name = 'devices';
+                        $uploadImage->path = $path . '/' . $fileName;
+                        $uploadImage->type = 'detail';
+                        $uploadImage->is_delete = 0;
+                        if ($filesTable->save($uploadImage)) {
+                            $message = "Image saved!";
+                        }else {
+                            $message = "Failed to save!";
+                        }
+                    } else {
+                        $message = "Unable to upload image, please try again!";
+                        $this->status = 'failed';
+                    }
+                } else {
+                    $message = "Please choose an image has type like jpg, png,... to upload!";
+                    $this->status = 'failed';
+                }
+            } else {
+                $message = "Please choose an image to upload!";
+                $this->status = 'failed';
+            }
+        }
+        $this->responseApi($this->status, $this->data_name, $message);
+    }
+
     public function delete()
     {
-        //delete
+        //delete logic device
         $devicesTable = TableRegistry::get('Devices');
         $devices = $this->request->getData();
         $id = $devices['id'];
-        $devices = $devicesTable->get($id);
-        $devices->is_deleted = 1;
-        $devices = $this->Devices->patchEntity($devices, $this->request->getData());
-        if ($devicesTable->save($devices)) {
-            $message = "Deleted";
-        } else {
-            $message = "Failed to delete";
+        //img
+        $filesTable = TableRegistry::get('Files');
+        $images = $filesTable->find()->where(['relate_id' => $id ,'is_deleted' => 0 , 'relate_name' => 'devices'])->all()->toArray();
+        $path = 'img/upload/devices/' . $id;
+        //check
+        if ($id != null) {
+            $devices = $devicesTable->get($id);
+            $devices->is_deleted = 1;
+            $devices = $this->Devices->patchEntity($devices, $this->request->getData());
+            if ($devicesTable->save($devices)) {
+                foreach ($images as $value) {
+                    unlink($value->path);
+                }
+                $filesTable->deleteAll(['relate_id' => $id , 'relate_name' => 'devices']);
+                rmdir($path);
+                $message = "Deleted!";
+            } else {
+                $message = "Failed to delete!";
+                $this->status = 'failed';
+            }
+        }else {
+            $message = "Please input id to show record!";
             $this->status = 'failed';
         }
         $this->responseApi($this->status, $this->data_name, $message);

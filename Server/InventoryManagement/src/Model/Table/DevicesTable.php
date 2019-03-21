@@ -142,8 +142,6 @@ class DevicesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        
-
         return $rules;
     }
 }
