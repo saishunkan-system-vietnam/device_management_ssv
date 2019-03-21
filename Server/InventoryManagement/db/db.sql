@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS borrow_devices (
   update_time           	DATETIME DEFAULT CURRENT_TIMESTAMP,
   is_deleted                BOOLEAN NOT NULL DEFAULT FALSE,
   primary key(id)
-)
+);
 
 CREATE TABLE IF NOT EXISTS borrow_devices_detail (
   id                        BIGINT unsigned NOT NULL AUTO_INCREMENT,
