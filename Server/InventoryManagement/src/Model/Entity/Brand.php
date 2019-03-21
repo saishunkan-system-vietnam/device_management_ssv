@@ -8,6 +8,8 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $brand_name
+ * @property string|null $created_user
+ * @property string|null $update_user
  * @property \Cake\I18n\FrozenTime|null $created_time
  * @property \Cake\I18n\FrozenTime|null $update_time
  * @property bool $is_deleted
@@ -28,6 +30,8 @@ class Brand extends Entity
      */
     protected $_accessible = [
         'brand_name' => true,
+        'created_user' => true,
+        'update_user' => true,
         'created_time' => true,
         'update_time' => true,
         'is_deleted' => true,

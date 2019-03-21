@@ -76,7 +76,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/brand/index', ['controller' => 'Brands', 'action' => 'index']);
     $routes->connect('/brand/view/:id', ['controller' => 'Brands', 'action' => 'view']);
     $routes->connect('/brand/edit/:id', ['controller' => 'Brands', 'action' => 'edit']);
-    $routes->connect('/brand/delete', ['controller' => 'Brands', 'action' => 'delete']);
+    $routes->connect('/brand/delete/:id', ['controller' => 'Brands', 'action' => 'delete']);
     $routes->connect('/brand/add', ['controller' => 'Brands', 'action' => 'add']);
 
     /**
@@ -117,9 +117,9 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/devices/index', ['controller' => 'Devices','action' => 'index']);
     $routes->connect('/devices/add', ['controller' => 'Devices','action' => 'add']);
     $routes->connect('/devices/addImage', ['controller' => 'Devices','action' => 'addImage']);
-    $routes->connect('/devices/view/:id', ['controller' => 'Devices','action' => 'view']);
-    $routes->connect('/devices/edit/:id', ['controller' => 'Devices','action' => 'edit']);
-    $routes->connect('/devices/delete/:id', ['controller' => 'Devices','action' => 'delete']);
+    $routes->connect('/devices/view', ['controller' => 'Devices','action' => 'view']);
+    $routes->connect('/devices/edit', ['controller' => 'Devices','action' => 'edit']);
+    $routes->connect('/devices/delete', ['controller' => 'Devices','action' => 'delete']);
 
     //$routes->fallbacks(DashedRoute::class);
 });

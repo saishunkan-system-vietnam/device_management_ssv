@@ -41,7 +41,6 @@ class BrandsController extends AppController
         $this->data_name = 'brands';
 
         $this->loadModel('Devices');
-
     }
 
     /**
@@ -51,17 +50,30 @@ class BrandsController extends AppController
      */
     public function index()
     {
-        $brands = $this->Brands->find();
-        $brand_name = trim($this->getRequest()->getData('brand_name'));
-        if ($this->request->is('post')) {
-            if (!empty($brand_name)) {
-                $brands->where(['brand_name Like' => '%' . $brand_name . '%']);
-            }
-        }
-        $brands->where(['is_deleted' => 0]);
 
-        $this->responseApi($this->status, $this->data_name, $brands);
+        // Only accept POST and GET requests
+        $this->request->allowMethod(['post', 'get']);
+
+        if ($this->request->is('post')) {
+            $inputData = $this->getRequest()->getData();
+        } elseif ($this->request->is('get')) {
+            $inputData = $this->getRequest()->getQuery();
+        }
+        $condition = ['is_deleted' => 0];
+        $brands = $this->Brands->find();
+        $brand_quantity = $this->Brands->find()->select(['count' => 'count(1)']);
+        if (isset($inputData['brand_name']) && !empty($inputData['brand_name'])) {
+            array_push($condition, ['brand_name Like' => '%' . trim($inputData['brand_name']) . '%']);
+        }
+        $brands->where($condition)
+            ->order(['id' => 'DESC'])
+            ->limit($this->perpage)
+            ->page($this->page);
+        $record_all = $brand_quantity->where($condition)->first();
+
+        $this->responseApi($this->status, $this->data_name, $brands, $record_all['count']);
     }
+
     /**
      * View method
      *
@@ -71,7 +83,7 @@ class BrandsController extends AppController
      */
     public function view($id = null)
     {
-        $id = $this->getRequest()->param('id');
+        $id = $this->getRequest()->getParam('id');
 
         $brand = $this->Brands
             ->find()
@@ -81,12 +93,12 @@ class BrandsController extends AppController
             ])->all();
 
         if ($brand->count() == 0) {
+            $this->status = 'fail';
             $this->data_name = 'message';
             $brand = 'Data not found';
         }
 
         $this->responseApi($this->status, $this->data_name, $brand);
-
     }
 
     /**
@@ -96,30 +108,21 @@ class BrandsController extends AppController
      */
     public function add()
     {
+        // Only accept POST requests
+        $this->request->allowMethod(['post']);
+
+        $inputData['brand_name'] = trim($this->getRequest()->getData('brand_name'));
+        $inputData['created_user'] = 'brand';
         $brand = $this->Brands->newEntity();
-
-        if ($this->request->is('post')) {
-            $input['brand_name'] = trim($this->request->getData('brand_name'));
-            $brand = $this->Brands->patchEntity($brand, $input);
-            if ($data = $this->Brands->save($brand)) {
-                $id = $data->id;
-                $brand = $this->Brands
-                    ->find()
-                    ->where([
-                        'id' => $id,
-                        'is_deleted' => 0,
-                    ])->all();
-            } else {
-                $this->status = 'fail';
-                $this->data_name = 'message';
-                $brand = 'Save data failed, may be the brand name already exist';
-            }
-
+        $brand = $this->Brands->patchEntity($brand, $inputData);
+        if ($data = $this->Brands->save($brand)) {
+            $brand = ['id' => $data->id];
         } else {
             $this->status = 'fail';
-            $this->data_name = 'message';
-            $brand = 'Not post method';
+            $this->data_name = 'error';
+            $category = $category->getErrors();
         }
+
         $this->responseApi($this->status, $this->data_name, $brand);
     }
 
@@ -132,8 +135,11 @@ class BrandsController extends AppController
      */
     public function edit($id = null)
     {
-        $id = $this->getRequest()->param('id');
-        $data = null;
+        // Only accept PATCH POST and PUT requests
+        $this->request->allowMethod(['patch', 'post', 'put']);
+
+        $id = $this->getRequest()->getData('id');
+
         $brand = $this->Brands
             ->find()
             ->where([
@@ -142,31 +148,23 @@ class BrandsController extends AppController
             ])->first();
         //Check exist brand
         if ($brand) {
-            if ($this->request->is(['patch', 'post', 'put'])) {
-                $input['brand_name'] = trim($this->request->getData('brand_name'));
-                $input['update_time'] = Time::now();
-                $brand = $this->Brands->patchEntity($brand, $input);
-                if ($this->Brands->save($brand)) {
-                    $data = $this->Brands
-                        ->find()
-                        ->where([
-                            'id' => $id,
-                            'is_deleted' => 0,
-                        ])->first();
-                } else {
-                    $this->status = 'fail';
-                    $data = 'Save data failed, may be the brand name already exist';
-                }
+            $inputData['brand_name'] = trim($this->getRequest()->getData('brand_name'));
+            $inputData['update_user'] = 'brand';
+            $inputData['update_time'] = Time::now();
+            $brand = $this->Brands->patchEntity($brand, $inputData);
+            if ($this->Brands->save($brand)) {
+                $brand = ['id' => $id];
             } else {
                 $this->status = 'fail';
-                $this->data_name = 'message';
-                $data = 'Not post, patch or put method';
+                $this->data_name = 'error';
+                $category = $category->getErrors();
             }
         } else {
             $this->data_name = 'message';
-            $data = 'Data not found';
+            $brand = 'Data not found';
         }
-        $this->responseApi($this->status, $this->data_name, $data);
+
+        $this->responseApi($this->status, $this->data_name, $brand);
     }
 
     /**
@@ -178,8 +176,10 @@ class BrandsController extends AppController
      */
     public function delete($id = null)
     {
+        // Only accept POST and GET requests
+        $this->request->allowMethod(['delete', 'post']);
+
         $id = $this->getRequest()->getData('id');
-        $this->request->allowMethod(['post', 'delete']);
 
         $brand = $this->Brands
             ->find()
@@ -187,7 +187,7 @@ class BrandsController extends AppController
                 'id' => $id,
                 'is_deleted' => 0,
             ])->first();
-
+        //Check exist brand
         if ($brand) {
             $devices = $this->Devices->find()
                 ->where([
@@ -198,6 +198,7 @@ class BrandsController extends AppController
             // Check there are device that are using brand
             if ($devices->count() == 0) {
                 $brand->is_deleted = (int) 1;
+                $category->update_user = 'brand';
                 $brand->update_time = Time::now();
                 if ($this->Brands->save($brand)) {
                     $data_name = 'message';
@@ -211,7 +212,6 @@ class BrandsController extends AppController
                 $data_name = 'message';
                 $data = 'Cant not delete. There are device that are using this brand yet to be deleted ';
             }
-
         } else {
             $data_name = 'message';
             $data = 'Data not found';

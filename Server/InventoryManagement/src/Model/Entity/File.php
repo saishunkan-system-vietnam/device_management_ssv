@@ -11,6 +11,8 @@ use Cake\ORM\Entity;
  * @property string $relate_name
  * @property string $path
  * @property string|null $type
+ * @property string|null $created_user
+ * @property string|null $update_user
  * @property \Cake\I18n\FrozenTime|null $created_time
  * @property \Cake\I18n\FrozenTime|null $update_time
  * @property bool $is_deleted
@@ -34,6 +36,8 @@ class File extends Entity
         'relate_name' => true,
         'path' => true,
         'type' => true,
+        'created_user' => true,
+        'update_user' => true,
         'created_time' => true,
         'update_time' => true,
         'is_deleted' => true,

@@ -16,6 +16,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $approved_date
  * @property \Cake\I18n\FrozenTime|null $delivery_date
  * @property \Cake\I18n\FrozenTime $return_date
+ * @property string|null $created_user
+ * @property string|null $update_user
  * @property \Cake\I18n\FrozenTime|null $created_time
  * @property \Cake\I18n\FrozenTime|null $update_time
  * @property bool $is_deleted
@@ -36,6 +38,7 @@ class BorrowDevicesDetail extends Entity
      * @var array
      */
     protected $_accessible = [
+        'borrow_device_id' => true,
         'device_id' => true,
         'borrow_reason' => true,
         'return_reason' => true,
@@ -44,11 +47,12 @@ class BorrowDevicesDetail extends Entity
         'approved_date' => true,
         'delivery_date' => true,
         'return_date' => true,
+        'created_user' => true,
+        'update_user' => true,
         'created_time' => true,
         'update_time' => true,
         'is_deleted' => true,
         'borrow_device' => true,
         'device' => true
-        'borrow_device' => true
     ];
 }

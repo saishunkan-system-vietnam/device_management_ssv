@@ -55,6 +55,12 @@ class UsersTable extends Table
             ->allowEmptyString('user_name', false);
 
         $validator
+            ->scalar('full_name')
+            ->maxLength('full_name', 255)
+            ->requirePresence('full_name', 'create')
+            ->allowEmptyString('full_name', false);
+
+        $validator
             ->scalar('position')
             ->maxLength('position', 100)
             ->requirePresence('position', 'create')
@@ -63,6 +69,16 @@ class UsersTable extends Table
         $validator
             ->integer('level')
             ->allowEmptyString('level');
+
+        $validator
+            ->scalar('created_user')
+            ->maxLength('created_user', 100)
+            ->allowEmptyString('created_user');
+
+        $validator
+            ->scalar('update_user')
+            ->maxLength('update_user', 100)
+            ->allowEmptyString('update_user');
 
         $validator
             ->dateTime('created_time')

@@ -9,6 +9,8 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int|null $id_parent
  * @property string $category_name
+ * @property string|null $created_user
+ * @property string|null $update_user
  * @property \Cake\I18n\FrozenTime|null $created_time
  * @property \Cake\I18n\FrozenTime|null $update_time
  * @property bool $is_deleted
@@ -28,6 +30,8 @@ class Category extends Entity
     protected $_accessible = [
         'id_parent' => true,
         'category_name' => true,
+        'created_user' => true,
+        'update_user' => true,
         'created_time' => true,
         'update_time' => true,
         'is_deleted' => true
