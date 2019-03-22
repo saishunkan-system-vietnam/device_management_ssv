@@ -42,34 +42,39 @@ class DevicesController extends AppController
         $devicesTable = TableRegistry::get('Devices');
         $devices = $devicesTable->find();
         $device_quantity = $devicesTable->find()->select(['count' => 'count(1)']);
+        $arr = [];
 
         if (isset($input_data['id_cate']) && $input_data['id_cate'] != null) {
-            array_push($condition, ['id_cate' => trim($input_data['id_cate'])]);
+            $arr[] =  array_merge($condition, ['id_cate' => trim($input_data['id_cate'])]);
         }
         if (isset($input_data['serial_number']) && !empty($input_data['serial_number'])) {
-            array_push($condition, ['serial_number LIKE' => '%' . trim($input_data['serial_number']) . '%']);
+            $arr[] =  array_merge($condition, ['serial_number LIKE' => '%' . trim($input_data['serial_number']) . '%']);
         }
         if (isset($input_data['product_number']) && !empty($input_data['product_number'])) {
-            array_push($condition, ['product_number LIKE' => '%' . trim($input_data['product_number']) . '%']);
+            $arr[] =  array_merge($condition, ['product_number LIKE' => '%' . trim($input_data['product_number']) . '%']);
         }
         if (isset($input_data['name']) && !empty($input_data['name'])) {
-            array_push($condition, ['name LIKE' => '%' . trim($input_data['name']) . '%']);
+            $arr[] =  array_merge($condition, ['name LIKE' => '%' . trim($input_data['name']) . '%']);
         }
         if (isset($input_data['brand_id']) && $input_data['brand_id'] != null) {
-            array_push($condition, ['brand_id' => trim($input_data['brand_id'])]);
+            $arr[] =  array_merge($condition, ['brand_id' => trim($input_data['brand_id'])]);
         }
         if (isset($input_data['specifications']) && !empty($input_data['specifications'])) {
-            array_push($condition, ['specifications LIKE' => '%' . trim($input_data['specifications']) . '%']);
+            $arr[] =  array_merge($condition, ['specifications LIKE' => '%' . trim($input_data['specifications']) . '%']);
         }
         if (isset($input_data['status']) && $input_data['status'] != null) {
-            array_push($condition, ['status' => trim($input_data['status'])]);
+            $arr[] =  array_merge($condition, ['status' => trim($input_data['status'])]);
         }
 
-        $devices->where($condition)
+        $devices->where($condition)->where($arr)
             ->order(['id' => 'DESC'])
             ->limit($this->perpage)
             ->page($this->page);
-        $record_all = $device_quantity->where($condition)->first();
+        $record_all = $device_quantity->where($condition)->where($arr)->first();
+        if ($record_all->count == 0 ) {
+            $this->status = 'failed';
+            $devices = 'Data not found!';
+        }
         $this->responseApi($this->status, $this->data_name, $devices, $record_all['count']);
     }
 
@@ -89,7 +94,6 @@ class DevicesController extends AppController
             $this->data_name = 'message';
             $category = 'Data not found!';
         }
-
         $this->responseApi($this->status, $this->data_name, $devices);
     }
 
@@ -127,6 +131,8 @@ class DevicesController extends AppController
     public function addImage()
     {
         //add image devices
+        $this->request->allowMethod(['post']);
+
         $devicesTable = TableRegistry::get('Devices');
         $id = $this->getRequest()->getData('id');
         if ($id != null) {
@@ -179,6 +185,8 @@ class DevicesController extends AppController
     public function edit()
     {
         //edit
+        $this->request->allowMethod(['post']);
+
         $devicesTable = TableRegistry::get('Devices');
         $id = $this->request->getData('id');
         $devices = $devicesTable->find()
@@ -218,6 +226,8 @@ class DevicesController extends AppController
 
     public function editImage()
     {
+        $this->request->allowMethod(['post']);
+
         $devicesTable = TableRegistry::get('Devices');
         $id = $this->request->getData('id');
 
@@ -226,48 +236,55 @@ class DevicesController extends AppController
         $editImg = $this->request->getData();
         $path = 'img/upload/devices/' . $id;
         $imgName = str_replace($path . '/','',$images->path);
-        
-        if (file_exists($path)) {
-            unlink($path . '/' . $imgName);
-        }
-        foreach ($editImg['img'] as $value) {
-            if (!empty($value['name'])) {
-                $ext = pathinfo($value['name'], PATHINFO_EXTENSION);
-                $fileName = 'devices' . strtotime("now") . "." . $ext;
-                $uploadPath = $path . '/';
-                $uploadFile = $uploadPath . $fileName;
-                $valiExt = array('jpg', 'png', 'jpeg', 'gif');
-                if (in_array($ext, $valiExt)) {
-                    if (move_uploaded_file($value['tmp_name'], $uploadFile)) {
-                        $uploadImage = $images;
-                        $uploadImage->relate_id = $id;
-                        $uploadImage->relate_name = 'devices';
-                        $uploadImage->path = $path . '/' . $fileName;
-                        $uploadImage->type = 'detail';
-                        $uploadImage->is_delete = 0;
-                        if ($filesTable->save($uploadImage)) {
-                            $message = "Image saved!";
-                        }else {
-                            $message = "Failed to save!";
+        if ($editImg['img'] != null) {
+            if (file_exists($path)) {
+                unlink($path . '/' . $imgName);
+                
+            }
+            foreach ($editImg['img'] as $value) {
+                if (!empty($value['name'])) {
+                    $ext = pathinfo($value['name'], PATHINFO_EXTENSION);
+                    $fileName = 'devices' . strtotime("now") . "." . $ext;
+                    $uploadPath = $path . '/';
+                    $uploadFile = $uploadPath . $fileName;
+                    $valiExt = array('jpg', 'png', 'jpeg', 'gif');
+                    if (in_array($ext, $valiExt)) {
+                        if (move_uploaded_file($value['tmp_name'], $uploadFile)) {
+                            $uploadImage = $images;
+                            $uploadImage->relate_id = $id;
+                            $uploadImage->relate_name = 'devices';
+                            $uploadImage->path = $path . '/' . $fileName;
+                            $uploadImage->type = 'detail';
+                            $uploadImage->is_delete = 0;
+                            if ($filesTable->save($uploadImage)) {
+                                $message = "Image saved!";
+                            }else {
+                                $message = "Failed to save!";
+                            }
+                        } else {
+                            $message = "Unable to upload image, please try again!";
+                            $this->status = 'failed';
                         }
                     } else {
-                        $message = "Unable to upload image, please try again!";
+                        $message = "Please choose an image has type like jpg, png,... to upload!";
                         $this->status = 'failed';
                     }
                 } else {
-                    $message = "Please choose an image has type like jpg, png,... to upload!";
+                    $message = "Please choose an image to upload!";
                     $this->status = 'failed';
                 }
-            } else {
-                $message = "Please choose an image to upload!";
-                $this->status = 'failed';
             }
+        }else {
+            $message = "Please choose an image!";
+            $this->status = 'failed';
         }
+        
         $this->responseApi($this->status, $this->data_name, $message);
     }
 
     public function delete()
     {
+        $this->request->allowMethod(['post']);
         //delete logic device
         $devicesTable = TableRegistry::get('Devices');
         $devices = $this->request->getData();

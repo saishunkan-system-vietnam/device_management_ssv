@@ -88,7 +88,6 @@ class CategoriesController extends AppController
             foreach ($categories as $category) {
                 array_push($id_parent, $category->id);
             }
-
             array_push($condition, ['id_parent IN' => $id_parent]);
         }
 
@@ -153,7 +152,6 @@ class CategoriesController extends AppController
             $this->data_name = 'error';
             $category = $category->getErrors();
         }
-
         $this->responseApi($this->status, $this->data_name, $category);
     }
 
