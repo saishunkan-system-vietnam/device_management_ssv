@@ -40,19 +40,6 @@ class BorrowDevicesTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Borrowers', [
-            'foreignKey' => 'borrower_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Approveds', [
-            'foreignKey' => 'approved_id'
-        ]);
-        $this->belongsTo('Handovers', [
-            'foreignKey' => 'handover_id'
-        ]);
-        $this->hasMany('BorrowDevicesDetail', [
-            'foreignKey' => 'borrow_device_id'
-        ]);
     }
 
     /**
@@ -84,19 +71,6 @@ class BorrowDevicesTable extends Table
             ->allowEmptyDateTime('borrow_date', false);
 
         $validator
-            ->dateTime('approved_date')
-            ->allowEmptyDateTime('approved_date');
-
-        $validator
-            ->dateTime('delivery_date')
-            ->allowEmptyDateTime('delivery_date');
-
-        $validator
-            ->dateTime('return_date')
-            ->requirePresence('return_date', 'create')
-            ->allowEmptyDateTime('return_date', false);
-
-        $validator
             ->scalar('created_user')
             ->maxLength('created_user', 100)
             ->allowEmptyString('created_user');
@@ -114,11 +88,6 @@ class BorrowDevicesTable extends Table
             ->dateTime('update_time')
             ->allowEmptyDateTime('update_time');
 
-        $validator
-            ->boolean('is_deleted')
-            ->requirePresence('is_deleted', 'create')
-            ->allowEmptyString('is_deleted', false);
-
         return $validator;
     }
 
@@ -131,10 +100,7 @@ class BorrowDevicesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['borrower_id'], 'Borrowers'));
-        $rules->add($rules->existsIn(['approved_id'], 'Approveds'));
-        $rules->add($rules->existsIn(['handover_id'], 'Handovers'));
-
         return $rules;
     }
+
 }

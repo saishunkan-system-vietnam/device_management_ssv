@@ -53,11 +53,13 @@ class AppController extends Controller
         $this->payload = [
             'status' => 'sucsess',
         ];
-
+        $json_data = $this->request->input('json_decode'); // Get data from json request type
         if ($this->getRequest()->getQuery('perpage') != null) {
             $this->perpage = $this->getRequest()->getQuery('perpage');
         } elseif ($this->getRequest()->getData('perpage') != null) {
             $this->perpage = $this->getRequest()->getData('perpage');
+        } elseif($json_data != null && isset($json_data->perpage)) {
+            $this->perpage = $json_data->perpage;
         } else {
             $this->perpage = self::PERPAGE;
         }
@@ -66,6 +68,8 @@ class AppController extends Controller
             $this->page = $this->getRequest()->getQuery('page');
         } elseif ($this->getRequest()->getData('page') != null) {
             $this->page = $this->getRequest()->getData('page');
+        } elseif($json_data != null && isset($json_data->page)) {
+            $this->perpage = $json_data->page;
         } else {
             $this->page = self::PAGE;
         }
@@ -73,6 +77,7 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
         ]);
+
         $this->loadComponent('Flash');
         //$this->loadComponent('Csrf');
         /*
