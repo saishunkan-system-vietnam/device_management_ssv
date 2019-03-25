@@ -51,10 +51,6 @@ class DevicesTable extends Table
         $this->hasMany('BorrowDevicesDetail', [
             'foreignKey' => 'device_id'
         ]);
-        // $this->hasMany('ChildDevices', [
-        //     'className' => 'Devices',
-        //     'foreignKey' => 'parent_id'
-        // ]);
     }
 
     /**

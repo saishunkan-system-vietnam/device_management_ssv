@@ -11,100 +11,98 @@ use App\Controller\AppController;
  */
 class FilesController extends AppController
 {
-
+    public $status;
+    public $data_name;
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function initialize()
     {
-
-        $files = $this->paginate($this->Files);
-
-        $this->payload['payload'] = $files;
+        parent::initialize();
+        $this->autoRender = false;
+        $this->status = 'success';
+        $this->data_name = 'devices';
 
     }
-
-    /**
-     * View method
-     *
-     * @param string|null $id File id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $file = $this->Files->get($id, [
-            'contain' => []
-        ]);
-
-        $this->payload['payload'] = $file;
-    }
-
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
     public function add()
     {
-        $file = $this->Files->newEntity();
-        if ($this->request->is('post')) {
-            $file = $this->Files->patchEntity($file, $this->request->getData());
-            if ($this->Files->save($file)) {
-                $this->Flash->success(__('The file has been saved.'));
+        //add image devices
+        $this->request->allowMethod(['post']);
 
-                return $this->redirect(['action' => 'index']);
+        $id = $this->getRequest()->getData('id');
+        $relate_name = $this->getRequest()->getData('relate_name');
+        $type = $this->getRequest()->getData('type');
+        if ($id != null) {
+            $images = $this->request->getData();
+            $path = "img/upload/$relate_name/$id";
+            if (!file_exists($path)) {
+                mkdir($path . '/', 0777, true);
             }
-            $this->Flash->error(__('The file could not be saved. Please, try again.'));
+            foreach ($images['img'] as $value) {
+                if (!empty($value['name'])) {
+                    $ext = pathinfo($value['name'], PATHINFO_EXTENSION);
+                    $fileName = $relate_name . strtotime("now") . "." . $ext;
+                    $uploadPath = $path . '/';
+                    $uploadFile = $uploadPath . $fileName;
+                    $valiExt = array('jpg', 'png', 'jpeg', 'gif');
+                    if (in_array($ext, $valiExt)) {
+                        if (move_uploaded_file($value['tmp_name'], $uploadFile)) {
+                            $uploadImage = $this->Files->newEntity();
+                            $uploadImage->relate_id = $id;
+                            $uploadImage->relate_name = $relate_name;
+                            $uploadImage->path = $uploadFile;
+                            $uploadImage->type = $type;
+                            $uploadImage->is_delete = 0;
+                            if ($this->Files->save($uploadImage)) {
+                                $message = "Image saved!";
+                            }else {
+                                $message = "Failed to save!";
+                            }
+                        } else {
+                            $message = "Unable to upload image, please try again!";
+                            $this->status = 'failed';
+                        }
+                    } else {
+                        $message = "Please choose an image has type like jpg, png,... to upload!";
+                        $this->status = 'failed';
+                    }
+                } else {
+                    $message = "Please choose an image to upload!";
+                    $this->status = 'failed';
+                }
+            }
+        }else {
+            $message = "Please input id to save an image!";
+            $this->status = 'failed';
         }
-        //$this->set(compact('file'));
-        $this->payload['payload'] = $file;
+        $this->responseApi($this->status, $this->data_name, $message);
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id File id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        // $file = $this->Files->get($id, [
-        //     'contain' => []
-        // ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $file = $this->Files->patchEntity($file, $this->request->getData());
-            if ($this->Files->save($file)) {
-                $this->Flash->success(__('The file has been saved.'));
+    public function delete() {
+        //add image devices
+        $this->request->allowMethod(['post']);
 
-                return $this->redirect(['action' => 'index']);
+        $id = $this->getRequest()->getData('id');
+        $image = $this->Files->get($id);
+        if ($image) {
+            $str = $image->path;
+            if ($this->Files->delete($image)) {
+                if (is_file($str)) {
+                    //Attempt to delete it.
+                    unlink($str);
+                }
+                $message = "Deleted!";
             }
-            $this->Flash->error(__('The file could not be saved. Please, try again.'));
-        }
-        //$this->set(compact('file'));
-        $this->payload['payload'] = $file;
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id File id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $file = $this->Files->get($id);
-        if ($this->Files->delete($file)) {
-            $this->Flash->success(__('The file has been deleted.'));
+            else {
+                $message = "Failed to delete!";
+                $this->status = 'failed';
+            }
         } else {
-            $this->Flash->error(__('The file could not be deleted. Please, try again.'));
+            $message = "Please input id to delete images!";
+            $this->status = 'failed';
         }
-
-        return $this->redirect(['action' => 'index']);
+        $this->responseApi($this->status, $this->data_name, $message);
     }
 }

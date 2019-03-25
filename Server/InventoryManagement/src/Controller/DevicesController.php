@@ -102,9 +102,6 @@ class DevicesController extends AppController
         // Only accept POST requests
         $this->request->allowMethod(['post']);
 
-        $devicesTable = TableRegistry::get('Devices');
-        $devices = $devicesTable->newEntity();
-
         $inputData['parent_id'] = trim($this->getRequest()->getData('parent_id'));
         $inputData['id_parent'] = trim($this->getRequest()->getData('id_parent'));
         $inputData['id_cate'] = trim($this->getRequest()->getData('id_cate'));
@@ -117,9 +114,9 @@ class DevicesController extends AppController
         $inputData['created_user'] = 'device';
 
         //validate
-        $devices = $this->Devices->patchEntity($devices, $inputData);
-        if ($data = $this->Devices->save($devices)) {
-            $device = ['id' => $data->id];
+        $devices = $this->Devices->newEntity($inputData);
+        if ($this->Devices->save($devices)) {
+            $device = ['id' => $devices->id];
         } else {
             $this->status = 'failed';
             $this->data_name = 'error';
@@ -128,72 +125,13 @@ class DevicesController extends AppController
         $this->responseApi($this->status, $this->data_name, $device);
     }
 
-    public function addImage()
-    {
-        //add image devices
-        $this->request->allowMethod(['post']);
-
-        $devicesTable = TableRegistry::get('Devices');
-        $id = $this->getRequest()->getData('id');
-        if ($id != null) {
-            $filesTable = TableRegistry::get('Files');
-            $images = $this->request->getData();
-            $path = 'img/upload/devices/' . $id;
-            if (!file_exists($path)) {
-                mkdir($path . '/', 0777, true);
-            }
-            foreach ($images['img'] as $value) {
-                if (!empty($value['name'])) {
-                    $ext = pathinfo($value['name'], PATHINFO_EXTENSION);
-                    $fileName = 'devices' . strtotime("now") . "." . $ext;
-                    $uploadPath = $path . '/';
-                    $uploadFile = $uploadPath . $fileName;
-                    $valiExt = array('jpg', 'png', 'jpeg', 'gif');
-                    if (in_array($ext, $valiExt)) {
-                        if (move_uploaded_file($value['tmp_name'], $uploadFile)) {
-                            $uploadImage = $filesTable->newEntity();
-                            $uploadImage->relate_id = $id;
-                            $uploadImage->relate_name = 'devices';
-                            $uploadImage->path = $path . '/' . $fileName;
-                            $uploadImage->type = 'detail';
-                            $uploadImage->is_delete = 0;
-                            if ($filesTable->save($uploadImage)) {
-                                $message = "Image saved!";
-                            }else {
-                                $message = "Failed to save!";
-                            }
-                        } else {
-                            $message = "Unable to upload image, please try again!";
-                            $this->status = 'failed';
-                        }
-                    } else {
-                        $message = "Please choose an image has type like jpg, png,... to upload!";
-                        $this->status = 'failed';
-                    }
-                } else {
-                    $message = "Please choose an image to upload!";
-                    $this->status = 'failed';
-                }
-            }
-        }else {
-            $message = "Please input id to save an image!";
-            $this->status = 'failed';
-        }
-        $this->responseApi($this->status, $this->data_name, $message);
-    }
-
     public function edit()
     {
         //edit
         $this->request->allowMethod(['post']);
 
-        $devicesTable = TableRegistry::get('Devices');
         $id = $this->request->getData('id');
-        $devices = $devicesTable->find()
-            ->where([
-                'id' => $id,
-                'is_deleted' => 0
-            ])->first();
+        $devices = $this->Devices->get($id);
         //Check exist brand
         if ($devices) {
             $inputData['parent_id'] = trim($this->getRequest()->getData('parent_id'));
@@ -224,85 +162,22 @@ class DevicesController extends AppController
         $this->responseApi($this->status, $this->data_name, $devices, $message);
     }
 
-    public function editImage()
-    {
-        $this->request->allowMethod(['post']);
-
-        $devicesTable = TableRegistry::get('Devices');
-        $id = $this->request->getData('id');
-
-        $filesTable = TableRegistry::get('Files');
-        $images = $filesTable->find()->where(['relate_id' => $id , 'is_deleted' => 0 , 'relate_name' => 'devices'])->first();
-        $editImg = $this->request->getData();
-        $path = 'img/upload/devices/' . $id;
-        $imgName = str_replace($path . '/','',$images->path);
-        if ($editImg['img'] != null) {
-            if (file_exists($path)) {
-                unlink($path . '/' . $imgName);
-                
-            }
-            foreach ($editImg['img'] as $value) {
-                if (!empty($value['name'])) {
-                    $ext = pathinfo($value['name'], PATHINFO_EXTENSION);
-                    $fileName = 'devices' . strtotime("now") . "." . $ext;
-                    $uploadPath = $path . '/';
-                    $uploadFile = $uploadPath . $fileName;
-                    $valiExt = array('jpg', 'png', 'jpeg', 'gif');
-                    if (in_array($ext, $valiExt)) {
-                        if (move_uploaded_file($value['tmp_name'], $uploadFile)) {
-                            $uploadImage = $images;
-                            $uploadImage->relate_id = $id;
-                            $uploadImage->relate_name = 'devices';
-                            $uploadImage->path = $path . '/' . $fileName;
-                            $uploadImage->type = 'detail';
-                            $uploadImage->is_delete = 0;
-                            if ($filesTable->save($uploadImage)) {
-                                $message = "Image saved!";
-                            }else {
-                                $message = "Failed to save!";
-                            }
-                        } else {
-                            $message = "Unable to upload image, please try again!";
-                            $this->status = 'failed';
-                        }
-                    } else {
-                        $message = "Please choose an image has type like jpg, png,... to upload!";
-                        $this->status = 'failed';
-                    }
-                } else {
-                    $message = "Please choose an image to upload!";
-                    $this->status = 'failed';
-                }
-            }
-        }else {
-            $message = "Please choose an image!";
-            $this->status = 'failed';
-        }
-        
-        $this->responseApi($this->status, $this->data_name, $message);
-    }
-
     public function delete()
     {
         $this->request->allowMethod(['post']);
         //delete logic device
-        $devicesTable = TableRegistry::get('Devices');
         $devices = $this->request->getData();
         $id = $devices['id'];
         //img
-        $filesTable = TableRegistry::get('Files');
-        $images = $filesTable->find()->where(['relate_id' => $id ,'is_deleted' => 0 , 'relate_name' => 'devices'])->all()->toArray();
         $path = 'img/upload/devices/' . $id;
         //check
         if ($id != null) {
-            $devices = $devicesTable->get($id);
+            $devices = $this->Devices->get($id);
             $devices->is_deleted = 1;
             $devices = $this->Devices->patchEntity($devices, $this->request->getData());
-            if ($devicesTable->save($devices)) {
-                foreach ($images as $value) {
-                    unlink($value->path);
-                }
-                $filesTable->deleteAll(['relate_id' => $id , 'relate_name' => 'devices']);
+            if ($this->Devices->save($devices)) {
+                $this->deleteAllFile($path);
+                $this->Files->deleteAll(['relate_id' => $id , 'relate_name' => 'devices']);
                 rmdir($path);
                 $message = "Deleted!";
             } else {
@@ -310,9 +185,30 @@ class DevicesController extends AppController
                 $this->status = 'failed';
             }
         }else {
-            $message = "Please input id to show record!";
+            $message = "Please input id to delete device!";
             $this->status = 'failed';
         }
         $this->responseApi($this->status, $this->data_name, $message);
+    }
+
+    private function deleteAllFile($str) {
+        //It it's a file.
+        if (is_file($str)) {
+            //Attempt to delete it.
+            return unlink($str);
+        }
+        //If it's a directory.
+        elseif (is_dir($str)) {
+            //Get a list of the files in this directory.
+            $scan = glob(rtrim($str,'/').'/*');
+            //Loop through the list of files.
+            foreach($scan as $index=>$path) {
+                //Call our recursive function.
+                deleteAll($path);
+            }
+            //Remove the directory itself.
+            return @rmdir($str);
+        }
+        return true;
     }
 }

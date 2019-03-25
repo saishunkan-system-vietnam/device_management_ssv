@@ -117,10 +117,11 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/devices/index', ['controller' => 'Devices','action' => 'index']);
     $routes->connect('/devices/add', ['controller' => 'Devices','action' => 'add']);
     $routes->connect('/devices/view/:id', ['controller' => 'Devices','action' => 'view']);
-    $routes->connect('/devices/addImage', ['controller' => 'Devices','action' => 'addImage']);
     $routes->connect('/devices/edit', ['controller' => 'Devices','action' => 'edit']);
-    $routes->connect('/devices/editImage', ['controller' => 'Devices','action' => 'editImage']);
     $routes->connect('/devices/delete', ['controller' => 'Devices','action' => 'delete']);
+
+    $routes->connect('/files/add', ['controller' => 'Files','action' => 'add']);
+    $routes->connect('/files/delete', ['controller' => 'Files','action' => 'delete']);
 
     //$routes->fallbacks(DashedRoute::class);
 });
