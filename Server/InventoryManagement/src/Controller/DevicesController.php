@@ -25,7 +25,7 @@ class DevicesController extends AppController
         $this->autoRender = false;
         $this->status = 'success';
         $this->data_name = 'devices';
-
+        $this->loadModel('Files');
     }
 
     public function index()
@@ -45,25 +45,25 @@ class DevicesController extends AppController
         $arr = [];
 
         if (isset($input_data['id_cate']) && $input_data['id_cate'] != null) {
-            $arr[] =  array_merge($condition, ['id_cate' => trim($input_data['id_cate'])]);
+            array_merge($condition, $arr[] = ['id_cate' => trim($input_data['id_cate'])]);
         }
         if (isset($input_data['serial_number']) && !empty($input_data['serial_number'])) {
-            $arr[] =  array_merge($condition, ['serial_number LIKE' => '%' . trim($input_data['serial_number']) . '%']);
+            array_merge($condition, $arr[] = ['serial_number LIKE' => '%' . trim($input_data['serial_number']) . '%']);
         }
         if (isset($input_data['product_number']) && !empty($input_data['product_number'])) {
-            $arr[] =  array_merge($condition, ['product_number LIKE' => '%' . trim($input_data['product_number']) . '%']);
+            array_merge($condition, $arr[] = ['product_number LIKE' => '%' . trim($input_data['product_number']) . '%']);
         }
         if (isset($input_data['name']) && !empty($input_data['name'])) {
-            $arr[] =  array_merge($condition, ['name LIKE' => '%' . trim($input_data['name']) . '%']);
+            array_merge($condition, $arr[] = ['name LIKE' => '%' . trim($input_data['name']) . '%']);
         }
         if (isset($input_data['brand_id']) && $input_data['brand_id'] != null) {
-            $arr[] =  array_merge($condition, ['brand_id' => trim($input_data['brand_id'])]);
+            array_merge($condition, $arr[] = ['brand_id' => trim($input_data['brand_id'])]);
         }
         if (isset($input_data['specifications']) && !empty($input_data['specifications'])) {
-            $arr[] =  array_merge($condition, ['specifications LIKE' => '%' . trim($input_data['specifications']) . '%']);
+            array_merge($condition, $arr[] = ['specifications LIKE' => '%' . trim($input_data['specifications']) . '%']);
         }
         if (isset($input_data['status']) && $input_data['status'] != null) {
-            $arr[] =  array_merge($condition, ['status' => trim($input_data['status'])]);
+            array_merge($condition, $arr[] = ['status' => trim($input_data['status'])]);
         }
 
         $devices->where($condition)->where($arr)
@@ -167,18 +167,18 @@ class DevicesController extends AppController
         $this->request->allowMethod(['post']);
         //delete logic device
         $devices = $this->request->getData();
+        $relate_name = $this->getRequest()->getData('relate_name');
         $id = $devices['id'];
         //img
-        $path = 'img/upload/devices/' . $id;
+        $path = "img/upload/$relate_name/$id";
         //check
         if ($id != null) {
             $devices = $this->Devices->get($id);
             $devices->is_deleted = 1;
             $devices = $this->Devices->patchEntity($devices, $this->request->getData());
             if ($this->Devices->save($devices)) {
-                $this->deleteAllFile($path);
                 $this->Files->deleteAll(['relate_id' => $id , 'relate_name' => 'devices']);
-                rmdir($path);
+                $this->deleteAllFile($path);
                 $message = "Deleted!";
             } else {
                 $message = "Failed to delete!";
@@ -204,7 +204,7 @@ class DevicesController extends AppController
             //Loop through the list of files.
             foreach($scan as $index=>$path) {
                 //Call our recursive function.
-                deleteAll($path);
+                $this->deleteAllFile($path);
             }
             //Remove the directory itself.
             return @rmdir($str);

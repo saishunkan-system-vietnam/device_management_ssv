@@ -24,59 +24,66 @@ class FilesController extends AppController
         $this->autoRender = false;
         $this->status = 'success';
         $this->data_name = 'devices';
+        $this->loadModel('Devices');
 
     }
     public function add()
     {
         //add image devices
         $this->request->allowMethod(['post']);
-
         $id = $this->getRequest()->getData('id');
         $relate_name = $this->getRequest()->getData('relate_name');
         $type = $this->getRequest()->getData('type');
-        if ($id != null) {
-            $images = $this->request->getData();
-            $path = "img/upload/$relate_name/$id";
-            if (!file_exists($path)) {
-                mkdir($path . '/', 0777, true);
-            }
-            foreach ($images['img'] as $value) {
-                if (!empty($value['name'])) {
-                    $ext = pathinfo($value['name'], PATHINFO_EXTENSION);
-                    $fileName = $relate_name . strtotime("now") . "." . $ext;
-                    $uploadPath = $path . '/';
-                    $uploadFile = $uploadPath . $fileName;
-                    $valiExt = array('jpg', 'png', 'jpeg', 'gif');
-                    if (in_array($ext, $valiExt)) {
-                        if (move_uploaded_file($value['tmp_name'], $uploadFile)) {
-                            $uploadImage = $this->Files->newEntity();
-                            $uploadImage->relate_id = $id;
-                            $uploadImage->relate_name = $relate_name;
-                            $uploadImage->path = $uploadFile;
-                            $uploadImage->type = $type;
-                            $uploadImage->is_delete = 0;
-                            if ($this->Files->save($uploadImage)) {
-                                $message = "Image saved!";
-                            }else {
-                                $message = "Failed to save!";
+        $devices = $this->Devices->find()->where(['id' => $id])->first();
+        if ($devices->is_deleted == true) {
+            $message = "This record is already deleted!";
+            $this->status = 'failed';
+        }else {
+            if ($id != null) {
+                $images = $this->request->getData();
+                $path = "img/upload/$relate_name/$id";
+                if (!file_exists($path)) {
+                    mkdir($path . '/', 0777, true);
+                }
+                foreach ($images['img'] as $value) {
+                    if (!empty($value['name'])) {
+                        $ext = pathinfo($value['name'], PATHINFO_EXTENSION);
+                        $fileName = $relate_name . round(microtime(true)*1000) . "." . $ext;
+                        $uploadPath = $path . '/';
+                        $uploadFile = $uploadPath . $fileName;
+                        $valiExt = array('jpg', 'png', 'jpeg', 'gif');
+                        if (in_array($ext, $valiExt)) {
+                            if (move_uploaded_file($value['tmp_name'], $uploadFile)) {
+                                $uploadImage = $this->Files->newEntity();
+                                $uploadImage->relate_id = $id;
+                                $uploadImage->relate_name = $relate_name;
+                                $uploadImage->path = $uploadFile;
+                                $uploadImage->type = $type;
+                                $uploadImage->is_delete = 0;
+                                if ($this->Files->save($uploadImage)) {
+                                    $message = "Image saved!";
+                                }else {
+                                    $message = "Failed to save!";
+                                }
+                            } else {
+                                $message = "Unable to upload image, please try again!";
+                                $this->status = 'failed';
                             }
                         } else {
-                            $message = "Unable to upload image, please try again!";
+                            $message = "Please choose an image has type like jpg, png,... to upload!";
                             $this->status = 'failed';
                         }
                     } else {
-                        $message = "Please choose an image has type like jpg, png,... to upload!";
+                        $message = "Please choose an image to upload!";
                         $this->status = 'failed';
                     }
-                } else {
-                    $message = "Please choose an image to upload!";
-                    $this->status = 'failed';
                 }
+            }else {
+                $message = "Please input id to save an image!";
+                $this->status = 'failed';
             }
-        }else {
-            $message = "Please input id to save an image!";
-            $this->status = 'failed';
         }
+        
         $this->responseApi($this->status, $this->data_name, $message);
     }
 
