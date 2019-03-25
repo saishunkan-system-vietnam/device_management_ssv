@@ -45,25 +45,25 @@ class DevicesController extends AppController
         $arr = [];
 
         if (isset($input_data['id_cate']) && $input_data['id_cate'] != null) {
-            $arr[] =  array_merge($condition, ['id_cate' => trim($input_data['id_cate'])]);
+            array_merge($condition, $arr[] = ['id_cate' => trim($input_data['id_cate'])]);
         }
         if (isset($input_data['serial_number']) && !empty($input_data['serial_number'])) {
-            $arr[] =  array_merge($condition, ['serial_number LIKE' => '%' . trim($input_data['serial_number']) . '%']);
+            array_merge($condition, $arr[] = ['serial_number LIKE' => '%' . trim($input_data['serial_number']) . '%']);
         }
         if (isset($input_data['product_number']) && !empty($input_data['product_number'])) {
-            $arr[] =  array_merge($condition, ['product_number LIKE' => '%' . trim($input_data['product_number']) . '%']);
+            array_merge($condition, $arr[] = ['product_number LIKE' => '%' . trim($input_data['product_number']) . '%']);
         }
         if (isset($input_data['name']) && !empty($input_data['name'])) {
-            $arr[] =  array_merge($condition, ['name LIKE' => '%' . trim($input_data['name']) . '%']);
+            array_merge($condition, $arr[] = ['name LIKE' => '%' . trim($input_data['name']) . '%']);
         }
         if (isset($input_data['brand_id']) && $input_data['brand_id'] != null) {
-            $arr[] =  array_merge($condition, ['brand_id' => trim($input_data['brand_id'])]);
+            array_merge($condition, $arr[] = ['brand_id' => trim($input_data['brand_id'])]);
         }
         if (isset($input_data['specifications']) && !empty($input_data['specifications'])) {
-            $arr[] =  array_merge($condition, ['specifications LIKE' => '%' . trim($input_data['specifications']) . '%']);
+           array_merge($condition,  $arr[] = ['specifications LIKE' => '%' . trim($input_data['specifications']) . '%']);
         }
         if (isset($input_data['status']) && $input_data['status'] != null) {
-            $arr[] =  array_merge($condition, ['status' => trim($input_data['status'])]);
+            array_merge($condition, $arr[] = ['status' => trim($input_data['status'])]);
         }
 
         $devices->where($condition)->where($arr)
@@ -101,7 +101,6 @@ class DevicesController extends AppController
     {
         // Only accept POST requests
         $this->request->allowMethod(['post']);
-
         $devicesTable = TableRegistry::get('Devices');
         $devices = $devicesTable->newEntity();
 
@@ -132,7 +131,6 @@ class DevicesController extends AppController
     {
         //add image devices
         $this->request->allowMethod(['post']);
-
         $devicesTable = TableRegistry::get('Devices');
         $id = $this->getRequest()->getData('id');
         if ($id != null) {
@@ -186,7 +184,6 @@ class DevicesController extends AppController
     {
         //edit
         $this->request->allowMethod(['post']);
-
         $devicesTable = TableRegistry::get('Devices');
         $id = $this->request->getData('id');
         $devices = $devicesTable->find()
@@ -194,6 +191,7 @@ class DevicesController extends AppController
                 'id' => $id,
                 'is_deleted' => 0
             ])->first();
+
         //Check exist brand
         if ($devices) {
             $inputData['parent_id'] = trim($this->getRequest()->getData('parent_id'));
@@ -227,7 +225,6 @@ class DevicesController extends AppController
     public function editImage()
     {
         $this->request->allowMethod(['post']);
-
         $devicesTable = TableRegistry::get('Devices');
         $id = $this->request->getData('id');
 
@@ -284,33 +281,40 @@ class DevicesController extends AppController
 
     public function delete()
     {
+        //delete device
         $this->request->allowMethod(['post']);
-        //delete logic device
         $devicesTable = TableRegistry::get('Devices');
         $devices = $this->request->getData();
         $id = $devices['id'];
+        
         //img
         $filesTable = TableRegistry::get('Files');
-        $images = $filesTable->find()->where(['relate_id' => $id ,'is_deleted' => 0 , 'relate_name' => 'devices'])->all()->toArray();
         $path = 'img/upload/devices/' . $id;
+        $allImg = glob($path . '/*');
+        //dd($allImg);
         //check
         if ($id != null) {
             $devices = $devicesTable->get($id);
             $devices->is_deleted = 1;
             $devices = $this->Devices->patchEntity($devices, $this->request->getData());
             if ($devicesTable->save($devices)) {
-                foreach ($images as $value) {
-                    unlink($value->path);
+                foreach ($allImg as $value) {
+                    unlink($value);
                 }
                 $filesTable->deleteAll(['relate_id' => $id , 'relate_name' => 'devices']);
-                rmdir($path);
-                $message = "Deleted!";
+                if (file_exists($path)) {
+                    rmdir($path);
+                    $message = "Folder $id is deleted!";
+                }else {
+                    $message = "Folder $id isn't exists!";
+                }
+                
             } else {
                 $message = "Failed to delete!";
                 $this->status = 'failed';
             }
         }else {
-            $message = "Please input id to show record!";
+            $message = "Please input id to delete record!";
             $this->status = 'failed';
         }
         $this->responseApi($this->status, $this->data_name, $message);
