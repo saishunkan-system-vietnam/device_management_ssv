@@ -20,16 +20,9 @@ class CategoriesController extends AppController
     public $status;
 
     /**
-     *  Data Name Table result or Message
+     *  Data Name Table result or Message name
      */
     public $data_name;
-
-    /**
-     * Number page
-     */
-    public $page = 1;
-
-    public $perpage = 1;
 
     /**
      * Initialization hook method.
@@ -74,10 +67,10 @@ class CategoriesController extends AppController
 
         if (isset($inputData['id_parent']) && $inputData['id_parent'] != null &&
             isset($inputData['children_flg']) && $inputData['children_flg'] != 1) {
-            array_push($condition, ['id_parent' => trim($inputData['id_parent'])]);
+            $condition = array_merge($condition, ['id_parent' => trim($inputData['id_parent'])]);
         }
         if (isset($inputData['category_name']) && !empty($inputData['category_name'])) {
-            array_push($condition, ['category_name LIKE ' => '%' . trim($inputData['category_name']) . '%']);
+            $condition = array_merge($condition, ['category_name LIKE ' => '%' . trim($inputData['category_name']) . '%']);
         }
 
         if (isset($inputData['children_flg']) && $inputData['children_flg'] == 1) {
@@ -88,7 +81,8 @@ class CategoriesController extends AppController
             foreach ($categories as $category) {
                 array_push($id_parent, $category->id);
             }
-            array_push($condition, ['id_parent IN' => $id_parent]);
+
+            $condition = array_merge($condition, ['id_parent IN' => $id_parent]);
         }
 
         $categories->where($condition)
@@ -117,9 +111,9 @@ class CategoriesController extends AppController
             ->where([
                 'id' => $id,
                 'is_deleted' => 0,
-            ])->all();
+            ])->first();
 
-        if ($category->count() == 0) {
+        if (empty($category)) {
             $this->status = 'fail';
             $this->data_name = 'message';
             $category = 'Data not found';
@@ -152,6 +146,7 @@ class CategoriesController extends AppController
             $this->data_name = 'error';
             $category = $category->getErrors();
         }
+
         $this->responseApi($this->status, $this->data_name, $category);
     }
 

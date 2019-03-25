@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -38,14 +37,6 @@ class BorrowDevicesDetailTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('BorrowDevices', [
-            'foreignKey' => 'borrow_device_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Devices', [
-            'foreignKey' => 'device_id',
-            'joinType' => 'INNER'
-        ]);
     }
 
     /**
@@ -77,19 +68,6 @@ class BorrowDevicesDetailTable extends Table
             ->allowEmptyDateTime('borrow_date', false);
 
         $validator
-            ->dateTime('approved_date')
-            ->allowEmptyDateTime('approved_date');
-
-        $validator
-            ->dateTime('delivery_date')
-            ->allowEmptyDateTime('delivery_date');
-
-        $validator
-            ->dateTime('return_date')
-            ->requirePresence('return_date', 'create')
-            ->allowEmptyDateTime('return_date', false);
-
-        $validator
             ->scalar('created_user')
             ->maxLength('created_user', 100)
             ->allowEmptyString('created_user');
@@ -107,11 +85,6 @@ class BorrowDevicesDetailTable extends Table
             ->dateTime('update_time')
             ->allowEmptyDateTime('update_time');
 
-        $validator
-            ->boolean('is_deleted')
-            ->requirePresence('is_deleted', 'create')
-            ->allowEmptyString('is_deleted', false);
-
         return $validator;
     }
 
@@ -124,9 +97,7 @@ class BorrowDevicesDetailTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['borrow_device_id'], 'BorrowDevices'));
-        $rules->add($rules->existsIn(['device_id'], 'Devices'));
-
         return $rules;
     }
+
 }

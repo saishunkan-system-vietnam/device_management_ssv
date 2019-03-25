@@ -78,7 +78,12 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/brand/edit/:id', ['controller' => 'Brands', 'action' => 'edit']);
     $routes->connect('/brand/delete/:id', ['controller' => 'Brands', 'action' => 'delete']);
     $routes->connect('/brand/add', ['controller' => 'Brands', 'action' => 'add']);
-
+    /** Borrow Devices*/
+    $routes->connect('/borrow_devices/index', ['controller' => 'BorrowDevices', 'action' => 'index']);
+    $routes->connect('/borrow_devices/view/:id', ['controller' => 'BorrowDevices', 'action' => 'view']);
+    $routes->connect('/borrow_devices/edit/:id', ['controller' => 'BorrowDevices', 'action' => 'edit']);
+    $routes->connect('/borrow_devices/delete/:id', ['controller' => 'BorrowDevices', 'action' => 'delete']);
+    $routes->connect('/borrow_devices/add', ['controller' => 'BorrowDevices', 'action' => 'add']);
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */

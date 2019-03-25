@@ -63,7 +63,7 @@ class BrandsController extends AppController
         $brands = $this->Brands->find();
         $brand_quantity = $this->Brands->find()->select(['count' => 'count(1)']);
         if (isset($inputData['brand_name']) && !empty($inputData['brand_name'])) {
-            array_push($condition, ['brand_name Like' => '%' . trim($inputData['brand_name']) . '%']);
+            $condition = array_merge($condition, ['brand_name Like' => '%' . trim($inputData['brand_name']) . '%']);
         }
         $brands->where($condition)
             ->order(['id' => 'DESC'])
@@ -90,9 +90,9 @@ class BrandsController extends AppController
             ->where([
                 'id' => $id,
                 'is_deleted' => 0,
-            ])->all();
+            ])->first();
 
-        if ($brand->count() == 0) {
+        if (empty($brand)) {
             $this->status = 'fail';
             $this->data_name = 'message';
             $brand = 'Data not found';
