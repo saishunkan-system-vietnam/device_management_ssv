@@ -202,7 +202,7 @@ class CategoriesController extends AppController
      */
     public function delete($id = null)
     {
-        // Only accept POST and GET requests
+        // Only accept POST and DELETE requests
         $this->request->allowMethod(['delete', 'post']);
 
         $id = $this->getRequest()->getData('id');
@@ -227,7 +227,7 @@ class CategoriesController extends AppController
                 $category->update_user = 'category';
                 $category->update_time = Time::now();
                 if ($this->Categories->save($category)) {
-                    $data_name = 'message';
+                    $this->data_name = 'message';
                     $category = 'Delete data successfully';
                 } else {
                     $this->status = 'fail';
@@ -235,11 +235,11 @@ class CategoriesController extends AppController
                     $category = 'Delete data failed';
                 }
             } else {
-                $data_name = 'message';
+                $this->data_name = 'message';
                 $category = 'Cant not delete. There are device that are using this category yet to be deleted ';
             }
         } else {
-            $data_name = 'message';
+            $this->data_name = 'message';
             $category = 'Data not found';
         }
 

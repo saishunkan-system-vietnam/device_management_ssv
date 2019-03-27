@@ -176,7 +176,7 @@ class BrandsController extends AppController
      */
     public function delete($id = null)
     {
-        // Only accept POST and GET requests
+        // Only accept POST and DELETE requests
         $this->request->allowMethod(['delete', 'post']);
 
         $id = $this->getRequest()->getData('id');
@@ -201,7 +201,7 @@ class BrandsController extends AppController
                 $category->update_user = 'brand';
                 $brand->update_time = Time::now();
                 if ($this->Brands->save($brand)) {
-                    $data_name = 'message';
+                    $this->data_name = 'message';
                     $data = 'Delete data successfully';
                 } else {
                     $this->status = 'fail';
@@ -209,11 +209,11 @@ class BrandsController extends AppController
                     $data = 'Delete data failed';
                 }
             } else {
-                $data_name = 'message';
+                $this->data_name = 'message';
                 $data = 'Cant not delete. There are device that are using this brand yet to be deleted ';
             }
         } else {
-            $data_name = 'message';
+            $this->data_name = 'message';
             $data = 'Data not found';
         }
 

@@ -69,21 +69,22 @@ Router::scope('/', function (RouteBuilder $routes) {
     /** Categories*/
     $routes->connect('/categories/index', ['controller' => 'Categories', 'action' => 'index']);
     $routes->connect('/categories/view/:id', ['controller' => 'Categories', 'action' => 'view']);
-    $routes->connect('/categories/edit/:id', ['controller' => 'Categories', 'action' => 'edit']);
-    $routes->connect('/categories/delete/:id', ['controller' => 'Categories', 'action' => 'delete']);
+    $routes->connect('/categories/edit', ['controller' => 'Categories', 'action' => 'edit']);
+    $routes->connect('/categories/delete', ['controller' => 'Categories', 'action' => 'delete']);
     $routes->connect('/categories/add', ['controller' => 'Categories', 'action' => 'add']);
     /** Brands*/
     $routes->connect('/brand/index', ['controller' => 'Brands', 'action' => 'index']);
     $routes->connect('/brand/view/:id', ['controller' => 'Brands', 'action' => 'view']);
-    $routes->connect('/brand/edit/:id', ['controller' => 'Brands', 'action' => 'edit']);
-    $routes->connect('/brand/delete/:id', ['controller' => 'Brands', 'action' => 'delete']);
+    $routes->connect('/brand/edit', ['controller' => 'Brands', 'action' => 'edit']);
+    $routes->connect('/brand/delete', ['controller' => 'Brands', 'action' => 'delete']);
     $routes->connect('/brand/add', ['controller' => 'Brands', 'action' => 'add']);
     /** Borrow Devices*/
     $routes->connect('/borrow_devices/index', ['controller' => 'BorrowDevices', 'action' => 'index']);
     $routes->connect('/borrow_devices/view/:id', ['controller' => 'BorrowDevices', 'action' => 'view']);
-    $routes->connect('/borrow_devices/edit/:id', ['controller' => 'BorrowDevices', 'action' => 'edit']);
-    $routes->connect('/borrow_devices/delete/:id', ['controller' => 'BorrowDevices', 'action' => 'delete']);
+    $routes->connect('/borrow_devices/edit', ['controller' => 'BorrowDevices', 'action' => 'edit']);
+    $routes->connect('/borrow_devices/delete', ['controller' => 'BorrowDevices', 'action' => 'delete']);
     $routes->connect('/borrow_devices/add', ['controller' => 'BorrowDevices', 'action' => 'add']);
+    $routes->connect('/borrow_devices/approve', ['controller' => 'BorrowDevices', 'action' => 'approved']);
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */
@@ -96,7 +97,6 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     //$routes->connect('/devices.json', ['controller' => 'Devices']);
 
- 
 
     /**
      * Connect catchall routes for all controllers.
