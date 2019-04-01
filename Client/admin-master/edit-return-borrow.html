@@ -64,11 +64,11 @@
                             <a href="category.html">
                                 <i class="fas fa-chart-bar"></i>Category</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="device.html">
                                 <i class="fas fa-table"></i>Devices</a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="borrow.html">
                                 <i class="fas fa-chart-bar"></i>Borrow Device</a>
                         </li>
@@ -104,11 +104,11 @@
                             <a href="category.html">
                                 <i class="fas fa-chart-bar"></i>Category</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="device.html">
                                 <i class="fas fa-table"></i>Devices</a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="borrow.html">
                                 <i class="fas fa-chart-bar"></i>Borrow Device</a>
                         </li>
@@ -120,7 +120,7 @@
                             <a href="user.html">
                                 <i class="fas fa-user"></i>User</a>
                         </li>
-                    </ul>
+                </ul>
                 </nav>
             </div>
         </aside>
@@ -306,131 +306,94 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-                        <div class="row m-t-30">
-                            <div class="col-md-12">
-                                    <div class="table-data__tool">
-                                        <div class="table-data__tool-left">
-                                            <div class="rs-select2--light rs-select2--md">
-                                                <select class="js-select2" name="property">
-                                                    <option selected="selected" value="">Apple</option>
-                                                    <option value="">Samsung</option>
-                                                    <option value="">Huawei</option>
-                                                    <option value="">Xiaomi</option>
-                                                    <option value="">Oppo</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
+                        <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                            <div class="card-header">
+                                                <strong>Edit Device</strong>
                                             </div>
-                                            <div class="rs-select2--light rs-select2--sm">
-                                                <select class="js-select2" name="time">
-                                                    <option selected="selected" value="">Phone</option>
-                                                    <option value="">Laptop</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
+                                            <div class="card-body card-block">
+                                                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                                        <div class="row form-group col-lg-8">
+                                                            <div class="col col-md-3">
+                                                                <label for="text-input" class=" form-control-label">Name Device</label>
+                                                            </div>
+                                                            <div class="col-12 col-md-9">
+                                                                <select name="select1" id="select1" class="form-control">
+                                                                    <option value="0">Iphone X</option>
+                                                                    <option value="1">Samsung S10</option>
+                                                                    <option value="2">Huawei Mate X</option>
+                                                                    <option value="3">Xiaomi Mi10</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row form-group col-lg-8">
+                                                            <div class="col col-md-3">
+                                                                <label for="text-input" class=" form-control-label">Serial Number</label>
+                                                            </div>
+                                                            <div class="col-12 col-md-9">
+                                                                <select name="select2" id="select2" class="form-control">
+                                                                    <option value="0">4175</option>
+                                                                    <option value="1">7574</option>
+                                                                    <option value="2">57417</option>
+                                                                    <option value="3">75857</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row form-group col-lg-8">
+                                                            <div class="col col-md-3">
+                                                                <label for="text-input" class=" form-control-label">User Borrow</label>
+                                                            </div>
+                                                            <div class="col-12 col-md-9">
+                                                                <input type="text" disabled id="text-input" name="text-input" placeholder="User" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row form-group col-lg-8">
+                                                            <div class="col col-md-3">
+                                                                <label for="textarea-input" class=" form-control-label">Borrow Reason</label>
+                                                            </div>
+                                                            <div class="col-12 col-md-9">
+                                                                <textarea name="textarea-input" id="textarea-input" rows="9" placeholder="Borrow Reason..." class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row form-group col-lg-8">
+                                                            <div class="col col-md-3">
+                                                                <label for="select" class=" form-control-label">Borrow Date</label>
+                                                            </div>
+                                                            <div class="col-12 col-md-9">
+                                                                <input class="form-control" type="date" id="borrowdate">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row form-group col-lg-8">
+                                                            <div class="col col-md-3">
+                                                                <label for="select" class=" form-control-label">Return Date</label>
+                                                            </div>
+                                                            <div class="col-12 col-md-9">
+                                                                <input class="form-control" type="date" id="returndate">
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                             </div>
-                                            <div class="rs-select2--light">
-                                                <form class="form-header" action="" method="POST">
-                                                        <input class="au-input au-input" style="width: 500px" type="text" name="search" placeholder="Search for datas &amp; device..." />
-                                                        <button class="au-btn--submit" type="submit">
-                                                            <i class="zmdi zmdi-search"></i>
-                                                        </button>
-                                                </form>
+                                            <div class="card-footer">
+                                                <button type="submit" class="btn btn-primary ">
+                                                    <i class="fa fa-dot-circle-o"></i> Submit
+                                                </button>
+                                                <button type="reset" class="btn btn-danger">
+                                                    <i class="fa fa-ban"></i> Reset
+                                                </button>
                                             </div>
-                                        </div>
-                                        <div class="table-data__tool-right">
-                                            <button onclick="location.href = 'return-borrow.html';" class="au-btn au-btn-icon au-btn--blue2 au-btn--small">
-                                            <i class="fa fa-undo-alt fa-lg"></i>Return Device
-                                            </button>
-                                            <button onclick="location.href = 'add-borrow.html';" class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                            <i class="fa fa-cart-plus fa-lg"></i>Borrow Device
-                                            </button>
-                                        </div>
-                                 </div>
-                                <!-- DATA TABLE-->
-                                <div class="table-responsive table--no-card m-b-30">
-                                    <table class="table table-borderless table-striped table-earning">
-                                        <thead>
-                                            <tr>
-                                                <th>image</th>
-                                                <th>Name Device</th>
-                                                <th>User borrow</th>
-                                                <th>Borrow Date</th>
-                                                <th>Return Date</th>
-                                                <th>Created time</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        
-                                        <tbody>
-                                            <tr>
-                                                <td><img src="images/details_1.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>iPhone X 64Gb Grey</td>
-                                                <td>Nam</td>
-                                                <td >01/04/2019</td>
-                                                <td>01/04/2020</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span>Wait</span>
-                                                </td>
-                                                <td>
-                                                    <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="edit-borrow.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="#" onclick="window.confirm('You want to delete this devices?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr onclick="location.href='view-return-borrow.html';">
-                                                <td><img src="images/details_2.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Huawei Mate X</td>
-                                                <td>Nam</td>
-                                                <td >01/04/2019</td>
-                                                <td>01/04/2020</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span class="status--denied">Denied</span>
-                                                </td>
-                                                <td>
-                                                        <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                        <a href="edit-borrow.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                </td>
-                                            </tr>
-                                            <tr >
-                                                <td><img src="images/details_3.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Samsung S10</td>
-                                                <td>Nam</td>
-                                                <td>01/04/2019</td>
-                                                <td>01/04/2020</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span class="status--process">Allow</span>
-                                                </td>
-                                                <td>
-                                                        <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="images/details_4.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Xiaomi Mi10</td>
-                                                <td>Nam</td>
-                                                <td>01/04/2019</td>
-                                                <td>01/04/2019</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span class="status--denied">Expired</span>
-                                                </td>
-                                                <td>
-                                                        <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                </td>
-                                            </tr>
-                                            
-                                        </tbody>
-                                    </table>
+                                    </div>    
                                 </div>
-                            </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-12 text-center"> 
+                                    <button onclick="location.href = 'return-borrow.html';"  id="singlebutton" name="singlebutton" class="btn btn-secondary">
+                                            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                                    </button> 
+                            </div>
                             <div class="col-md-12">
                                 <div class="copyright">
-                                    <p>Copyright © 2018 Colorlib. Saishunkan Co.,Ltd. All Rights Reserved.</a>.</p>
+                                    <p>Copyright © 2018 Colorlib. Saishunkan Co.,Ltd. All Rights Reserved</a>.</p>
                                 </div>
                             </div>
                         </div>
@@ -440,6 +403,7 @@
             <!-- END MAIN CONTENT-->
             <!-- END PAGE CONTAINER-->
         </div>
+
     </div>
 
     <!-- Jquery JS-->
@@ -465,6 +429,8 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+
+
 </body>
 
 </html>

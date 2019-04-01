@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Device</title>
+    <title>User</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -29,6 +29,7 @@
     <link href="vendor/slick/slick.css" rel="stylesheet" media="all">
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+    
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
@@ -56,19 +57,19 @@
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                        <li>
-                            <a class="js-arrow" href="index.html">
+                        <li >
+                            <a href="index.html">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
                         <li>
                             <a href="category.html">
                                 <i class="fas fa-chart-bar"></i>Category</a>
                         </li>
-                        <li >
+                        <li>
                             <a href="device.html">
                                 <i class="fas fa-table"></i>Devices</a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="borrow.html">
                                 <i class="fas fa-chart-bar"></i>Borrow Device</a>
                         </li>
@@ -76,8 +77,8 @@
                             <a href="brand.html">
                                 <i class="far fa-check-square"></i>Brand</a>
                         </li>
-                        <li>
-                            <a href="user.html">
+                        <li class="active">
+                            <a href="user.html" >
                                 <i class="fas fa-user"></i>User</a>
                         </li>
                     </ul>
@@ -97,18 +98,18 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li>
-                            <a class="js-arrow" href="index.html">
+                            <a href="index.html">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
                         <li>
                             <a href="category.html">
                                 <i class="fas fa-chart-bar"></i>Category</a>
                         </li>
-                        <li >
+                        <li>
                             <a href="device.html">
                                 <i class="fas fa-table"></i>Devices</a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="borrow.html">
                                 <i class="fas fa-chart-bar"></i>Borrow Device</a>
                         </li>
@@ -116,7 +117,7 @@
                             <a href="brand.html">
                                 <i class="far fa-check-square"></i>Brand</a>
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="user.html">
                                 <i class="fas fa-user"></i>User</a>
                         </li>
@@ -136,7 +137,7 @@
                             <form class="form-header" action="" method="POST">
                                 <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                                 <button class="au-btn--submit" type="submit">
-                                        <i class="fas fa-search"></i>
+                                    <i class="fas fa-search"></i>
                                 </button>
                             </form>
                             <div class="header-button">
@@ -300,146 +301,164 @@
                     </div>
                 </div>
             </header>
-            <!-- HEADER DESKTOP-->
+            <!-- END HEADER DESKTOP-->
 
-            <!-- MAIN CONTENT-->
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-                        <div class="row m-t-30">
-                            <div class="col-md-12">
-                                    <div class="table-data__tool">
-                                        <div class="table-data__tool-left">
-                                            <div class="rs-select2--light rs-select2--md">
-                                                <select class="js-select2" name="property">
-                                                    <option selected="selected" value="">Apple</option>
-                                                    <option value="">Samsung</option>
-                                                    <option value="">Huawei</option>
-                                                    <option value="">Xiaomi</option>
-                                                    <option value="">Oppo</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
-                                            </div>
-                                            <div class="rs-select2--light rs-select2--sm">
-                                                <select class="js-select2" name="time">
-                                                    <option selected="selected" value="">Phone</option>
-                                                    <option value="">Laptop</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
-                                            </div>
-                                            <div class="rs-select2--light">
-                                                <form class="form-header" action="" method="POST">
-                                                        <input class="au-input au-input" style="width: 500px" type="text" name="search" placeholder="Search for datas &amp; device..." />
-                                                        <button class="au-btn--submit" type="submit">
-                                                            <i class="zmdi zmdi-search"></i>
-                                                        </button>
-                                                </form>
-                                            </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- USER DATA-->
+                                <div class="user-data m-b-30">
+                                    <h3 class="title-3 m-b-30">
+                                        <i class="fa fa-user"></i>user data</h3>
+                                    <div class="filters m-b-45">
+                                        <div class="rs-select2--dark rs-select2--md rs-select2--border">
+                                            <select class="js-select2" name="property">
+                                                <option selected="selected">Manegemenet</option>
+                                                <option value="">System Engineer</option>
+                                                <option value="">Customer</option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
                                         </div>
-                                        <div class="table-data__tool-right">
-                                            <button onclick="location.href = 'return-borrow.html';" class="au-btn au-btn-icon au-btn--blue2 au-btn--small">
-                                            <i class="fa fa-undo-alt fa-lg"></i>Return Device
-                                            </button>
-                                            <button onclick="location.href = 'add-borrow.html';" class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                            <i class="fa fa-cart-plus fa-lg"></i>Borrow Device
+                                        <div class="rs-select2--dark rs-select2--md rs-select2--border">
+                                            <select class="js-select2 au-select-dark" name="time">
+                                                <option selected="selected">Administrator</option>
+                                                <option value="">Staff</option>
+                                                <option value="">Customer</option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
+                                        </div>
+                                        <div class="rs-select2--dark rs-select2--md rs-select2--border">
+                                            <button  onclick="location.href = 'add-user.html'" class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                                <i class="zmdi zmdi-plus"></i>add user
                                             </button>
                                         </div>
-                                 </div>
-                                <!-- DATA TABLE-->
-                                <div class="table-responsive table--no-card m-b-30">
-                                    <table class="table table-borderless table-striped table-earning">
-                                        <thead>
-                                            <tr>
-                                                <th>image</th>
-                                                <th>Name Device</th>
-                                                <th>User borrow</th>
-                                                <th>Borrow Date</th>
-                                                <th>Return Date</th>
-                                                <th>Created time</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        
-                                        <tbody>
-                                            <tr>
-                                                <td><img src="images/details_1.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>iPhone X 64Gb Grey</td>
-                                                <td>Nam</td>
-                                                <td >01/04/2019</td>
-                                                <td>01/04/2020</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span>Wait</span>
-                                                </td>
-                                                <td>
-                                                    <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="edit-borrow.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="#" onclick="window.confirm('You want to delete this devices?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr onclick="location.href='view-return-borrow.html';">
-                                                <td><img src="images/details_2.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Huawei Mate X</td>
-                                                <td>Nam</td>
-                                                <td >01/04/2019</td>
-                                                <td>01/04/2020</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span class="status--denied">Denied</span>
-                                                </td>
-                                                <td>
-                                                        <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                        <a href="edit-borrow.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                </td>
-                                            </tr>
-                                            <tr >
-                                                <td><img src="images/details_3.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Samsung S10</td>
-                                                <td>Nam</td>
-                                                <td>01/04/2019</td>
-                                                <td>01/04/2020</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span class="status--process">Allow</span>
-                                                </td>
-                                                <td>
-                                                        <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="images/details_4.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Xiaomi Mi10</td>
-                                                <td>Nam</td>
-                                                <td>01/04/2019</td>
-                                                <td>01/04/2019</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span class="status--denied">Expired</span>
-                                                </td>
-                                                <td>
-                                                        <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                </td>
-                                            </tr>
-                                            
-                                        </tbody>
-                                    </table>
+                                    </div>
+                                    
+                                    <div class="table-responsive table-data">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <td>Avatar</td>
+                                                    <td>user name</td>
+                                                    <td>full name</td>
+                                                    <td>position</td>
+                                                    <td>level</td>
+                                                    <td>created user</td>
+                                                    <td>update user</td>
+                                                    <td>created time</td>
+                                                    <td>update time</td>
+                                                    <td>status</td>
+                                                    <td>action</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <img src="images/icon/avatar-01.jpg" style="width: 50px; height: 50px;">
+                                                    </td>
+                                                    <td>Admin</td>
+                                                    <td>
+                                                        Admin
+                                                    </td>
+                                                    <td>Management</td>
+                                                    <td>
+                                                        <span class="role admin">admin</span>
+                                                    </td>
+                                                    <td>
+                                                        Admin
+                                                    </td>
+                                                    <td>
+                                                        Admin
+                                                    </td>
+                                                    <td>01/04/2019</td>
+                                                    <td>01/04/2019</td>
+                                                    <td>
+                                                        <span class="status--process">Ready</span>
+                                                    </td>
+                                                    <td>
+                                                            <a href="edit-user.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                            <a href="#" onclick="window.confirm('You want to delete this user?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="images/icon/avatar-02.jpg" style="width: 50px; height: 50px;">
+                                                    </td>
+                                                    <td>Linh123</td>
+                                                    <td>
+                                                        Linh Nguyen
+                                                    </td>
+                                                    <td>Leader</td>
+                                                    <td>
+                                                        <span class="role member">member</span>
+                                                    </td>
+                                                    <td>
+                                                        Admin
+                                                    </td>
+                                                    <td>
+                                                        Admin
+                                                    </td>
+                                                    <td>01/04/2019</td>
+                                                    <td>01/04/2019</td>
+                                                    <td>
+                                                        <span class="status--process">Ready</span>
+                                                    </td>
+                                                    <td>
+                                                            <a href="edit-user.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                            <a href="#" onclick="window.confirm('You want to delete this user?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="images/icon/avatar-03.jpg" style="width: 50px; height: 50px;">
+                                                    </td>
+                                                    <td>Nam</td>
+                                                    <td>
+                                                        Nam Duong
+                                                    </td>
+                                                    <td>Customer</td>
+                                                    <td>
+                                                        <span class="role user">customer</span>
+                                                    </td>
+                                                    <td>
+                                                        Admin
+                                                    </td>
+                                                    <td>
+                                                        Admin
+                                                    </td>
+                                                    <td>01/04/2019</td>
+                                                    <td>01/04/2019</td>
+                                                    <td>
+                                                        <span class="status--denied">Denied</span>
+                                                    </td>
+                                                    <td>
+                                                            <a href="#" onclick="window.confirm('You want to restock this user?');" style="color:#20c997;"><i class="fa fa-undo fa-lg"></i></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="user-data__footer">
+                                        <button class="au-btn au-btn-load">load more</button>
+                                    </div>
                                 </div>
+                                <!-- END USER DATA-->
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">
-                                    <p>Copyright © 2018 Colorlib. Saishunkan Co.,Ltd. All Rights Reserved.</a>.</p>
+                                    <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- END MAIN CONTENT-->
-            <!-- END PAGE CONTAINER-->
         </div>
+
     </div>
 
     <!-- Jquery JS-->
@@ -465,6 +484,7 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+
 </body>
 
 </html>

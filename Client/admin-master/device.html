@@ -64,11 +64,11 @@
                             <a href="category.html">
                                 <i class="fas fa-chart-bar"></i>Category</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="device.html">
                                 <i class="fas fa-table"></i>Devices</a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="borrow.html">
                                 <i class="fas fa-chart-bar"></i>Borrow Device</a>
                         </li>
@@ -104,11 +104,11 @@
                             <a href="category.html">
                                 <i class="fas fa-chart-bar"></i>Category</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="device.html">
                                 <i class="fas fa-table"></i>Devices</a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="borrow.html">
                                 <i class="fas fa-chart-bar"></i>Borrow Device</a>
                         </li>
@@ -337,12 +337,8 @@
                                             </div>
                                         </div>
                                         <div class="table-data__tool-right">
-                                            <button onclick="location.href = 'return-borrow.html';" class="au-btn au-btn-icon au-btn--blue2 au-btn--small">
-                                            <i class="fa fa-undo-alt fa-lg"></i>Return Device
-                                            </button>
-                                            <button onclick="location.href = 'add-borrow.html';" class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                            <i class="fa fa-cart-plus fa-lg"></i>Borrow Device
-                                            </button>
+                                            <button onclick="location.href = 'add-device.html';" class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                            <i class="zmdi zmdi-plus"></i>Add Device</button>
                                         </div>
                                  </div>
                                 <!-- DATA TABLE-->
@@ -351,82 +347,135 @@
                                         <thead>
                                             <tr>
                                                 <th>image</th>
-                                                <th>Name Device</th>
-                                                <th>User borrow</th>
-                                                <th>Borrow Date</th>
-                                                <th>Return Date</th>
-                                                <th>Created time</th>
-                                                <th>Status</th>
+                                                <th>name</th>
+                                                <th>serial Number</th>
+                                                <th class="text-right">Brand</th>
+                                                <th>created</th>
+                                                <th>update</th>
+                                                <th class="text-right">Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         
                                         <tbody>
-                                            <tr>
+                                            <tr >
                                                 <td><img src="images/details_1.jpg" style="width: 50px; height: 50px;" alt=""></td>
                                                 <td>iPhone X 64Gb Grey</td>
-                                                <td>Nam</td>
-                                                <td >01/04/2019</td>
-                                                <td>01/04/2020</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span>Wait</span>
+                                                <td>4CE0460D0G</td>
+                                                <td class="text-right">Apple</td>
+                                                <td>ThinhBT</td>
+                                                <td>Admin</td>
+                                                <td class="text-right">
+                                                    <span class="status--process">Ready</span>
                                                 </td>
                                                 <td>
-                                                    <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="edit-borrow.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <a href="edit-device.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
                                                     <a href="#" onclick="window.confirm('You want to delete this devices?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
+                                                    
                                                 </td>
                                             </tr>
-                                            <tr onclick="location.href='view-return-borrow.html';">
+                                            <tr >
                                                 <td><img src="images/details_2.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Huawei Mate X</td>
-                                                <td>Nam</td>
-                                                <td >01/04/2019</td>
-                                                <td>01/04/2020</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
+                                                <td>Samsung S8 Black</td>
+                                                <td>4CE0460D0G</td>
+                                                <td class="text-right">SamSung</td>
+                                                <td>ThinhBT</td>
+                                                <td>Admin</td>
+                                                <td class="text-right">
+                                                    <span class="status--process">Ready</span>
+                                                </td>
+                                                <td>
+                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <a href="edit-device.html" style="color: #339af0;" ><i class="fa fa-edit fa-lg"></i></a>&nbsp;
+                                                    <a href="#" onclick="window.confirm('You want to delete this devices?');" style="color: red;"><i class="fa fa-trash fa-lg"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr >
+                                                <td><img src="images/details_1.jpg" style="width: 50px; height: 50px;" alt=""></td>
+                                                <td>Game Console Controller</td>
+                                                <td>4CE0460D0G</td>
+                                                <td class="text-right">Sony</td>
+                                                <td>ThinhBT</td>
+                                                <td>Admin</td>
+                                                <td class="text-right">
                                                     <span class="status--denied">Denied</span>
                                                 </td>
                                                 <td>
-                                                        <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                        <a href="edit-borrow.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <a href="#" onclick="window.confirm('You want to restock this devices?');" style="color:#20c997;"><i class="fa fa-undo fa-lg"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr >
+                                                <td><img src="images/details_4.jpg" style="width: 50px; height: 50px;" alt=""></td>
+                                                <td>iPhone X 256Gb Black</td>
+                                                <td>4CE0460D0G</td>
+                                                <td class="text-right">Apple</td>
+                                                <td>ThinhBT</td>
+                                                <td>Admin</td>
+                                                <td class="text-right">
+                                                    <span class="status--process">Ready</span>
+                                                </td>
+                                                <td>
+                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <a href="edit-device.html" style="color: #339af0;" ><i class="fa fa-edit fa-lg"></i></a>&nbsp;
+                                                    <a href="#" onclick="window.confirm('You want to delete this devices?');" style="color: red;"><i class="fa fa-trash fa-lg"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr >
+                                                <td><img src="images/details_1.jpg" style="width: 50px; height: 50px;" alt=""></td>
+                                                <td>USB 3.0 Cable</td>
+                                                <td>4CE0460D0G</td>
+                                                <td class="text-right">SamSung</td>
+                                                <td>ThinhBT</td>
+                                                <td>Admin</td>
+                                                <td class="text-right">
+                                                    <span class="status--denied">Denied</span>
+                                                </td>
+                                                <td>
+                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <a href="#" onclick="window.confirm('You want to restock this devices?');" style="color: #20c997;"><i class="fa fa-undo fa-lg"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="images/details_2.jpg" style="width: 50px; height: 50px;" alt=""></td>
+                                                <td>Smartwatch 4.0 LTE Wifi</td>
+                                                <td>4CE0460D0G</td>
+                                                <td class="text-right">Redmi</td>
+                                                <td>ThinhBT</td>
+                                                <td>Admin</td>
+                                                <td class="text-right">
+                                                        <span class="status--process">Ready</span>
+                                                </td>
+                                                <td>
+                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <a href="edit-device.html" style="color: #339af0;" ><i class="fa fa-edit fa-lg"></i></a>&nbsp;
+                                                    <a href="#" onclick="window.confirm('You want to delete this devices?');" style="color: red;"><i class="fa fa-trash fa-lg"></i></a>
                                                 </td>
                                             </tr>
                                             <tr >
                                                 <td><img src="images/details_3.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Samsung S10</td>
-                                                <td>Nam</td>
-                                                <td>01/04/2019</td>
-                                                <td>01/04/2020</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span class="status--process">Allow</span>
+                                                <td>Camera C430W 4k</td>
+                                                <td>4CE0460D0G</td>
+                                                <td class="text-right">Apple</td>
+                                                <td>ThinhBT</td>
+                                                <td>Admin</td>
+                                                <td class="text-right">
+                                                    <span class="status--denied">Denied</span>
                                                 </td>
+                                                
                                                 <td>
-                                                        <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <a href="#" onclick="window.confirm('You want to restock this devices?');" style="color: #20c997;"><i class="fa fa-undo fa-lg"></i></a>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td><img src="images/details_4.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Xiaomi Mi10</td>
-                                                <td>Nam</td>
-                                                <td>01/04/2019</td>
-                                                <td>01/04/2019</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span class="status--denied">Expired</span>
-                                                </td>
-                                                <td>
-                                                        <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                </td>
-                                            </tr>
-                                            
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
+                        <div id="result" ></div>
+                        <button onclick="device();" class="btn btn-danger" >show</button>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">
@@ -465,6 +514,17 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    
+    
+
+    <script language="javascript">
+        function device() {
+            $.get("/devices/index", function(data, status){
+                $('#result').html(result);
+                    console.log(result);
+            });
+        }
+    </script>
 </body>
 
 </html>

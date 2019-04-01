@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Device</title>
+    <title>Category</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -60,15 +60,15 @@
                             <a class="js-arrow" href="index.html">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="category.html">
                                 <i class="fas fa-chart-bar"></i>Category</a>
                         </li>
-                        <li >
+                        <li>
                             <a href="device.html">
                                 <i class="fas fa-table"></i>Devices</a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="borrow.html">
                                 <i class="fas fa-chart-bar"></i>Borrow Device</a>
                         </li>
@@ -100,15 +100,15 @@
                             <a class="js-arrow" href="index.html">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="category.html">
                                 <i class="fas fa-chart-bar"></i>Category</a>
                         </li>
-                        <li >
+                        <li>
                             <a href="device.html">
                                 <i class="fas fa-table"></i>Devices</a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="borrow.html">
                                 <i class="fas fa-chart-bar"></i>Borrow Device</a>
                         </li>
@@ -300,137 +300,215 @@
                     </div>
                 </div>
             </header>
-            <!-- HEADER DESKTOP-->
+            <!-- END HEADER DESKTOP-->
 
             <!-- MAIN CONTENT-->
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-                        <div class="row m-t-30">
+                        <div class="row">
                             <div class="col-md-12">
-                                    <div class="table-data__tool">
-                                        <div class="table-data__tool-left">
-                                            <div class="rs-select2--light rs-select2--md">
-                                                <select class="js-select2" name="property">
-                                                    <option selected="selected" value="">Apple</option>
-                                                    <option value="">Samsung</option>
-                                                    <option value="">Huawei</option>
-                                                    <option value="">Xiaomi</option>
-                                                    <option value="">Oppo</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
-                                            </div>
-                                            <div class="rs-select2--light rs-select2--sm">
-                                                <select class="js-select2" name="time">
-                                                    <option selected="selected" value="">Phone</option>
-                                                    <option value="">Laptop</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
-                                            </div>
-                                            <div class="rs-select2--light">
-                                                <form class="form-header" action="" method="POST">
-                                                        <input class="au-input au-input" style="width: 500px" type="text" name="search" placeholder="Search for datas &amp; device..." />
-                                                        <button class="au-btn--submit" type="submit">
-                                                            <i class="zmdi zmdi-search"></i>
-                                                        </button>
-                                                </form>
-                                            </div>
+                                <!-- DATA TABLE -->
+                                <h3 class="title-5 m-b-35">Category</h3>
+                                <div class="table-data__tool">
+                                    <div class="table-data__tool-left">
+                                        <div class="rs-select2--light rs-select2--md">
+                                            <select class="js-select2" name="property">
+                                                <option selected="selected">Apple</option>
+                                                <option value="">Xiaomi</option>
+                                                <option value="">Samsung</option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
                                         </div>
-                                        <div class="table-data__tool-right">
-                                            <button onclick="location.href = 'return-borrow.html';" class="au-btn au-btn-icon au-btn--blue2 au-btn--small">
-                                            <i class="fa fa-undo-alt fa-lg"></i>Return Device
-                                            </button>
-                                            <button onclick="location.href = 'add-borrow.html';" class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                            <i class="fa fa-cart-plus fa-lg"></i>Borrow Device
-                                            </button>
+                                        <div class="rs-select2--light rs-select2--sm">
+                                            <select class="js-select2" name="time">
+                                                <option selected="selected">Phone</option>
+                                                <option value="">Laptop</option>
+                                                <option value="">Desktop</option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
                                         </div>
-                                 </div>
-                                <!-- DATA TABLE-->
-                                <div class="table-responsive table--no-card m-b-30">
-                                    <table class="table table-borderless table-striped table-earning">
+                                        
+                                    </div>
+                                    <div class="table-data__tool-right">
+                                        <button onclick="location.href = 'add-category.html'" class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <i class="zmdi zmdi-plus"></i>add item
+                                        </button>
+                                        
+                                    </div>
+                                </div>
+                                <div class="table-responsive table-responsive-data2">
+                                    <table class="table table-data2">
                                         <thead>
                                             <tr>
-                                                <th>image</th>
-                                                <th>Name Device</th>
-                                                <th>User borrow</th>
-                                                <th>Borrow Date</th>
-                                                <th>Return Date</th>
-                                                <th>Created time</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
+                                                <th>
+                                                    <label class="au-checkbox">
+                                                        <input type="checkbox">
+                                                        <span class="au-checkmark"></span>
+                                                    </label>
+                                                </th>
+                                                <th>name</th>
+                                                <th>parent category</th>
+                                                <th>created user</th>
+                                                <th>update user</th>
+                                                <th>created time</th>
+                                                <th>update time</th>
+                                                <th>status</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
-                                        
                                         <tbody>
-                                            <tr>
-                                                <td><img src="images/details_1.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>iPhone X 64Gb Grey</td>
-                                                <td>Nam</td>
-                                                <td >01/04/2019</td>
-                                                <td>01/04/2020</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span>Wait</span>
-                                                </td>
+                                            <tr class="tr-shadow">
                                                 <td>
-                                                    <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="edit-borrow.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="#" onclick="window.confirm('You want to delete this devices?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
+                                                    <label class="au-checkbox">
+                                                        <input type="checkbox">
+                                                        <span class="au-checkmark"></span>
+                                                    </label>
+                                                </td>
+                                                <td>Apple</td>
+                                                <td>
+                                                    <span>none</span>
+                                                </td>
+                                                <td>ThinhBT</td>
+                                                <td>Admin</td>
+                                                <td>
+                                                    2018-09-27
+                                                </td>
+                                                <td>2018-09-27</td>
+                                                <td><span class="status--process">Ready</span></td>
+                                                <td>
+                                                        <a href="edit-category.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                        <a href="#" onclick="window.confirm('You want to delete this category?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
                                                 </td>
                                             </tr>
-                                            <tr onclick="location.href='view-return-borrow.html';">
-                                                <td><img src="images/details_2.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Huawei Mate X</td>
-                                                <td>Nam</td>
-                                                <td >01/04/2019</td>
-                                                <td>01/04/2020</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span class="status--denied">Denied</span>
-                                                </td>
+                                            <tr class="spacer"></tr>
+                                            <tr class="tr-shadow">
                                                 <td>
-                                                        <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                        <a href="edit-borrow.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <label class="au-checkbox">
+                                                        <input type="checkbox">
+                                                        <span class="au-checkmark"></span>
+                                                    </label>
+                                                </td>
+                                                <td>Iphone</td>
+                                                <td>
+                                                    <span>Apple</span>
+                                                </td>
+                                                <td>Nam</td>
+                                                <td>Admin</td>
+                                                <td>
+                                                    2018-09-27
+                                                </td>
+                                                <td>2018-09-27</td>
+                                                <td><span class="status--process">Ready</span></td>
+                                                <td>
+                                                        <a href="edit-category.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                        <a href="#" onclick="window.confirm('You want to delete this category?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
                                                 </td>
                                             </tr>
-                                            <tr >
-                                                <td><img src="images/details_3.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Samsung S10</td>
-                                                <td>Nam</td>
-                                                <td>01/04/2019</td>
-                                                <td>01/04/2020</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span class="status--process">Allow</span>
-                                                </td>
+                                            <tr class="spacer"></tr>
+                                            <tr class="tr-shadow">
                                                 <td>
-                                                        <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <label class="au-checkbox">
+                                                        <input type="checkbox">
+                                                        <span class="au-checkmark"></span>
+                                                    </label>
+                                                </td>
+                                                <td>Samsung</td>
+                                                <td>
+                                                    <span>none</span>
+                                                </td>
+                                                <td>Huy</td>
+                                                <td>Admin</td>
+                                                <td>
+                                                    2018-09-27
+                                                </td>
+                                                <td>2018-09-27</td>
+                                                <td><span class="status--denied">Denied</span></td>
+                                                <td>
+                                                        <a href="#" onclick="window.confirm('You want to reuse this category?');" style="color:#20c997;"><i class="fa fa-undo fa-lg"></i></a>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td><img src="images/details_4.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Xiaomi Mi10</td>
-                                                <td>Nam</td>
-                                                <td>01/04/2019</td>
-                                                <td>01/04/2019</td>
-                                                <td class="text-center">01/04/2019</td>
-                                                <td class="text-center">
-                                                    <span class="status--denied">Expired</span>
-                                                </td>
+                                            <tr class="spacer"></tr>
+                                            <tr class="tr-shadow">
                                                 <td>
-                                                        <a href="view-borrow.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <label class="au-checkbox">
+                                                        <input type="checkbox">
+                                                        <span class="au-checkmark"></span>
+                                                    </label>
+                                                </td>
+                                                <td>Galaxy S</td>
+                                                <td>
+                                                    <span>Samsung</span>
+                                                </td>
+                                                <td>Linh</td>
+                                                <td>Admin</td>
+                                                <td>
+                                                    2018-09-27
+                                                </td>
+                                                <td>2018-09-27</td>
+                                                <td><span class="status--denied">Denied</span></td>
+                                                <td>
+                                                        <a href="#" onclick="window.confirm('You want to reuse this category?');" style="color:#20c997;"><i class="fa fa-undo fa-lg"></i></a>
                                                 </td>
                                             </tr>
-                                            
+                                            <tr class="spacer"></tr>
+                                            <tr class="tr-shadow">
+                                                <td>
+                                                    <label class="au-checkbox">
+                                                        <input type="checkbox">
+                                                        <span class="au-checkmark"></span>
+                                                    </label>
+                                                </td>
+                                                <td>Xiaomi</td>
+                                                <td>
+                                                    <span>none</span>
+                                                </td>
+                                                <td>Huy</td>
+                                                <td>Admin</td>
+                                                <td>
+                                                    2018-09-27
+                                                </td>
+                                                <td>2018-09-27</td>
+                                                <td><span class="status--process">Ready</span></td>
+                                                <td>
+                                                        <a href="edit-category.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                        <a href="#" onclick="window.confirm('You want to delete this category?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr class="spacer"></tr>
+                                            <tr class="tr-shadow">
+                                                <td>
+                                                    <label class="au-checkbox">
+                                                        <input type="checkbox">
+                                                        <span class="au-checkmark"></span>
+                                                    </label>
+                                                </td>
+                                                <td>Redmi note</td>
+                                                <td>
+                                                    <span>Xiaomi</span>
+                                                </td>
+                                                <td>Linh</td>
+                                                <td>Admin</td>
+                                                <td>
+                                                    2018-09-27
+                                                </td>
+                                                <td>2018-09-27</td>
+                                                <td><span class="status--process">Ready</span></td>
+                                                <td>
+                                                        <a href="edit-category.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                        <a href="#" onclick="window.confirm('You want to delete this category?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
+                                <!-- END DATA TABLE -->
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">
-                                    <p>Copyright © 2018 Colorlib. Saishunkan Co.,Ltd. All Rights Reserved.</a>.</p>
+                                    <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
                                 </div>
                             </div>
                         </div>
@@ -438,8 +516,9 @@
                 </div>
             </div>
             <!-- END MAIN CONTENT-->
-            <!-- END PAGE CONTAINER-->
         </div>
+        <!-- END PAGE CONTAINER-->
+
     </div>
 
     <!-- Jquery JS-->
@@ -465,6 +544,7 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+
 </body>
 
 </html>
