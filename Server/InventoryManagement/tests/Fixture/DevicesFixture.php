@@ -5,11 +5,9 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * DevicesFixture
- *
  */
 class DevicesFixture extends TestFixture
 {
-
     /**
      * Fields
      *
@@ -27,7 +25,7 @@ class DevicesFixture extends TestFixture
         'specifications' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null],
         'status' => ['type' => 'tinyinteger', 'length' => 4, 'unsigned' => false, 'null' => true, 'default' => '0', 'comment' => '', 'precision' => null],
         'stock_date' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '', 'precision' => null],
-        'warranty_period' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+        'warranty_period' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '', 'precision' => null],
         'created_user' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => '', 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'update_user' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => '', 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'created_time' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '', 'precision' => null],
@@ -42,7 +40,6 @@ class DevicesFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
      * Init method
      *
@@ -61,12 +58,12 @@ class DevicesFixture extends TestFixture
                 'brand_id' => 1,
                 'specifications' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
                 'status' => 1,
-                'stock_date' => '2019-03-20 04:04:12',
-                'warranty_period' => '2019-03-20 04:04:12',
+                'stock_date' => '2019-04-08 03:36:16',
+                'warranty_period' => '2019-04-08 03:36:16',
                 'created_user' => 'Lorem ipsum dolor sit amet',
                 'update_user' => 'Lorem ipsum dolor sit amet',
-                'created_time' => '2019-03-20 04:04:12',
-                'update_time' => '2019-03-20 04:04:12',
+                'created_time' => '2019-04-08 03:36:16',
+                'update_time' => '2019-04-08 03:36:16',
                 'is_deleted' => 1
             ],
         ];

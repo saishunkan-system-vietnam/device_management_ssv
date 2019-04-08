@@ -38,7 +38,7 @@ class DevicesController extends AppController
         } elseif ($this->request->is('get')) {
             $input_data = $this->getRequest()->getQuery();
         }
-        $condition = ['is_deleted' => 0];
+        $condition = ['Devices.is_deleted' => 0];
         $devicesTable = TableRegistry::get('Devices');
         $devices = $devicesTable->find();
         $device_quantity = $devicesTable->find()->select(['count' => 'count(1)']);
@@ -65,11 +65,43 @@ class DevicesController extends AppController
         if (isset($input_data['status']) && $input_data['status'] != null) {
             array_merge($condition, $arr[] = ['status' => trim($input_data['status'])]);
         }
-
+        
         $devices->where($condition)->where($arr)
-            ->order(['id' => 'DESC'])
+            ->order(['Devices.id' => 'ASC'])
             ->limit($this->perpage)
             ->page($this->page);
+        $join = $devices
+            ->select([
+                'id' => 'Devices.id',
+                'name' => 'Devices.name',
+                'serial_number' => 'Devices.serial_number',
+                'stock_date' => 'Devices.stock_date',
+                'warranty_period' => 'Devices.warranty_period',
+                'status' => 'Devices.status',
+                'path' =>'Files.path',
+                'brand_name' => 'Brands.brand_name',
+                'brand_id' => 'Brands.id'
+            ])
+            ->join([
+                'Files' => [
+                    'table' => 'files',
+                    'type' => 'LEFT',
+                    'conditions' => [
+                        'Files.relate_id = Devices.id'
+                    ]
+                ]
+            ])
+            ->join([
+                'Brands' => [
+                    'table' => 'brands',
+                    'type' => 'INNER',
+                    'conditions' => [
+                        'Brands.id = Devices.brand_id'
+                    ]
+                ]
+            ])
+            ->group(['Devices.id']);
+            
         $record_all = $device_quantity->where($condition)->where($arr)->first();
         if ($record_all->count == 0 ) {
             $this->status = 'failed';
@@ -78,8 +110,27 @@ class DevicesController extends AppController
         $this->responseApi($this->status, $this->data_name, $devices, $record_all['count']);
     }
 
+    public function show()
+    {
+        // Only accept POST and GET requests
+        $this->request->allowMethod(['post', 'get']);
+
+        $condition = ['is_deleted' => 0, 'parent_id' => 0];
+        $devices = $this->Devices->find();
+        $devices_quantity = $this->Devices->find()->select(['count' => 'count(1)']);
+
+        $devices->where($condition)->select(['id','name'])
+            ->order(['id' => 'DESC'])
+            ->limit($this->perpage)
+            ->page($this->page);
+        $record_all = $devices_quantity->where($condition)->first();
+
+        $this->responseApi($this->status, $this->data_name, $devices, $record_all['count']);
+    }
+
     public function view()
     {
+        $this->request->allowMethod(['post', 'get']);
         //view by id
         $id = $this->request->getParam('id');
         $devicesTable = TableRegistry::get('Devices');
@@ -110,11 +161,11 @@ class DevicesController extends AppController
         $inputData['name'] = trim($this->getRequest()->getData('name'));
         $inputData['brand_id'] = trim($this->getRequest()->getData('brand_id'));
         $inputData['specifications'] = trim($this->getRequest()->getData('specifications'));
-        $inputData['warranty_period'] = trim($this->getRequest()->getData('warranty_period'));
-        $inputData['created_user'] = 'device';
-
+        $inputData['created_user'] = trim($this->getRequest()->getData('created_user'));
+        
         //validate
         $devices = $this->Devices->newEntity($inputData);
+        
         if ($this->Devices->save($devices)) {
             $device = ['id' => $devices->id];
         } else {
@@ -143,8 +194,8 @@ class DevicesController extends AppController
             $inputData['brand_id'] = trim($this->getRequest()->getData('brand_id'));
             $inputData['specifications'] = trim($this->getRequest()->getData('specifications'));
             $inputData['status'] = trim($this->getRequest()->getData('status'));
-            $inputData['warranty_period'] = trim($this->getRequest()->getData('warranty_period'));
-            $inputData['update_user'] = 'device';
+            $inputData['update_user'] = trim($this->getRequest()->getData('update_user'));
+            $inputData['is_deleted'] = trim($this->getRequest()->getData('is_deleted'));
 
             $devices = $this->Devices->patchEntity($devices, $inputData);
             if ($this->Devices->save($devices)) {
@@ -154,7 +205,7 @@ class DevicesController extends AppController
                 $this->status = 'failed';
             }
         } else {
-            $this->status = 'fail';
+            $this->status = 'failed';
             $this->data_name = 'message';
             $category = 'Data not found!';
         }

@@ -20,6 +20,7 @@ use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use App\Middleware\HttpOptionsMiddleware;
 
 /**
  * Application setup class.
@@ -73,6 +74,8 @@ class Application extends BaseApplication
             ->add(new AssetMiddleware([
                 'cacheTime' => Configure::read('Asset.cacheTime')
             ]))
+
+            ->add( new HttpOptionsMiddleware($this))
 
             // Add routing middleware.
             // Routes collection cache enabled by default, to disable route caching

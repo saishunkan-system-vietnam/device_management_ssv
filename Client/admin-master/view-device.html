@@ -306,7 +306,7 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-                        <div class="row">
+                        <div class="row" id="app">
                             <div class="col-lg-6">
                                 <div id="demo" class="carousel slide" data-ride="carousel" style="width: 690px;height: 690px;">
                                     <!-- Indicators -->
@@ -350,7 +350,7 @@
                                         <i class="fa fa-trash" ></i> Delete
                                     </button>
                                     <button onclick="location.href = 'device.html';"  id="backbtn" name="singlebutton" class="btn btn-secondary">
-                                        <i class="fa fa-arrow-left" ></i> Back
+                                        <i class="fa fa-arrow-left" ></i> List
                                     </button> 
                                 </div>
                                  
@@ -361,10 +361,10 @@
                                     <h3 class="title-3 m-b-30">Device</h3>
                                     <div class="table-responsive">
                                         <table class="table table-borderless table-striped">
-                                            <tbody>
+                                            <tbody v-for="item in view">
                                                 <tr>
                                                     <td>Device Id</td>
-                                                    <td>1</td>
+                                                    <td>{{ item.id }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Parent</td>
@@ -380,47 +380,51 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Name Device</td>
-                                                    <td>HTC One</td>
+                                                    <td>{{ item.name }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Serial Number</td>
-                                                    <td>21</td>
+                                                    <td>{{ item.serial_number }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Product Number</td>
-                                                    <td>69</td>
+                                                    <td>{{ item.product_number }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Specifications</td>
-                                                    <td>Camera</td>
+                                                    <td>{{ item.specifications }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Created User</td>
-                                                    <td>ThinhBT</td>
+                                                    <td>{{ item.created_user }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Update User</td>
-                                                    <td>Admin</td>
+                                                    <td>{{ item.update_user }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Warranty Period</td>
-                                                    <td>10/10/2018</td>
+                                                    <td>{{ item.warranty_period }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Stock Date</td>
-                                                    <td>10/10/2019</td>
+                                                    <td>{{ item.stock_date }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Created Time</td>
-                                                    <td>07/08/2015</td>
+                                                    <td>{{ item.created_time }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Update Time</td>
-                                                    <td>07/08/2016</td>
+                                                    <td>{{ item.update_time }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Status</td>
-                                                    <td>Ready</td>
+                                                    <td>
+                                                        <span class="status--process" v-if="item.status ==  0">Ready</span>
+                                                        <span v-else-if="item.status ==  1">Borrowing</span>
+                                                        <span class="status--denied" v-else="item.status ==  2">Broken</span>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -467,7 +471,28 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+    <!-- <script src="js/vue-filter-date-format.cjs.js"></script>
+    <script src="js/vue-filter-date-format.esm.js"></script> -->
+    <!-- <script src="node_modules/moment/moment.js"></script> -->
 
+    <script>
+        var view = new Vue({
+            el : '#app',
+            data () {
+                return {
+                    view : ''
+                }
+            },
+            mounted() {
+                axios
+                    .get('http://inventorymanagement.com/devices/view/5')
+                    .then(response => (this.view = response.data.payload.devices))
+            },
+        });
+        console.log(view);
+    </script>
 </body>
 
 </html>

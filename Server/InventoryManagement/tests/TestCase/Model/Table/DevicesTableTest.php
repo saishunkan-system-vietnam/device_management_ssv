@@ -10,7 +10,6 @@ use Cake\TestSuite\TestCase;
  */
 class DevicesTableTest extends TestCase
 {
-
     /**
      * Test subject
      *

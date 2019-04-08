@@ -329,11 +329,6 @@
                                             </select>
                                             <div class="dropDownSelect2"></div>
                                         </div>
-                                        <div class="rs-select2--dark rs-select2--md rs-select2--border">
-                                            <button  onclick="location.href = 'add-user.html'" class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                                <i class="zmdi zmdi-plus"></i>add user
-                                            </button>
-                                        </div>
                                     </div>
                                     
                                     <div class="table-responsive table-data">
@@ -346,9 +341,6 @@
                                                     <td>position</td>
                                                     <td>level</td>
                                                     <td>created user</td>
-                                                    <td>update user</td>
-                                                    <td>created time</td>
-                                                    <td>update time</td>
                                                     <td>status</td>
                                                     <td>action</td>
                                                 </tr>
@@ -369,11 +361,6 @@
                                                     <td>
                                                         Admin
                                                     </td>
-                                                    <td>
-                                                        Admin
-                                                    </td>
-                                                    <td>01/04/2019</td>
-                                                    <td>01/04/2019</td>
                                                     <td>
                                                         <span class="status--process">Ready</span>
                                                     </td>
@@ -398,11 +385,6 @@
                                                         Admin
                                                     </td>
                                                     <td>
-                                                        Admin
-                                                    </td>
-                                                    <td>01/04/2019</td>
-                                                    <td>01/04/2019</td>
-                                                    <td>
                                                         <span class="status--process">Ready</span>
                                                     </td>
                                                     <td>
@@ -425,11 +407,6 @@
                                                     <td>
                                                         Admin
                                                     </td>
-                                                    <td>
-                                                        Admin
-                                                    </td>
-                                                    <td>01/04/2019</td>
-                                                    <td>01/04/2019</td>
                                                     <td>
                                                         <span class="status--denied">Denied</span>
                                                     </td>
@@ -484,7 +461,24 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
 
+    <script>
+        var devices = new Vue({
+            el : '#app',
+            data () {
+                return {
+                    devices : ''
+                }
+            },
+            mounted() {
+                axios
+                    .get('http://inventorymanagement.com/devices/index')
+                    .then(response => (this.devices = response.data.payload.devices))
+            },
+        });
+    </script>
 </body>
 
 </html>

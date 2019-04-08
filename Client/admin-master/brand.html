@@ -332,117 +332,28 @@
                                                 </th>
                                                 <th>brand name</th>
                                                 <th>created user</th>
-                                                <th>update user</th>
-                                                <th>created time</th>
-                                                <th>update time</th>
                                                 <th>status</th>
                                                 <th>action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr class="tr-shadow" ">
+                                        <tbody id="app">
+                                            <tr class="tr-shadow" v-for="item in brands">
                                                 <td>
                                                     <label class="au-checkbox">
                                                         <input type="checkbox">
                                                         <span class="au-checkmark"></span>
                                                     </label>
                                                 </td>
-                                                <td>Apple</td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
-                                                <td>
-                                                    2018-09-27
-                                                </td>
-                                                <td>2018-09-27</td>
-                                                <td><span class="status--process">Ready</span></td>
+                                                <td>{{ item.brand_name }}</td>
+                                                <td>{{ item.created_user }}</td>
+                                                
+                                                <td><span class="status--process">{{ item.is_deleted }}</span></td>
                                                 <td>
                                                         <a href="edit-brand.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
                                                         <a href="#" onclick="window.confirm('You want to delete this brand?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
                                                 </td>
                                             </tr>
-                                            <tr class="spacer"></tr>
-                                            <tr class="tr-shadow">
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td>Huawei</td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
-                                                <td>
-                                                    2018-09-27
-                                                </td>
-                                                <td>2018-09-27</td>
-                                                <td><span class="status--process">Ready</span></td>
-                                                <td>
-                                                        <a href="edit-brand.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                        <a href="#" onclick="window.confirm('You want to delete this brand?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
-                                            <tr class="tr-shadow">
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td>Oppo</td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
-                                                <td>
-                                                    2018-09-27
-                                                </td>
-                                                <td>2018-09-27</td>
-                                                <td><span class="status--denied">Denied</span></td>
-                                                <td>
-                                                        <a href="#" onclick="window.confirm('You want to restock this brand?');" style="color:#20c997;"><i class="fa fa-undo fa-lg"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
-                                            <tr class="tr-shadow">
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td>Xiaomi</td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
-                                                <td>
-                                                    2018-09-27
-                                                </td>
-                                                <td>2018-09-27</td>
-                                                <td><span class="status--process">Ready</span></td>
-                                                <td>
-                                                        <a href="edit-brand.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                        <a href="#" onclick="window.confirm('You want to delete this brand?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
-                                            <tr class="tr-shadow">
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td>Samsung</td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
-                                                <td>
-                                                    2018-09-27
-                                                </td>
-                                                <td>2018-09-27</td>
-                                                <td><span class="status--process">Ready</span></td>
-                                                <td>
-                                                        <a href="edit-brand.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                        <a href="#" onclick="window.confirm('You want to delete this brand?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
-                                                </td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -488,7 +399,28 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+    <!-- <script src="js/vue-filter-date-format.cjs.js"></script>
+    <script src="js/vue-filter-date-format.esm.js"></script> -->
+    <!-- <script src="node_modules/moment/moment.js"></script> -->
 
+    <script>
+        var brands = new Vue({
+            el : '#app',
+            data () {
+                return {
+                    brands : ''
+                }
+            },
+            mounted() {
+                axios
+                    .get('http://inventorymanagement.com/brand/index')
+                    .then(response => (this.brands = response.data.payload.brands))
+            },
+        });
+        console.log(brands);
+    </script>
 </body>
 
 </html>

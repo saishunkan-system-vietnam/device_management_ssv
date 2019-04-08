@@ -101,7 +101,6 @@ class FilesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-
         return $rules;
     }
 }

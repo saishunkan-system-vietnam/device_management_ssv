@@ -74,6 +74,28 @@ class BrandsController extends AppController
         $this->responseApi($this->status, $this->data_name, $brands, $record_all['count']);
     }
 
+    public function show()
+    {
+        // Only accept POST and GET requests
+        $this->request->allowMethod(['post', 'get']);
+
+        if ($this->request->is('post')) {
+            $inputData = $this->getRequest()->getData();
+        } elseif ($this->request->is('get')) {
+            $inputData = $this->getRequest()->getQuery();
+        }
+        $condition = ['is_deleted' => 0];
+        $brands = $this->Brands->find();
+        $brand_quantity = $this->Brands->find()->select(['count' => 'count(1)']);
+        $brands->where($condition)->select(['id','brand_name'])
+            ->order(['id' => 'DESC'])
+            ->limit($this->perpage)
+            ->page($this->page);
+        $record_all = $brand_quantity->where($condition)->first();
+
+        $this->responseApi($this->status, $this->data_name, $brands, $record_all['count']);
+    }
+
     /**
      * View method
      *

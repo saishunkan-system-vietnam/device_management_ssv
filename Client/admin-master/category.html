@@ -102,7 +102,7 @@
                         </li>
                         <li class="active">
                             <a href="category.html">
-                                <i class="fas fa-chart-bar"></i>Category</a>
+                                <i class="fas fa-folder"></i>Category</a>
                         </li>
                         <li>
                             <a href="device.html">
@@ -309,30 +309,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- DATA TABLE -->
-                                <h3 class="title-5 m-b-35">Category</h3>
+                                <h3 class="title-5 m-b-35"><i class="fas fa-folder"></i>&nbsp;Category</h3>
                                 <div class="table-data__tool">
                                     <div class="table-data__tool-left">
-                                        <div class="rs-select2--light rs-select2--md">
-                                            <select class="js-select2" name="property">
-                                                <option selected="selected">Apple</option>
-                                                <option value="">Xiaomi</option>
-                                                <option value="">Samsung</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                        <div class="rs-select2--light rs-select2--sm">
-                                            <select class="js-select2" name="time">
-                                                <option selected="selected">Phone</option>
-                                                <option value="">Laptop</option>
-                                                <option value="">Desktop</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                        
                                     </div>
                                     <div class="table-data__tool-right">
                                         <button onclick="location.href = 'add-category.html'" class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                        <i class="zmdi zmdi-plus"></i>add item
+                                        <i class="fa fa-plus"></i>add item
                                         </button>
                                         
                                     </div>
@@ -341,162 +324,27 @@
                                     <table class="table table-data2">
                                         <thead>
                                             <tr>
-                                                <th>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </th>
                                                 <th>name</th>
                                                 <th>parent category</th>
                                                 <th>created user</th>
-                                                <th>update user</th>
-                                                <th>created time</th>
-                                                <th>update time</th>
                                                 <th>status</th>
-                                                <th></th>
+                                                <th>action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr class="tr-shadow">
+                                        <tbody id="app">
+                                            <tr class="tr-shadow" v-for="item in categories">
+                                                <td>{{ item.category_name }}</td>
                                                 <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
+                                                    <span v-if="item.id_parent == 0 ">Null</span>
                                                 </td>
-                                                <td>Apple</td>
+                                                <td>{{ item.created_user }}</td>
                                                 <td>
-                                                    <span>none</span>
+                                                    <span class="status--process" v-if="item.is_deleted == 0">Ready</span>
+                                                    <span class="status--denied" v-if="item.is_deleted == 1">Deleted</span>
                                                 </td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
                                                 <td>
-                                                    2018-09-27
-                                                </td>
-                                                <td>2018-09-27</td>
-                                                <td><span class="status--process">Ready</span></td>
-                                                <td>
-                                                        <a href="edit-category.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                        <a href="#" onclick="window.confirm('You want to delete this category?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
-                                            <tr class="tr-shadow">
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td>Iphone</td>
-                                                <td>
-                                                    <span>Apple</span>
-                                                </td>
-                                                <td>Nam</td>
-                                                <td>Admin</td>
-                                                <td>
-                                                    2018-09-27
-                                                </td>
-                                                <td>2018-09-27</td>
-                                                <td><span class="status--process">Ready</span></td>
-                                                <td>
-                                                        <a href="edit-category.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                        <a href="#" onclick="window.confirm('You want to delete this category?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
-                                            <tr class="tr-shadow">
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td>Samsung</td>
-                                                <td>
-                                                    <span>none</span>
-                                                </td>
-                                                <td>Huy</td>
-                                                <td>Admin</td>
-                                                <td>
-                                                    2018-09-27
-                                                </td>
-                                                <td>2018-09-27</td>
-                                                <td><span class="status--denied">Denied</span></td>
-                                                <td>
-                                                        <a href="#" onclick="window.confirm('You want to reuse this category?');" style="color:#20c997;"><i class="fa fa-undo fa-lg"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
-                                            <tr class="tr-shadow">
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td>Galaxy S</td>
-                                                <td>
-                                                    <span>Samsung</span>
-                                                </td>
-                                                <td>Linh</td>
-                                                <td>Admin</td>
-                                                <td>
-                                                    2018-09-27
-                                                </td>
-                                                <td>2018-09-27</td>
-                                                <td><span class="status--denied">Denied</span></td>
-                                                <td>
-                                                        <a href="#" onclick="window.confirm('You want to reuse this category?');" style="color:#20c997;"><i class="fa fa-undo fa-lg"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
-                                            <tr class="tr-shadow">
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td>Xiaomi</td>
-                                                <td>
-                                                    <span>none</span>
-                                                </td>
-                                                <td>Huy</td>
-                                                <td>Admin</td>
-                                                <td>
-                                                    2018-09-27
-                                                </td>
-                                                <td>2018-09-27</td>
-                                                <td><span class="status--process">Ready</span></td>
-                                                <td>
-                                                        <a href="edit-category.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                        <a href="#" onclick="window.confirm('You want to delete this category?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
-                                            <tr class="tr-shadow">
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td>Redmi note</td>
-                                                <td>
-                                                    <span>Xiaomi</span>
-                                                </td>
-                                                <td>Linh</td>
-                                                <td>Admin</td>
-                                                <td>
-                                                    2018-09-27
-                                                </td>
-                                                <td>2018-09-27</td>
-                                                <td><span class="status--process">Ready</span></td>
-                                                <td>
-                                                        <a href="edit-category.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                        <a href="#" onclick="window.confirm('You want to delete this category?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
+                                                    <a href="edit-category.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
+                                                    <a href="#" onclick="window.confirm('You want to delete this category?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -544,7 +392,25 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
 
+    <script>
+        var categories = new Vue({
+            el : '#app',
+            data () {
+                return {
+                    categories : ''
+                }
+            },
+            mounted() {
+                axios
+                    .get('http://inventorymanagement.com/categories/index')
+                    .then(response => (this.categories = response.data.payload.categories))
+            },
+        });
+        console.log(categories);
+    </script>
 </body>
 
 </html>

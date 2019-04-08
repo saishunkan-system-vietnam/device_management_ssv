@@ -68,16 +68,18 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     /** Categories*/
     $routes->connect('/categories/index', ['controller' => 'Categories', 'action' => 'index']);
+    $routes->connect('/categories/show', ['controller' => 'Categories', 'action' => 'show']);
     $routes->connect('/categories/view/:id', ['controller' => 'Categories', 'action' => 'view']);
     $routes->connect('/categories/edit', ['controller' => 'Categories', 'action' => 'edit']);
     $routes->connect('/categories/delete', ['controller' => 'Categories', 'action' => 'delete']);
     $routes->connect('/categories/add', ['controller' => 'Categories', 'action' => 'add']);
     /** Brands*/
-    $routes->connect('/brand/index', ['controller' => 'Brands', 'action' => 'index']);
-    $routes->connect('/brand/view/:id', ['controller' => 'Brands', 'action' => 'view']);
-    $routes->connect('/brand/edit', ['controller' => 'Brands', 'action' => 'edit']);
-    $routes->connect('/brand/delete', ['controller' => 'Brands', 'action' => 'delete']);
-    $routes->connect('/brand/add', ['controller' => 'Brands', 'action' => 'add']);
+    $routes->connect('/brands/index', ['controller' => 'Brands', 'action' => 'index']);
+    $routes->connect('/brands/show', ['controller' => 'Brands', 'action' => 'show']);
+    $routes->connect('/brands/view/:id', ['controller' => 'Brands', 'action' => 'view']);
+    $routes->connect('/brands/edit', ['controller' => 'Brands', 'action' => 'edit']);
+    $routes->connect('/brands/delete', ['controller' => 'Brands', 'action' => 'delete']);
+    $routes->connect('/brands/add', ['controller' => 'Brands', 'action' => 'add']);
     /** Borrow Devices*/
     $routes->connect('/borrow_devices/index', ['controller' => 'BorrowDevices', 'action' => 'index']);
     $routes->connect('/borrow_devices/view/:id', ['controller' => 'BorrowDevices', 'action' => 'view']);
@@ -120,6 +122,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->setExtensions(['json', 'xml']);
     //Devices
     $routes->connect('/devices/index', ['controller' => 'Devices','action' => 'index']);
+    $routes->connect('/devices/show', ['controller' => 'Devices','action' => 'show']);
     $routes->connect('/devices/add', ['controller' => 'Devices','action' => 'add']);
     $routes->connect('/devices/view/:id', ['controller' => 'Devices','action' => 'view']);
     $routes->connect('/devices/edit', ['controller' => 'Devices','action' => 'edit']);

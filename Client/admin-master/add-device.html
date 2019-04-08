@@ -312,130 +312,123 @@
                                             <div class="card-header">
                                                 <strong>Add Device</strong>
                                             </div>
-                                            <div class="card-body card-block">
-                                                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                                        <div class="row form-group col-lg-8">
-                                                            <div class="col col-md-3">
-                                                                <label for="text-input" class=" form-control-label">Name Device</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <input type="text" id="inputName" name="text-input" placeholder="Name" class="form-control">
-                                                            </div>
+                                            <form @submit.prevent="addDevice" method="post" enctype="multipart/form-data"  ref="form" class="form-horizontal" id="app">
+                                                <div class="card-body card-block">
+                                                    <div class="row form-group col-lg-8">
+                                                        <div class="col col-md-3">
+                                                            <label for="name" class=" form-control-label">Name Device</label>
                                                         </div>
-                                                        <div class="row form-group col-lg-8">
-                                                            <div class="col col-md-3">
-                                                                <label for="text-input" class=" form-control-label">Serial Number</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <input type="text" id="text-input" name="text-input" placeholder="Serial Number" class="form-control">
-                                                            </div>
+                                                        <div class="col-12 col-md-9">
+                                                            <input type="text" id="name" v-model="name" name="name" placeholder="Name" class="form-control">
                                                         </div>
-                                                        <div class="row form-group col-lg-8">
-                                                            <div class="col col-md-3">
-                                                                <label for="text-input" class=" form-control-label">Product Number</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <input type="text" id="text-input" name="text-input" placeholder="Product Number" class="form-control">
-                                                            </div>
+                                                    </div>
+                                                    <div class="row form-group col-lg-8">
+                                                        <div class="col col-md-3">
+                                                            <label for="inputSerial" class="form-control-label">Serial Number</label>
                                                         </div>
-                                                        <div class="row form-group col-lg-8">
-                                                            <div class="col col-md-3">
-                                                                <label for="textarea-input" class=" form-control-label">Specifications</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <textarea name="textarea-input" id="textarea-input" rows="9" placeholder="Specifications..." class="form-control"></textarea>
-                                                            </div>
+                                                        <div class="col-12 col-md-9">
+                                                            <input type="text" id="inputSerial" v-model="serial_number" name="inputSerial" placeholder="Serial Number" class="form-control">
                                                         </div>
-                                                        <div class="row form-group col-lg-8">
-                                                            <div class="col col-md-3">
-                                                                <label for="image" class=" form-control-label">Image</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <input type="file" id="image" name="image" class="form-control">
-                                                            </div>
+                                                    </div>
+                                                    <div class="row form-group col-lg-8">
+                                                        <div class="col col-md-3">
+                                                            <label for="inputProduct" class=" form-control-label">Product Number</label>
                                                         </div>
-                                                        <div class="row form-group col-lg-8">
-                                                            <div class="col col-md-3">
-                                                                <label for="text-input" class=" form-control-label">Created</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <input type="text" id="text-input" name="text-input" placeholder="Created by user" class="form-control">
-                                                            </div>
+                                                        <div class="col-12 col-md-9">
+                                                            <input type="text" id="inputProduct"  v-model="product_number" name="inputProduct" placeholder="Product Number" class="form-control">
                                                         </div>
-                                                        <div class="row form-group col-lg-8">
-                                                            <div class="col col-md-3">
-                                                                <label for="select" class=" form-control-label">Parent</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <select name="select" id="select" class="form-control">
-                                                                    <option value="0">None</option>
-                                                                    <option value="1">Máy cây 1</option>
-                                                                    <option value="2">Máy cây 2</option>
-                                                                    <option value="3">Máy cây 3</option>
-                                                                </select>
-                                                            </div>
+                                                    </div>
+                                                    <div class="row form-group col-lg-8">
+                                                        <div class="col col-md-3">
+                                                            <label for="textarea-input" class=" form-control-label">Specifications</label>
                                                         </div>
-                                                        <div class="row form-group col-lg-8">
-                                                            <div class="col col-md-3">
-                                                                <label for="select" class=" form-control-label">Category</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <select name="select" id="select" class="form-control">
-                                                                    <option value="0">Phone</option>
-                                                                    <option value="1">Laptop</option>
-                                                                    <option value="2">PC</option>
-                                                                    <option value="3">Ipad</option>
-                                                                </select>
-                                                            </div>
+                                                        <div class="col-12 col-md-9">
+                                                            <textarea name="textarea-input" id="textarea-input" v-model="specifications" rows="9" placeholder="Specifications..." class="form-control"></textarea>
                                                         </div>
-                                                        <div class="row form-group col-lg-8">
-                                                            <div class="col col-md-3">
-                                                                <label for="select" class=" form-control-label">Brand</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <select name="select" id="select" class="form-control">
-                                                                    <option value="0">Samsung</option>
-                                                                    <option value="1">Apple</option>
-                                                                    <option value="2">Xiaomi</option>
-                                                                    <option value="3">Ipad</option>
-                                                                </select>
-                                                            </div>
+                                                    </div>
+                                                    <div class="row form-group col-lg-8">
+                                                        <div class="col col-md-3">
+                                                            <label for="image" class=" form-control-label">Image</label>
                                                         </div>
-                                                        <div class="row form-group col-lg-8">
-                                                            <div class="col col-md-3">
-                                                                <label for="text-input" class=" form-control-label">Warranty Period</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <input class="form-control" type="date" id="date1">
-                                                            </div>
+                                                        <div class="col-12 col-md-9">
+                                                            <input type="file" id="image" v-on:change="addDevice()" name="image" class="form-control" multiple>
                                                         </div>
-                                                        <div class="row form-group col-lg-8">
-                                                            <div class="col col-md-3">
-                                                                <label for="text-input" class=" form-control-label">Stock Date</label>
-                                                            </div>
-                                                            <div class="col-12 col-md-9">
-                                                                <input class="form-control" type="date" id="date2">
-                                                            </div>
+                                                    </div>
+                                                    <div class="row form-group col-lg-8">
+                                                        <div class="col col-md-3">
+                                                            <label for="inputCreated" class=" form-control-label">Created By</label>
                                                         </div>
-                                                    </form>
-                                            </div>
-                                            <div class="card-footer">
-                                                <button type="submit" class="btn btn-primary ">
-                                                    <i class="fa fa-dot-circle-o"></i> Submit
-                                                </button>
-                                                <button type="reset" class="btn btn-danger">
-                                                    <i class="fa fa-ban"></i> Reset
-                                                </button>
-                                            </div>
+                                                        <div class="col-12 col-md-9">
+                                                            <input type="text" id="inputCreated" v-model="created_user" name="text-input" placeholder="Created by user" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group col-lg-8">
+                                                        <div class="col col-md-3">
+                                                            <label for="select1" class=" form-control-label">Parent</label>
+                                                        </div>
+                                                        <div class="col-12 col-md-9">
+                                                            <select name="select" id="select" v-model="parent_id" class="form-control">
+                                                                <option value="">---Select parent---</option>
+                                                                <option v-for="item in devices" v-bind:value="item.id" >{{ item.name }}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group col-lg-8">
+                                                        <div class="col col-md-3">
+                                                            <label for="select1" class=" form-control-label">Category</label>
+                                                        </div>
+                                                        <div class="col-12 col-md-9">
+                                                            <select name="select1" id="select1" v-model="id_cate" class="form-control">
+                                                                <option value="">---Select category---</option>
+                                                                <option v-for="item in categories" v-bind:value="item.id" >{{ item.category_name }}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group col-lg-8">
+                                                        <div class="col col-md-3">
+                                                            <label for="select2" class=" form-control-label">Brand</label>
+                                                        </div>
+                                                        <div class="col-12 col-md-9">
+                                                            <select name="select2" id="select2" v-model="brand_id" class="form-control">
+                                                                <option value="">---Select brand---</option>
+                                                                <option v-for="item in brands" v-bind:value="item.id" >{{ item.brand_name }}</option>
+                                                                
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group col-lg-8">
+                                                        <div class="col col-md-3">
+                                                            <label for="date1" class=" form-control-label">Warranty Period</label>
+                                                        </div>
+                                                        <div class="col-12 col-md-9">
+                                                            <input class="form-control" v-model="warranty_period" type="date" id="date1">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group col-lg-8">
+                                                        <div class="col col-md-3">
+                                                            <label for="date2" class=" form-control-label">Stock Date</label>
+                                                        </div>
+                                                        <div class="col-12 col-md-9">
+                                                            <input class="form-control" v-model="stock_date" type="date" id="date2">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <i class="fa fa-dot-circle-o"></i> Submit
+                                                    </button>
+                                                    <button type="reset" onclick="reset();" class="btn btn-danger">
+                                                        <i class="fa fa-ban"></i> Reset
+                                                    </button>
+                                                    <button onclick="location.href = 'device.html';"  id="singlebutton" name="singlebutton" class="btn btn-secondary">
+                                                            <i class="fa fa-arrow-left" aria-hidden="true"></i> List
+                                                    </button> 
+                                                </div>
+                                            </form>
                                     </div>    
                                 </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12 text-center"> 
-                                    <button onclick="location.href = 'device.html';"  id="singlebutton" name="singlebutton" class="btn btn-secondary">
-                                            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-                                    </button> 
-                            </div>
                             <div class="col-md-12">
                                 <div class="copyright">
                                     <p>Copyright © 2018 Colorlib. Saishunkan Co.,Ltd. All Rights Reserved</a>.</p>
@@ -474,7 +467,97 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+    <!-- <script src="js/vue-filter-date-format.cjs.js"></script>
+    <script src="js/vue-filter-date-format.esm.js"></script> -->
+    <!-- <script src="node_modules/moment/moment.js"></script> -->
 
+    <script>
+        function reset() {
+            document.getElementById('app').reset();
+        }
+
+        var add = new Vue({
+            el : '#app',
+            data (){
+                return {
+                    id : '',
+                    name : '',
+                    serial_number : '',
+                    product_number : '',
+                    specifications : '',
+                    created_user : '',
+                    warranty_period: '',
+                    stock_date : '',
+                    brand_id : '',
+                    id_cate : '',
+                    brands : '',
+                    categories : '',
+                    parent_id : '',
+                    devices : '',
+                    images : ''
+                }
+            },
+            methods: {
+                addDevice(){
+                    axios
+                        .post(
+                            'http://inventorymanagement.com/devices/add',
+                            { 
+                                name : this.name,
+                                serial_number: this.serial_number,
+                                product_number : this.product_number,
+                                specifications : this.specifications,
+                                created_user : this.created_user,
+                                warranty_period : this.warranty_period,
+                                stock_date : this.stock_date,
+                                brand_id : this.brand_id,
+                                id_cate : this.id_cate,
+                                brands : this.brands,
+                                categories : this.categories,
+                                parent_id : this.parent_id,
+                            }
+                        )
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                axios
+                                    .post(
+                                        'http://inventorymanagement.com/files/add',
+                                        {
+                                            relate_id : response.data.payload.devices.id,
+                                            relate_name : 'devices',
+                                            images : this.images,
+                                        }
+                                    )
+                            }else{
+                                alert('Cannot add your device!!!');
+                            }
+                        })
+                        .catch(error =>{
+                            console.log(error)
+                        });
+                }
+            },
+            mounted() {
+                axios 
+                    .get('http://inventorymanagement.com/brands/show')
+                    .then(response => (this.brands = response.data.payload.brands));
+
+                axios
+                    .get('http://inventorymanagement.com/categories/show')
+                    .then(response => (this.categories = response.data.payload.categories));
+                
+                axios
+                    .get('http://inventorymanagement.com/devices/show')
+                    .then(response => (this.devices = response.data.payload.devices));   
+            }
+             
+        }); 
+       
+    </script>
+
+    
 
 </body>
 

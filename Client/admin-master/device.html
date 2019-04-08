@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+C:\GIT\Inventory_management\Client\admin-master\device.html<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -142,7 +142,7 @@
                             <div class="header-button">
                                 <div class="noti-wrap">
                                     <div class="noti__item js-item-menu">
-                                        <i class="zmdi zmdi-comment-more"></i>
+                                        <i class="fas fa-comment-alt"></i>
                                         <span class="quantity">1</span>
                                         <div class="mess-dropdown js-dropdown">
                                             <div class="mess__title">
@@ -174,7 +174,7 @@
                                         </div>
                                     </div>
                                     <div class="noti__item js-item-menu">
-                                        <i class="zmdi zmdi-email"></i>
+                                        <i class="fas fa-envelope"></i>
                                         <span class="quantity">1</span>
                                         <div class="email-dropdown js-dropdown">
                                             <div class="email__title">
@@ -213,7 +213,7 @@
                                         </div>
                                     </div>
                                     <div class="noti__item js-item-menu">
-                                        <i class="zmdi zmdi-notifications"></i>
+                                        <i class="fas fa-bell"></i>
                                         <span class="quantity">3</span>
                                         <div class="notifi-dropdown js-dropdown">
                                             <div class="notifi__title">
@@ -221,7 +221,7 @@
                                             </div>
                                             <div class="notifi__item">
                                                 <div class="bg-c1 img-cir img-40">
-                                                    <i class="zmdi zmdi-email-open"></i>
+                                                    <i class="fa fa-envelope-open"></i>
                                                 </div>
                                                 <div class="content">
                                                     <p>You got a email notification</p>
@@ -230,7 +230,7 @@
                                             </div>
                                             <div class="notifi__item">
                                                 <div class="bg-c2 img-cir img-40">
-                                                    <i class="zmdi zmdi-account-box"></i>
+                                                    <i class="fa fa-user"></i>
                                                 </div>
                                                 <div class="content">
                                                     <p>Your account has been blocked</p>
@@ -239,7 +239,7 @@
                                             </div>
                                             <div class="notifi__item">
                                                 <div class="bg-c3 img-cir img-40">
-                                                    <i class="zmdi zmdi-file-text"></i>
+                                                    <i class="fa fa-file-alt"></i>
                                                 </div>
                                                 <div class="content">
                                                     <p>You got a new file</p>
@@ -277,20 +277,20 @@
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
                                                     <a href="#">
-                                                        <i class="zmdi zmdi-account"></i>Account</a>
+                                                        <i class="fa fa-user"></i>Account</a>
                                                 </div>
                                                 <div class="account-dropdown__item">
                                                     <a href="#">
-                                                        <i class="zmdi zmdi-settings"></i>Setting</a>
+                                                        <i class="fa fa-cog"></i>Setting</a>
                                                 </div>
                                                 <div class="account-dropdown__item">
                                                     <a href="#">
-                                                        <i class="zmdi zmdi-money-box"></i>Billing</a>
+                                                        <i class="fa fa-money-bill-alt"></i>Billing</a>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
                                                 <a href="#">
-                                                    <i class="zmdi zmdi-power"></i>Logout</a>
+                                                    <i class="fa fa-power-off"></i>Logout</a>
                                             </div>
                                         </div>
                                     </div>
@@ -310,31 +310,6 @@
                             <div class="col-md-12">
                                     <div class="table-data__tool">
                                         <div class="table-data__tool-left">
-                                            <div class="rs-select2--light rs-select2--md">
-                                                <select class="js-select2" name="property">
-                                                    <option selected="selected" value="">Apple</option>
-                                                    <option value="">Samsung</option>
-                                                    <option value="">Huawei</option>
-                                                    <option value="">Xiaomi</option>
-                                                    <option value="">Oppo</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
-                                            </div>
-                                            <div class="rs-select2--light rs-select2--sm">
-                                                <select class="js-select2" name="time">
-                                                    <option selected="selected" value="">Phone</option>
-                                                    <option value="">Laptop</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
-                                            </div>
-                                            <div class="rs-select2--light">
-                                                <form class="form-header" action="" method="POST">
-                                                        <input class="au-input au-input" style="width: 500px" type="text" name="search" placeholder="Search for datas &amp; device..." />
-                                                        <button class="au-btn--submit" type="submit">
-                                                            <i class="zmdi zmdi-search"></i>
-                                                        </button>
-                                                </form>
-                                            </div>
                                         </div>
                                         <div class="table-data__tool-right">
                                             <button onclick="location.href = 'add-device.html';" class="au-btn au-btn-icon au-btn--green au-btn--small">
@@ -343,130 +318,37 @@
                                  </div>
                                 <!-- DATA TABLE-->
                                 <div class="table-responsive table--no-card m-b-30">
-                                    <table class="table table-borderless table-striped table-earning">
+                                    <table class="table table-borderless table-striped table-earning" id="tblDevice">
                                         <thead>
                                             <tr>
                                                 <th>image</th>
                                                 <th>name</th>
                                                 <th>serial Number</th>
                                                 <th class="text-right">Brand</th>
-                                                <th>created</th>
-                                                <th>update</th>
+                                                <th>stock date</th>
+                                                <th>warranty period</th>
                                                 <th class="text-right">Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        
-                                        <tbody>
-                                            <tr >
-                                                <td><img src="images/details_1.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>iPhone X 64Gb Grey</td>
-                                                <td>4CE0460D0G</td>
-                                                <td class="text-right">Apple</td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
+
+                                        <tbody id="app">
+                                            <tr v-for="item in devices" :key="item.id">
+                                                <td><img v-bind:src="'http://inventorymanagement.com/' + item.path" style="width: 50px; height: 50px;" alt=""></td>
+                                                <td>{{ item.name }}</td>
+                                                <td>{{ item.serial_number }}</td>
+                                                <td class="text-right">{{ item.brand_name }}</td>
+                                                <td>{{ item.stock_date }}</td>
+                                                <td>{{ item.warranty_period }}</td>
                                                 <td class="text-right">
-                                                    <span class="status--process">Ready</span>
+                                                    <span class="status--process" v-if="item.status ==  0">Ready</span>
+                                                    <span v-else-if="item.status ==  1">Borrowing</span>
+                                                    <span class="status--denied" v-else="item.status ==  2">Broken</span>
                                                 </td>
                                                 <td>
                                                     <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
                                                     <a href="edit-device.html"><i class="fa fa-edit fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="#" onclick="window.confirm('You want to delete this devices?');"><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
-                                                    
-                                                </td>
-                                            </tr>
-                                            <tr >
-                                                <td><img src="images/details_2.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Samsung S8 Black</td>
-                                                <td>4CE0460D0G</td>
-                                                <td class="text-right">SamSung</td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
-                                                <td class="text-right">
-                                                    <span class="status--process">Ready</span>
-                                                </td>
-                                                <td>
-                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="edit-device.html" style="color: #339af0;" ><i class="fa fa-edit fa-lg"></i></a>&nbsp;
-                                                    <a href="#" onclick="window.confirm('You want to delete this devices?');" style="color: red;"><i class="fa fa-trash fa-lg"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr >
-                                                <td><img src="images/details_1.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Game Console Controller</td>
-                                                <td>4CE0460D0G</td>
-                                                <td class="text-right">Sony</td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
-                                                <td class="text-right">
-                                                    <span class="status--denied">Denied</span>
-                                                </td>
-                                                <td>
-                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="#" onclick="window.confirm('You want to restock this devices?');" style="color:#20c997;"><i class="fa fa-undo fa-lg"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr >
-                                                <td><img src="images/details_4.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>iPhone X 256Gb Black</td>
-                                                <td>4CE0460D0G</td>
-                                                <td class="text-right">Apple</td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
-                                                <td class="text-right">
-                                                    <span class="status--process">Ready</span>
-                                                </td>
-                                                <td>
-                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="edit-device.html" style="color: #339af0;" ><i class="fa fa-edit fa-lg"></i></a>&nbsp;
-                                                    <a href="#" onclick="window.confirm('You want to delete this devices?');" style="color: red;"><i class="fa fa-trash fa-lg"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr >
-                                                <td><img src="images/details_1.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>USB 3.0 Cable</td>
-                                                <td>4CE0460D0G</td>
-                                                <td class="text-right">SamSung</td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
-                                                <td class="text-right">
-                                                    <span class="status--denied">Denied</span>
-                                                </td>
-                                                <td>
-                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="#" onclick="window.confirm('You want to restock this devices?');" style="color: #20c997;"><i class="fa fa-undo fa-lg"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="images/details_2.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Smartwatch 4.0 LTE Wifi</td>
-                                                <td>4CE0460D0G</td>
-                                                <td class="text-right">Redmi</td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
-                                                <td class="text-right">
-                                                        <span class="status--process">Ready</span>
-                                                </td>
-                                                <td>
-                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="edit-device.html" style="color: #339af0;" ><i class="fa fa-edit fa-lg"></i></a>&nbsp;
-                                                    <a href="#" onclick="window.confirm('You want to delete this devices?');" style="color: red;"><i class="fa fa-trash fa-lg"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr >
-                                                <td><img src="images/details_3.jpg" style="width: 50px; height: 50px;" alt=""></td>
-                                                <td>Camera C430W 4k</td>
-                                                <td>4CE0460D0G</td>
-                                                <td class="text-right">Apple</td>
-                                                <td>ThinhBT</td>
-                                                <td>Admin</td>
-                                                <td class="text-right">
-                                                    <span class="status--denied">Denied</span>
-                                                </td>
-                                                
-                                                <td>
-                                                    <a href="view-device.html"><i class="fa fa-eye fa-lg" style="color: #339af0;"></i></a>&nbsp;
-                                                    <a href="#" onclick="window.confirm('You want to restock this devices?');" style="color: #20c997;"><i class="fa fa-undo fa-lg"></i></a>
+                                                    <a href="#" v-on:click="deleteDevices(item.id)" ><i class="fa fa-trash fa-lg"  style="color: red;"></i></a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -474,8 +356,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="result" ></div>
-                        <button onclick="device();" class="btn btn-danger" >show</button>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">
@@ -514,18 +394,52 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
-    
-    
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+    <!-- <script src="js/vue-filter-date-format.cjs.js"></script>
+    <script src="js/vue-filter-date-format.esm.js"></script> -->
+    <!-- <script src="node_modules/moment/moment.js"></script> -->
 
-    <script language="javascript">
-        function device() {
-            $.get("/devices/index", function(data, status){
-                $('#result').html(result);
-                    console.log(result);
-            });
-        }
+    <script>
+        var devices = new Vue({
+            el : '#app',
+            data () {
+                return {
+                    devices : ''
+                }
+            },
+            mounted() {
+                this.callApi();
+            },
+            methods : {
+                callApi () {
+                    axios
+                        .get('http://inventorymanagement.com/devices/index')
+                        .then(response => (this.devices = response.data.payload.devices))
+                },
+                deleteDevices : function (id) {
+                    if(window.confirm('You want to delete this devices ?') == true){
+                        axios
+                            .post('http://inventorymanagement.com/devices/delete',{id})
+                            .then(response => {
+                                if (response.data.status == 'success') {
+                                    this.callApi();
+                                }else{
+                                    alert('fail!');
+                                }
+                                console.log(response);
+                            })
+                            .catch(error =>{
+                                console.log(error)
+                            });
+                    }
+
+                }
+            }
+        });
+        
     </script>
-</body>
 
+</body>
 </html>
 <!-- end document-->

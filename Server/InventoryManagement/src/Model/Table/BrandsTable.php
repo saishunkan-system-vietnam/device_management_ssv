@@ -87,7 +87,7 @@ class BrandsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['brand_name']));
+        //$rules->add($rules->isUnique(['brand_name']));
         return $rules;
     }
 }

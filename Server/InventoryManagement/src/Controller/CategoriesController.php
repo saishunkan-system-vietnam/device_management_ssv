@@ -95,6 +95,30 @@ class CategoriesController extends AppController
 
     }
 
+    public function show()
+    {
+        // Only accept POST and GET requests
+        $this->request->allowMethod(['post', 'get']);
+
+        if ($this->request->is('post')) {
+            $inputData = $this->getRequest()->getData();
+
+        } elseif ($this->request->is('get')) {
+            $inputData = $this->getRequest()->getQuery();
+        }
+        $condition = ['is_deleted' => 0, 'id_parent !=' => 0];
+        $categories = $this->Categories->find();
+        $categories_quantity = $this->Categories->find()->select(['count' => 'count(1)']);
+
+        $categories->where($condition)->select(['id','category_name'])
+            ->order(['id' => 'DESC'])
+            ->limit($this->perpage)
+            ->page($this->page);
+        $record_all = $categories_quantity->where($condition)->first();
+
+        $this->responseApi($this->status, $this->data_name, $categories, $record_all['count']);
+    }
+
     /**
      * View method
      *

@@ -23,7 +23,7 @@ class FilesController extends AppController
         parent::initialize();
         $this->autoRender = false;
         $this->status = 'success';
-        $this->data_name = 'devices';
+        $this->data_name = 'files';
         $this->loadModel('Devices');
 
     }
@@ -88,11 +88,12 @@ class FilesController extends AppController
     }
 
     public function delete() {
-        //add image devices
+        //delete image devices
         $this->request->allowMethod(['post']);
 
         $id = $this->getRequest()->getData('id');
         $image = $this->Files->get($id);
+
         if ($image) {
             $str = $image->path;
             if ($this->Files->delete($image)) {
